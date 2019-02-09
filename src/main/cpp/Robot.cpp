@@ -12,15 +12,15 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 void Robot::RobotInit() {
-  m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
-  m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
-  frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+    m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
+    m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
+    frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
-  driveBase = new DriveBase();
-  claw = new Claw();
-  elevator = new Elevator();
-  bling = new Bling();
-  cargo = new Cargo();
+    driveBase = new DriveBase();
+    claw = new Claw();
+    elevator = new Elevator();
+    bling = new Bling();
+    cargo = new Cargo();
 }
 
 /**
@@ -45,29 +45,43 @@ void Robot::RobotPeriodic() {}
  * make sure to add them to the chooser code above as well.
  */
 void Robot::AutonomousInit() {
-  m_autoSelected = m_chooser.GetSelected();
-  // m_autoSelected = SmartDashboard::GetString("Auto Selector",
-  //     kAutoNameDefault);
-  std::cout << "Auto selected: " << m_autoSelected << std::endl;
+    m_autoSelected = m_chooser.GetSelected();
+    // m_autoSelected = SmartDashboard::GetString("Auto Selector",
+    //     kAutoNameDefault);
+    std::cout << "Auto selected: " << m_autoSelected << std::endl;
 
-  if (m_autoSelected == kAutoNameCustom) {
-    // Custom Auto goes here
-  } else {
-    // Default Auto goes here
-  }
+    if (m_autoSelected == kAutoNameCustom) {
+        // Custom Auto goes here
+    } else {
+        // Default Auto goes here
+    }
 }
 
 void Robot::AutonomousPeriodic() {
-  if (m_autoSelected == kAutoNameCustom) {
-    // Custom Auto goes here
-  } else {
-    // Default Auto goes here
-  }
+    if (m_autoSelected == kAutoNameCustom) {
+        // Custom Auto goes here
+    } else {
+        // Default Auto goes here
+    }
 }
 
-void Robot::TeleopInit() {}
+void Robot::TeleopInit() {
+    controller = new frc::XboxController(0);
+}
 
-void Robot::TeleopPeriodic() {}
+void Robot::TeleopPeriodic() {
+    // These values are reversed for some reason
+    double leftY = -controller->GetY(Joystick::JoystickHand::kLeftHand);
+    double rightY = -controller->GetY(Joystick::JoystickHand::kRightHand);
+    driveBase->tankDrive(leftY, rightY);
+    
+    if (controller->GetTriggerAxis(Joystick::JoystickHand::kLeftHand) > 0.3) {
+        claw->closeClaw();
+    }
+    if (controller->GetTriggerAxis(Joystick::JoystickHand::kRightHand) > 0.3) {
+        claw->openClaw();
+    }
+}
 
 void Robot::TestPeriodic() {}
 
