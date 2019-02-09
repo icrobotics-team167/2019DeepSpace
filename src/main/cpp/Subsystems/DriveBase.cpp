@@ -57,3 +57,26 @@ DriveBase::~DriveBase() {
     delete leftEncoder;
     delete rightEncoder;
 }
+
+/**
+ * Standard implementation of tank drive.
+ * Note that the speeds are automatically set so that if both are positive
+ * the robot will drive forward.
+ * 
+ * @author Vladimir Tivanski
+ * @since 2-9-2019
+ * 
+ * @param leftSpeed The speed that the left motor group will drive at
+ * @param rightSpeed The speed that the right motor group will drive at
+ */ 
+void DriveBase::tankDrive(double leftSpeed, double rightSpeed) {
+    leftSpeed *= -1;
+
+    leftTalon1->Set(ControlMode::PercentOutput, leftSpeed);
+    leftTalon2->Set(ControlMode::PercentOutput, leftSpeed);
+    leftTalon3->Set(ControlMode::PercentOutput, leftSpeed);
+
+    rightTalon1->Set(ControlMode::PercentOutput, rightSpeed);
+    rightTalon2->Set(ControlMode::PercentOutput, rightSpeed);
+    rightTalon3->Set(ControlMode::PercentOutput, rightSpeed);
+}

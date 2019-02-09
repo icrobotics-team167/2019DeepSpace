@@ -37,6 +37,8 @@ private:
 public:
     DriveBase();
     ~DriveBase();
+
+    void tankDrive(double leftSpeed, double rightSpeed);
 };
 
 #endif
