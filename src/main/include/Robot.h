@@ -7,6 +7,12 @@
 
 #pragma once
 
+#include "Subsystems/DriveBase.h"
+#include "Subsystems/Claw.h"
+#include "Subsystems/Elevator.h"
+#include "Subsystems/Bling.h"
+#include "Subsystems/Cargo.h"
+
 #include <string>
 
 #include <frc/TimedRobot.h>
@@ -27,4 +33,10 @@ class Robot : public frc::TimedRobot {
   const std::string kAutoNameDefault = "Default";
   const std::string kAutoNameCustom = "My Auto";
   std::string m_autoSelected;
+
+  DriveBase *driveBase;
+  Claw *claw;
+  Elevator *elevator;
+  Bling *bling;
+  Cargo *cargo;
 };

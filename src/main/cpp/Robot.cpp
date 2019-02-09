@@ -15,6 +15,12 @@ void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+
+  driveBase = new DriveBase();
+  claw = new Claw();
+  elevator = new Elevator();
+  bling = new Bling();
+  cargo = new Cargo();
 }
 
 /**
