@@ -17,3 +17,25 @@ Claw::~Claw() {
     // Claw raising and lowering solenoid
     delete pivotSolenoid;
 }
+
+/**
+ * Opens the claw
+ * 
+ * @author Vladimir Tivanski
+ * @since 2-9-2019
+ */
+void Claw::openClaw() {
+    closedSolenoid->Set(false);
+    openSolenoid->Set(true);
+}
+
+/**
+ * Closes the claw
+ * 
+ * @author Vladimir Tivanski
+ * @since 2-9-2019
+ */
+void Claw::closeClaw() {
+    openSolenoid->Set(false);
+    closedSolenoid->Set(true);
+}

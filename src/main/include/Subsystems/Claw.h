@@ -16,6 +16,9 @@ private:
 public:
     Claw();
     ~Claw();
+    
+    void openClaw();
+    void closeClaw();
 };
 
 #endif
