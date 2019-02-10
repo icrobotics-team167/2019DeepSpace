@@ -14,6 +14,7 @@ DriveBase::DriveBase() {
     // NavX
     try {
         navx = new AHRS(SPI::Port::kMXP);
+        navxInitValue = navx->GetAngle();
     } catch (std::exception &exception) {
         std::string error = "Error instantiating navX MXP:  ";
         error += exception.what();
@@ -59,9 +60,7 @@ DriveBase::~DriveBase() {
 }
 
 /**
- * Standard implementation of tank drive.
- * Note that the speeds are automatically set so that if both are positive
- * the robot will drive forward.
+ * Sets the speeds on each side of the robot.
  * 
  * @author Vladimir Tivanski
  * @since 2-9-2019
@@ -69,7 +68,7 @@ DriveBase::~DriveBase() {
  * @param leftSpeed The speed that the left motor group will drive at
  * @param rightSpeed The speed that the right motor group will drive at
  */ 
-void DriveBase::tankDrive(double leftSpeed, double rightSpeed) {
+void DriveBase::drive(double leftSpeed, double rightSpeed) {
     leftSpeed *= -1;
 
     leftTalon1->Set(ControlMode::PercentOutput, leftSpeed);
@@ -79,4 +78,58 @@ void DriveBase::tankDrive(double leftSpeed, double rightSpeed) {
     rightTalon1->Set(ControlMode::PercentOutput, rightSpeed);
     rightTalon2->Set(ControlMode::PercentOutput, rightSpeed);
     rightTalon3->Set(ControlMode::PercentOutput, rightSpeed);
+}
+
+/**
+ * Standard implementation of tank drive.
+ * Updates the navx initial value so straightDrive() can be called after
+ * driving with a controller.
+ * 
+ * @author Vladimir Tivanski
+ * @since 2-10-2019
+ * 
+ * @param leftSpeed The speed that the left motor group will drive at
+ * @param rightSpeed The speed that the right motor group will drive at
+ */ 
+void DriveBase::tankDrive(double leftSpeed, double rightSpeed) {
+    drive(leftSpeed, rightSpeed);
+
+    navxInitValue = navx->GetAngle();
+}
+
+/**
+ * Drives straigt by adjusting the speeds so that the robot will 
+ * realign itself if it drives slightly off track.
+ * 
+ * @author Vladimir Tivanski
+ * @since 2-10-2019
+ * 
+ * @param speed The speed that both motor groups will drive at
+ */ 
+void DriveBase::straightDrive(double speed) {
+    double rotationAngle = navx->GetAngle();
+    double leftSpeed = speed;
+    double rightSpeed = speed;
+    double realign = 0.0175;
+    
+    SmartDashboard::PutNumber("rotation angle", rotationAngle);
+    SmartDashboard::PutNumber("initial navx value", navxInitValue);
+
+    if (rotationAngle > navxInitValue) {
+        rightSpeed += realign;
+    } else if (rotationAngle < navxInitValue) {
+        leftSpeed += realign;
+    }
+
+    if (rightSpeed > 1) {
+        rightSpeed -= realign;
+        leftSpeed -= realign;
+    }
+
+        if (leftSpeed > 1) {
+        leftSpeed -= realign;
+        rightSpeed -= realign;
+    }
+
+    drive(leftSpeed, rightSpeed);
 }

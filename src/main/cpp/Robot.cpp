@@ -63,6 +63,8 @@ void Robot::AutonomousPeriodic() {
     } else {
         // Default Auto goes here
     }
+
+    driveBase->straightDrive(0.3);
 }
 
 void Robot::TeleopInit() {

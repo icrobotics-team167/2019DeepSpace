@@ -23,6 +23,7 @@ private:
 
     // NavX
     AHRS *navx;
+    double navxInitValue;
 
     // Limelight
     std::shared_ptr<NetworkTable> limelightNetworkTable;
@@ -38,7 +39,9 @@ public:
     DriveBase();
     ~DriveBase();
 
+    void drive(double leftSpeed, double rightSpeed);
     void tankDrive(double leftSpeed, double rightSpeed);
+    void straightDrive(double power);
 };
 
 #endif
