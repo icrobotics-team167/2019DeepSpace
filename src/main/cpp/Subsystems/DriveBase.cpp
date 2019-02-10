@@ -125,8 +125,8 @@ void DriveBase::straightDrive(double speed) {
         rightSpeed -= realign;
         leftSpeed -= realign;
     }
-
-        if (leftSpeed > 1) {
+    
+    if (leftSpeed > 1) {
         leftSpeed -= realign;
         rightSpeed -= realign;
     }
