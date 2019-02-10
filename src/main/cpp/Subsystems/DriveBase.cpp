@@ -134,10 +134,26 @@ void DriveBase::straightDrive(double speed) {
     drive(leftSpeed, rightSpeed);
 }
 
+/**
+ * Gets the left encoder
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-10-2019
+ * 
+ * @returns A pointer to the left encoder
+ */ 
 frc::Encoder *DriveBase::getLeftEncoder() {
     return leftEncoder;
 }
 
+/**
+ * Gets the right encoder
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-10-2019
+ * 
+ * @returns A pointer to the right encoder
+ */ 
 frc::Encoder *DriveBase::getRightEncoder() {
     return rightEncoder;
 }

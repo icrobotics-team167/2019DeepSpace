@@ -9,6 +9,12 @@
 
 #include <frc/WPILib.h>
 
+/**
+ * Interface for auto routines
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-10-2019
+ */ 
 class AutoRoutine {
 protected:
     DriveBase *driveBase;
