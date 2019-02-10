@@ -106,7 +106,7 @@ void DriveBase::tankDrive(double leftSpeed, double rightSpeed) {
  * 
  * @param speed The speed that both motor groups will drive at
  */ 
-void DriveBase::straightDrive(double speed) {
+void DriveBase::straightDrive(double inches, double speed) {
     double rotationAngle = navx->GetAngle();
     
     SmartDashboard::PutNumber("rotation angle", rotationAngle);
@@ -132,6 +132,11 @@ void DriveBase::straightDrive(double speed) {
 
     if (leftSpeed > 1) {
         leftSpeed = 1;
+    }
+
+    if (leftEncoder->Get() > INCH_TO_LEFT_ENCODER * inches && rightEncoder->Get() > INCH_TO_RIGHT_ENCODER * inches) {
+        leftSpeed = 0;
+        rightSpeed = 0;
     }
 
     drive(leftSpeed, rightSpeed);
@@ -162,4 +167,8 @@ frc::Encoder *DriveBase::getLeftEncoder() {
  */ 
 frc::Encoder *DriveBase::getRightEncoder() {
     return rightEncoder;
+}
+
+AHRS *DriveBase::getNavx() {
+    return navx;
 }

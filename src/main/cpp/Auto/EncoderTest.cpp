@@ -31,12 +31,13 @@ void EncoderTest::run() {
         case AutoState::init:
             leftEncoder->Reset();
             rightEncoder->Reset();
+            driveBase->navxInitValue = driveBase->getNavx()->GetAngle();
             autoState = AutoState::test;
             break;
         case AutoState::test:
             SmartDashboard::PutNumber("Left encoder: ", leftEncoder->Get());
             SmartDashboard::PutNumber("Right encoder: ", rightEncoder->Get());
-            driveBase->straightDrive(0.3);
+            driveBase->straightDrive(100, 0.3);
             break;
     }
 }

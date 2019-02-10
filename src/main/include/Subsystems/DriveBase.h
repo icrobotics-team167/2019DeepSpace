@@ -23,7 +23,6 @@ private:
 
     // NavX
     AHRS *navx;
-    double navxInitValue;
 
     // Limelight
     std::shared_ptr<NetworkTable> limelightNetworkTable;
@@ -41,10 +40,12 @@ public:
 
     void drive(double leftSpeed, double rightSpeed);
     void tankDrive(double leftSpeed, double rightSpeed);
-    void straightDrive(double speed);
+    void straightDrive(double inches, double speed);
+    
+    double navxInitValue;
 
-    const double INCH_TO_LEFT_ENCODER = 120.23;
-    const double INCH_TO_RIGHT_ENCODER = 121.38;
+    const double INCH_TO_LEFT_ENCODER = 116;
+    const double INCH_TO_RIGHT_ENCODER = 117;
 
     double previousError = 0;
     double totalError = 0;
@@ -55,6 +56,8 @@ public:
 
     frc::Encoder *getLeftEncoder();
     frc::Encoder *getRightEncoder();
+
+    AHRS *getNavx();
 };
 
 #endif
