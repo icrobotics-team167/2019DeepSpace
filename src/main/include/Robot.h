@@ -13,6 +13,9 @@
 #include "Subsystems/Bling.h"
 #include "Subsystems/Cargo.h"
 
+#include "Auto/AutoRoutine.h"
+#include "Auto/EncoderTest.h"
+
 #include <string>
 
 #include <frc/TimedRobot.h>
@@ -45,6 +48,8 @@ private:
     Elevator *elevator;
     Bling *bling;
     Cargo *cargo;
+
+    AutoRoutine *autoRoutine;
 
     frc::XboxController *controller;
 };
