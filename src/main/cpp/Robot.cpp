@@ -85,6 +85,20 @@ void Robot::TeleopPeriodic() {
     if (controller->GetTriggerAxis(Joystick::JoystickHand::kRightHand) > 0.3) {
         claw->openClaw();
     }
+
+    if (controller->GetBumper(Joystick::JoystickHand::kLeftHand)) {
+        driveBase->setLowGear();
+    }
+    if (controller->GetBumper(Joystick::JoystickHand::kRightHand)) {
+        driveBase->setHighGear();
+    }
+
+    if (controller->GetAButton()) {
+        claw->moveClawUp();
+    }
+    if (controller->GetBButton()) {
+        claw->moveClawDown();
+    }
 }
 
 void Robot::TestPeriodic() {}

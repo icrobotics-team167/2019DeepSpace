@@ -8,7 +8,7 @@
 // Left motor controllers
 #define LEFT_TALON_1 3
 #define LEFT_TALON_2 4
-#define LEFT_TALON_3 5
+#define LEFT_TALON_3 9
 
 // Right motor controllers
 #define RIGHT_TALON_1 6
@@ -22,8 +22,7 @@
 // #define LIMELIGHT
 
 // Gear shifting solenoids (these will be replaced with one single-acting solenoid at a later date)
-#define LOW_GEAR_SOLENOID 2
-#define HIGH_GEAR_SOLENOID 3
+#define GEAR_SHIFTER_SOLENOID 0
 
 // Drivetrain encoders
 #define LEFT_ENCODER_A 0
@@ -33,15 +32,14 @@
 
 // ***** Claw *****
 // Claw opening and closing solenoids (these will be replaced with one single-acting solenoid at a later date)
-#define CLAW_OPEN_SOLENOID 1
-#define CLAW_CLOSED_SOLENOID 0
+#define CLAW_SOLENOID 2
 
 // Claw raising and lowering solenoid
-#define PIVOT_SOLENOID 4 // This port number won't actually work, but it can't conflict with the temporary solenoids described above
+#define PIVOT_SOLENOID 1 // This port number won't actually work, but it can't conflict with the temporary solenoids described above
 
 // ***** Elevator *****
 // Elevator motor
-#define ELEVATOR_TALON 9
+#define ELEVATOR_TALON 5
 
 // Elevator encoder
 #define ELEVATOR_ENCODER_A 4

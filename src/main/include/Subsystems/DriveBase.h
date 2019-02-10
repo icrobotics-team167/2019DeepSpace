@@ -28,8 +28,7 @@ private:
     std::shared_ptr<NetworkTable> limelightNetworkTable;
 
     // Gear shifting solenoids
-    frc::Solenoid *lowGearSolenoid;
-    frc::Solenoid *highGearSolenoid;
+    frc::Solenoid *gearShifterSolenoid;
     
     // Drivetrain encoders
     frc::Encoder *leftEncoder;
@@ -56,6 +55,9 @@ public:
 
     frc::Encoder *getLeftEncoder();
     frc::Encoder *getRightEncoder();
+
+    void setLowGear();
+    void setHighGear();
 
     AHRS *getNavx();
 };
