@@ -44,8 +44,8 @@ public:
     
     double navxInitValue;
 
-    const double INCH_TO_LEFT_ENCODER = 116;
-    const double INCH_TO_RIGHT_ENCODER = 117;
+    const double INCH_TO_LEFT_ENCODER = 116.711067093;
+    const double INCH_TO_RIGHT_ENCODER = 117.837349601;
 
     double previousError = 0;
     double totalError = 0;
