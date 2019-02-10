@@ -25,8 +25,8 @@ DriveBase::DriveBase() {
     limelightNetworkTable = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
 
     // Gear shifting solenoids
-    lowGearSolenoid = new frc::Solenoid(LOW_GEAR_SOLENOID);
-    highGearSolenoid = new frc::Solenoid(HIGH_GEAR_SOLENOID);
+    lowGearSolenoid = new frc::Solenoid(PNEUMATIC_CONTROLLER, LOW_GEAR_SOLENOID);
+    highGearSolenoid = new frc::Solenoid(PNEUMATIC_CONTROLLER, HIGH_GEAR_SOLENOID);
 
     // Drivetrain encoders
     leftEncoder = new frc::Encoder(LEFT_ENCODER_A, LEFT_ENCODER_B, false);
@@ -108,28 +108,42 @@ void DriveBase::tankDrive(double leftSpeed, double rightSpeed) {
  */ 
 void DriveBase::straightDrive(double speed) {
     double rotationAngle = navx->GetAngle();
-    double leftSpeed = speed;
-    double rightSpeed = speed;
-    double realign = 0.0175;
     
     SmartDashboard::PutNumber("rotation angle", rotationAngle);
-    SmartDashboard::PutNumber("initial navx value", navxInitValue);
+    SmartDashboard::PutNumber("Heading", navxInitValue);
 
-    if (rotationAngle > navxInitValue) {
-        rightSpeed += realign;
-    } else if (rotationAngle < navxInitValue) {
-        leftSpeed += realign;
-    }
+    double headingError = navxInitValue - rotationAngle;
+    double diffError = headingError - previousError;   
+    
+    SmartDashboard::PutNumber("Heading Error", headingError);
+    SmartDashboard::PutNumber("diff Error", diffError);
+
+    double leftSpeed = speed + (KP * headingError + KI * totalError + KD * diffError);
+    double rightSpeed = speed - (KP * headingError + KI * totalError + KD * diffError);
+
+
+    SmartDashboard::PutNumber("Total Error", totalError);
+    SmartDashboard::PutNumber("Left Speed", leftSpeed);
+    SmartDashboard::PutNumber("Right Speed", rightSpeed);
 
     if (rightSpeed > 1) {
-        rightSpeed -= realign;
-        leftSpeed -= realign;
+        rightSpeed = 1;
     }
-    
+
     if (leftSpeed > 1) {
-        leftSpeed -= realign;
-        rightSpeed -= realign;
+        leftSpeed = 1;
     }
 
     drive(leftSpeed, rightSpeed);
+
+    previousError = headingError;
+    totalError += headingError;
+}
+
+frc::Encoder* DriveBase::getLEncoder() {
+    return leftEncoder;
+}
+
+frc::Encoder* DriveBase::getREncoder() {
+    return rightEncoder;
 }

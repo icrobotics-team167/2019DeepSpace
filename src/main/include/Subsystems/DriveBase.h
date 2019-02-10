@@ -41,7 +41,20 @@ public:
 
     void drive(double leftSpeed, double rightSpeed);
     void tankDrive(double leftSpeed, double rightSpeed);
-    void straightDrive(double power);
+    void straightDrive(double speed);
+
+    frc::Encoder* getLEncoder();
+    frc::Encoder* getREncoder();
+
+    const double INCH_TO_LEFT_ENCODER = 120.23;
+    const double INCH_TO_RIGHT_ENCODER = 121.38;
+
+    double previousError = 0;
+    double totalError = 0;
+
+    const double KP = 0.02;
+    const double KI = 0.0001;
+    const double KD = 0.01;
 };
 
 #endif

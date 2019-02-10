@@ -55,6 +55,9 @@ void Robot::AutonomousInit() {
     } else {
         // Default Auto goes here
     }
+
+    driveBase->getLEncoder()->Reset();
+    driveBase->getREncoder()->Reset();
 }
 
 void Robot::AutonomousPeriodic() {
@@ -64,7 +67,10 @@ void Robot::AutonomousPeriodic() {
         // Default Auto goes here
     }
 
-    driveBase->straightDrive(0.3);
+    driveBase->straightDrive(0.5);
+    
+    frc::SmartDashboard::PutNumber("Left Encoder", driveBase->getLEncoder()->Get());
+    frc::SmartDashboard::PutNumber("Right Encoder", driveBase->getREncoder()->Get());
 }
 
 void Robot::TeleopInit() {
