@@ -28,6 +28,12 @@ public:
     void TeleopPeriodic() override;
     void TestPeriodic() override;
 
+    DriveBase *getDriveBase();
+    Claw *getClaw();
+    Elevator *getElevator();
+    Bling *getBling();
+    Cargo *getCargo();
+
 private:
     frc::SendableChooser<std::string> m_chooser;
     const std::string kAutoNameDefault = "Default";
