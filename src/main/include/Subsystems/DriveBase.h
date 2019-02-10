@@ -42,6 +42,9 @@ public:
     void drive(double leftSpeed, double rightSpeed);
     void tankDrive(double leftSpeed, double rightSpeed);
     void straightDrive(double power);
+
+    frc::Encoder *getLeftEncoder();
+    frc::Encoder *getRightEncoder();
 };
 
 #endif

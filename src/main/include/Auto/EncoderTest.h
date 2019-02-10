@@ -9,6 +9,9 @@ private:
         init, test
     };
     AutoState autoState;
+
+    frc::Encoder *leftEncoder;
+    frc::Encoder *rightEncoder;
 public:
     EncoderTest(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo);
     ~EncoderTest();

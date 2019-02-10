@@ -133,3 +133,11 @@ void DriveBase::straightDrive(double speed) {
 
     drive(leftSpeed, rightSpeed);
 }
+
+frc::Encoder *DriveBase::getLeftEncoder() {
+    return leftEncoder;
+}
+
+frc::Encoder *DriveBase::getRightEncoder() {
+    return rightEncoder;
+}

@@ -55,6 +55,8 @@ void Robot::AutonomousInit() {
     } else {
         // Default Auto goes here
     }
+
+    autoRoutine = new EncoderTest(driveBase, claw, elevator, bling, cargo);
 }
 
 void Robot::AutonomousPeriodic() {
@@ -63,6 +65,8 @@ void Robot::AutonomousPeriodic() {
     } else {
         // Default Auto goes here
     }
+
+    autoRoutine->run();
 }
 
 void Robot::TeleopInit() {
