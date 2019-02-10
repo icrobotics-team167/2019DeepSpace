@@ -23,6 +23,7 @@ protected:
     Bling *bling;
     Cargo *cargo;
 public:
+    AutoRoutine(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo);
     virtual void run() = 0;
 };
 

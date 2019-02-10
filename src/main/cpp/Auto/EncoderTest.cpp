@@ -12,13 +12,9 @@
  * @param *bling A pointer to the Bling subsystem
  * @param *Cargo A pointer to the Cargo subsystem
  */ 
-EncoderTest::EncoderTest(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo) {
-    this->driveBase = driveBase;
-    this->claw = claw;
-    this->elevator = elevator;
-    this->bling = bling;
-    this->cargo = cargo;
-
+EncoderTest::EncoderTest(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo):
+AutoRoutine(driveBase, claw, elevator, bling, cargo)
+{
     leftEncoder = driveBase->getLeftEncoder();
     rightEncoder = driveBase->getRightEncoder();
     autoState = AutoState::init;
