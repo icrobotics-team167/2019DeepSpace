@@ -40,6 +40,8 @@ public:
     void drive(double leftSpeed, double rightSpeed);
     void tankDrive(double leftSpeed, double rightSpeed);
     void straightDrive(double inches, double speed);
+
+    void pointTurn(double angle, double speed);
     
     double navxInitValue;
 

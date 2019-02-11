@@ -145,6 +145,26 @@ void DriveBase::straightDrive(double inches, double speed) {
 }
 
 /**
+ * Standard implementation of a point turn
+ * 
+ * @author Vladimir Tivanski
+ * @author Dominic Rutkowski
+ * @since 2-11-2019
+ * 
+ * @param angle The angle to turn (positive is clockwise, negative is counterclockwise)
+ * @param speed The speed at which the robot will turn
+ */
+void DriveBase::pointTurn(double angle, double speed) {
+    if (abs(navx->GetAngle - navxInitValue) < angle) {
+        if (angle > 0) {
+            drive(speed, -speed);
+        } else if (angle < 0) {
+            drive(-speed, speed);
+        }
+    }
+}
+
+/**
  * Sets the gearbox to low gear
  * 
  * @author Dominic Rutkowski
