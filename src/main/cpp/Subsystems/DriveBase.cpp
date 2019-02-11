@@ -25,7 +25,7 @@ DriveBase::DriveBase() {
     limelightNetworkTable = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
 
     // Gear shifting solenoids
-    gearShitferSolenoid = new frc::Solenoid(PNEUMATIC_CONTROLLER, GEAR_SHIFTER_SOLENOID);
+    gearShifterSolenoid = new frc::Solenoid(PNEUMATIC_CONTROLLER, GEAR_SHIFTER_SOLENOID);
 
     // Drivetrain encoders
     leftEncoder = new frc::Encoder(LEFT_ENCODER_A, LEFT_ENCODER_B, false);
