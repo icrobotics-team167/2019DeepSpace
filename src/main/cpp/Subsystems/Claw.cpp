@@ -36,10 +36,22 @@ void Claw::closeClaw() {
     clawSolenoid->Set(false);
 }
 
+/**
+ * Raises the claw
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-10-2019
+ */
 void Claw::moveClawUp() {
     pivotSolenoid->Set(true);
 }
 
+/**
+ * Lowers the claw
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-10-2019
+ */
 void Claw::moveClawDown() {
     pivotSolenoid->Set(false);
 }

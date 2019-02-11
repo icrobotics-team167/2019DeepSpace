@@ -102,6 +102,7 @@ void DriveBase::tankDrive(double leftSpeed, double rightSpeed) {
  * @author Vladimir Tivanski
  * @since 2-10-2019
  * 
+ * @param inches The number of inches that the robot is to drive
  * @param speed The speed that both motor groups will drive at
  */ 
 void DriveBase::straightDrive(double inches, double speed) {
@@ -143,10 +144,22 @@ void DriveBase::straightDrive(double inches, double speed) {
     totalError += headingError;
 }
 
+/**
+ * Sets the gearbox to low gear
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-10-2019
+ */
 void DriveBase::setLowGear() {
     gearShifterSolenoid->Set(false);
 }
 
+/**
+ * Sets the gearbox to high gear
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-10-2019
+ */
 void DriveBase::setHighGear() {
     gearShifterSolenoid->Set(true);
 }
@@ -175,6 +188,15 @@ frc::Encoder *DriveBase::getRightEncoder() {
     return rightEncoder;
 }
 
+/**
+ * Gets the NavX
+ * 
+ * @author Dominic Rutkowski
+ * @author Vladimir Tivanski
+ * @since 2-10-2019
+ * 
+ * @returns A pointer to the navX 
+ */
 AHRS *DriveBase::getNavx() {
     return navx;
 }
