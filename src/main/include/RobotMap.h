@@ -16,12 +16,12 @@
 #define RIGHT_TALON_3 8
 
 // NavX
-// #define NAVX
+// Port found automatically
 
 // Limelight
 // #define LIMELIGHT
 
-// Gear shifting solenoids (these will be replaced with one single-acting solenoid at a later date)
+// Gear shifting solenoids
 #define GEAR_SHIFTER_SOLENOID 0
 
 // Drivetrain encoders
@@ -31,11 +31,11 @@
 #define RIGHT_ENCODER_B 3
 
 // ***** Claw *****
-// Claw opening and closing solenoids (these will be replaced with one single-acting solenoid at a later date)
+// Claw opening and closing solenoid
 #define CLAW_SOLENOID 2
 
 // Claw raising and lowering solenoid
-#define PIVOT_SOLENOID 1 // This port number won't actually work, but it can't conflict with the temporary solenoids described above
+#define PIVOT_SOLENOID 1
 
 // ***** Elevator *****
 // Elevator motor
@@ -62,7 +62,7 @@
 
 // ***** Cargo *****
 // Cargo intake
-#define CARGO_ARM_TALON 11 // Extends and withdraws the cargo arm
+#define CARGO_ARM_TALON 11
 #define CARGO_INTAKE_TALON 12 
 #define CARGO_LIGHT_SENSOR 3
 

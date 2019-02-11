@@ -24,7 +24,7 @@ DriveBase::DriveBase() {
     // Limelight
     limelightNetworkTable = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
 
-    // Gear shifting solenoids
+    // Gear shifting solenoid
     gearShifterSolenoid = new frc::Solenoid(PNEUMATIC_CONTROLLER, GEAR_SHIFTER_SOLENOID);
 
     // Drivetrain encoders
@@ -49,7 +49,7 @@ DriveBase::~DriveBase() {
     // Limelight
     // Automatically deallocated since the limelight is a smart_ptr
 
-    // Gear shifting solenoids
+    // Gear shifting solenoid
     delete gearShifterSolenoid;
 
     // Drivetrain encoders

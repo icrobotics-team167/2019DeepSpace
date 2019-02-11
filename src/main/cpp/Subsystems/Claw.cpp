@@ -1,7 +1,7 @@
 #include "Subsystems/Claw.h"
 
 Claw::Claw() {
-    // Claw opening and closing solenoids
+    // Claw opening and closing solenoid
     clawSolenoid = new frc::Solenoid(PNEUMATIC_CONTROLLER, CLAW_SOLENOID);
     
     // Claw raising and lowering solenoid
@@ -9,7 +9,7 @@ Claw::Claw() {
 }
 
 Claw::~Claw() {
-    // Claw opening and closing solenoids
+    // Claw opening and closing solenoid
     delete clawSolenoid;
 
     // Claw raising and lowering solenoid
