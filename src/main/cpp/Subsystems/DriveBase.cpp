@@ -193,6 +193,17 @@ frc::Encoder *DriveBase::getRightEncoder() {
 }
 
 /**
+ * Resets the value of each encoder to 0
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-11-2019
+ */
+void DriveBase::resetEncoders() {
+    leftEncoder->Reset();
+    rightEncoder->Reset();
+}
+
+/**
  * Gets the NavX
  * 
  * @author Dominic Rutkowski

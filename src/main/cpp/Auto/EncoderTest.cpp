@@ -29,9 +29,8 @@ AutoRoutine(driveBase, claw, elevator, bling, cargo)
 void EncoderTest::run() {
     switch (autoState) {
         case AutoState::init:
-            leftEncoder->Reset();
-            rightEncoder->Reset();
-            driveBase->navxInitValue = driveBase->getNavx()->GetAngle();
+            driveBase->resetEncoders();
+            driveBase->updateNavx();
             autoState = AutoState::test;
             break;
         case AutoState::test:

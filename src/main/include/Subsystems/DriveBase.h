@@ -23,6 +23,7 @@ private:
 
     // NavX
     AHRS *navx;
+    double navxInitValue;
 
     // Limelight
     std::shared_ptr<NetworkTable> limelightNetworkTable;
@@ -53,11 +54,11 @@ public:
 
     frc::Encoder *getLeftEncoder();
     frc::Encoder *getRightEncoder();
+    void resetEncoders();
 
     void setLowGear();
     void setHighGear();
 
-    double navxInitValue;
     AHRS *getNavx();
     void updateNavx();
 };
