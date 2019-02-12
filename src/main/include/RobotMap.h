@@ -22,7 +22,7 @@
 // #define LIMELIGHT
 
 // Gear shifting solenoids
-#define GEAR_SHIFTER_SOLENOID 0
+#define GEAR_SHIFTER_SOLENOID 2
 
 // Drivetrain encoders
 #define LEFT_ENCODER_A 0
@@ -32,10 +32,10 @@
 
 // ***** Claw *****
 // Claw opening and closing solenoid
-#define CLAW_SOLENOID 2
+#define CLAW_SOLENOID 1
 
 // Claw raising and lowering solenoid
-#define PIVOT_SOLENOID 1
+#define PIVOT_SOLENOID 0
 
 // ***** Elevator *****
 // Elevator motor
