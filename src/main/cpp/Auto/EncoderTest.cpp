@@ -1,7 +1,7 @@
-#include "Auto/EncoderTest.h"
+#include "Auto/AutoTest.h"
 
 /**
- * Initializes the encoder test auto routine
+ * Initializes the auto test routine
  * 
  * @author Dominic Rutkowski
  * @since 2-10-2019
@@ -12,7 +12,7 @@
  * @param *bling A pointer to the Bling subsystem
  * @param *Cargo A pointer to the Cargo subsystem
  */ 
-EncoderTest::EncoderTest(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo):
+AutoTest::AutoTest(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo):
 AutoRoutine(driveBase, claw, elevator, bling, cargo)
 {
     leftEncoder = driveBase->getLeftEncoder();
@@ -21,22 +21,35 @@ AutoRoutine(driveBase, claw, elevator, bling, cargo)
 }
 
 /**
- * Drives forward at 0.3 power and test the encoders
+ * Drives forward at 100 inches 0.3 power and then
+ * turns 180 degrees clockwise, puts encoder values
+ * in the SmartDashboard
  * 
  * @author Dominic Rutkowski
  * @since 2-10-2019
  */ 
-void EncoderTest::run() {
+void AutoTest::run() {
     switch (autoState) {
         case AutoState::init:
             driveBase->resetEncoders();
             driveBase->updateNavx();
-            autoState = AutoState::test;
+            autoState = AutoState::drive100;
             break;
-        case AutoState::test:
-            SmartDashboard::PutNumber("Left encoder: ", leftEncoder->Get());
-            SmartDashboard::PutNumber("Right encoder: ", rightEncoder->Get());
-            driveBase->straightDrive(100, 0.3);
+        case AutoState::drive100:
+            if (driveBase->straightDrive(100, 0.3)) {
+                driveBase->updateNavx();
+                autoState = AutoState::turn180;
+            }
+            break;
+        case AutoState::turn180:
+            if (driveBase->pointTurn(180, 0.3)) {
+                driveBase->updateNavx();
+                autoState = AutoState::done;
+            }
+            break;
+        case AutoState::done:
             break;
     }
+    SmartDashboard::PutNumber("Left encoder: ", leftEncoder->Get());
+    SmartDashboard::PutNumber("Right encoder: ", rightEncoder->Get());
 }

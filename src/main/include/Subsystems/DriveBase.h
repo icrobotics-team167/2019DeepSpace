@@ -39,9 +39,9 @@ public:
     ~DriveBase();
 
     void drive(double leftSpeed, double rightSpeed);
-    void straightDrive(double inches, double speed);
 
-    void pointTurn(double angle, double speed);
+    bool straightDrive(double inches, double speed);
+    bool pointTurn(double angle, double speed);
 
     const double LEFT_ENCODER_TICKS_PER_INCH = 116.711067093;
     const double RIGHT_ENCODER_TICKS_PER_INCH = 117.837349601;

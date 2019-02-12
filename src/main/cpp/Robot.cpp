@@ -56,7 +56,7 @@ void Robot::AutonomousInit() {
         // Default Auto goes here
     }
 
-    autoRoutine = new EncoderTest(driveBase, claw, elevator, bling, cargo);
+    autoRoutine = new AutoTest(driveBase, claw, elevator, bling, cargo);
 }
 
 void Robot::AutonomousPeriodic() {

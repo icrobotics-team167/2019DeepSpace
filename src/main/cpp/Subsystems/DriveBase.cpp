@@ -83,12 +83,15 @@ void DriveBase::drive(double leftSpeed, double rightSpeed) {
  * realign itself if it drives slightly off track.
  * 
  * @author Vladimir Tivanski
+ * @author Dominic Rutkowski
  * @since 2-10-2019
  * 
  * @param inches The number of inches that the robot is to drive
  * @param speed The speed that both motor groups will drive at
+ * 
+ * @returns True if the drive is complete, false otherwise
  */ 
-void DriveBase::straightDrive(double inches, double speed) {
+bool DriveBase::straightDrive(double inches, double speed) {
     double rotationAngle = navx->GetAngle();
     
     SmartDashboard::PutNumber("rotation angle", rotationAngle);
@@ -118,14 +121,15 @@ void DriveBase::straightDrive(double inches, double speed) {
 
     if (leftEncoder->Get() > LEFT_ENCODER_TICKS_PER_INCH * inches &&
         rightEncoder->Get() > RIGHT_ENCODER_TICKS_PER_INCH * inches) {
-        leftSpeed = 0;
-        rightSpeed = 0;
+        return true;
     }
 
     drive(leftSpeed, rightSpeed);
 
     previousError = headingError;
     totalError += headingError;
+
+    return false;
 }
 
 /**
@@ -137,15 +141,19 @@ void DriveBase::straightDrive(double inches, double speed) {
  * 
  * @param angle The angle to turn (positive is clockwise, negative is counterclockwise)
  * @param speed The speed at which the robot will turn
+ * 
+ * @returns True if the turn is complete, false otherwise
  */
-void DriveBase::pointTurn(double angle, double speed) {
+bool DriveBase::pointTurn(double angle, double speed) {
     if (abs(navx->GetAngle() - navxInitValue) < angle) {
-        if (angle > 0) {
+        if (angle >= 0) {
             drive(speed, -speed);
-        } else if (angle < 0) {
+        } else {
             drive(-speed, speed);
         }
+        return false;
     }
+    return true;
 }
 
 /**
