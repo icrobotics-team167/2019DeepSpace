@@ -77,7 +77,8 @@ void Robot::TeleopPeriodic() {
     // These values are reversed for some reason
     double leftY = -controller->GetY(Joystick::JoystickHand::kLeftHand);
     double rightY = -controller->GetY(Joystick::JoystickHand::kRightHand);
-    driveBase->tankDrive(leftY, rightY);
+    driveBase->drive(leftY, rightY);
+    driveBase->updateNavx();
     
     if (controller->GetTriggerAxis(Joystick::JoystickHand::kLeftHand) > 0.3) {
         claw->closeClaw();

@@ -61,7 +61,7 @@ DriveBase::~DriveBase() {
  * Sets the speeds on each side of the robot.
  * 
  * @author Vladimir Tivanski
- * @since 2-9-2019
+ * @since 2-11-2019
  * 
  * @param leftSpeed The speed that the left motor group will drive at
  * @param rightSpeed The speed that the right motor group will drive at
@@ -76,23 +76,6 @@ void DriveBase::drive(double leftSpeed, double rightSpeed) {
     rightTalon1->Set(ControlMode::PercentOutput, rightSpeed);
     rightTalon2->Set(ControlMode::PercentOutput, rightSpeed);
     rightTalon3->Set(ControlMode::PercentOutput, rightSpeed);
-}
-
-/**
- * Standard implementation of tank drive.
- * Updates the navx initial value so straightDrive() can be called after
- * driving with a controller.
- * 
- * @author Vladimir Tivanski
- * @since 2-10-2019
- * 
- * @param leftSpeed The speed that the left motor group will drive at
- * @param rightSpeed The speed that the right motor group will drive at
- */ 
-void DriveBase::tankDrive(double leftSpeed, double rightSpeed) {
-    drive(leftSpeed, rightSpeed);
-
-    navxInitValue = navx->GetAngle();
 }
 
 /**
@@ -219,4 +202,14 @@ frc::Encoder *DriveBase::getRightEncoder() {
  */
 AHRS *DriveBase::getNavx() {
     return navx;
+}
+
+/**
+ * Updates naxvInitValue to the current bearing
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-11-2019
+ */
+void DriveBase::updateNavx() {
+    navxInitValue = navx->GetAngle();
 }

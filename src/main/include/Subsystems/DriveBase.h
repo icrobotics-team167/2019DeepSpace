@@ -62,6 +62,7 @@ public:
     void setHighGear();
 
     AHRS *getNavx();
+    void updateNavx();
 };
 
 #endif
