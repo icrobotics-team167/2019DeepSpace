@@ -94,22 +94,22 @@ void DriveBase::drive(double leftSpeed, double rightSpeed) {
 bool DriveBase::straightDrive(double inches, double speed) {
     double rotationAngle = navx->GetAngle();
     
-    SmartDashboard::PutNumber("rotation angle", rotationAngle);
-    SmartDashboard::PutNumber("Heading", navxInitValue);
+    SmartDashboard::PutNumber("Rotation angle: ", rotationAngle);
+    SmartDashboard::PutNumber("Heading: ", navxInitValue);
 
     double headingError = navxInitValue - rotationAngle;
     double diffError = headingError - previousError;   
     
-    SmartDashboard::PutNumber("Heading Error", headingError);
-    SmartDashboard::PutNumber("diff Error", diffError);
+    SmartDashboard::PutNumber("Heading error: ", headingError);
+    SmartDashboard::PutNumber("Differential error: ", diffError);
 
     double leftSpeed = speed + (KP * headingError + KI * totalError + KD * diffError);
     double rightSpeed = speed - (KP * headingError + KI * totalError + KD * diffError);
 
 
-    SmartDashboard::PutNumber("Total Error", totalError);
-    SmartDashboard::PutNumber("Left Speed", leftSpeed);
-    SmartDashboard::PutNumber("Right Speed", rightSpeed);
+    SmartDashboard::PutNumber("Total error: ", totalError);
+    SmartDashboard::PutNumber("Left speed: ", leftSpeed);
+    SmartDashboard::PutNumber("Right speed: ", rightSpeed);
 
     if (rightSpeed > 1) {
         rightSpeed = 1;
