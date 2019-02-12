@@ -155,7 +155,7 @@ void DriveBase::straightDrive(double inches, double speed) {
  * @param speed The speed at which the robot will turn
  */
 void DriveBase::pointTurn(double angle, double speed) {
-    if (abs(navx->GetAngle - navxInitValue) < angle) {
+    if (abs(navx->GetAngle() - navxInitValue) < angle) {
         if (angle > 0) {
             drive(speed, -speed);
         } else if (angle < 0) {
