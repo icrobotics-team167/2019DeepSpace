@@ -116,7 +116,8 @@ void DriveBase::straightDrive(double inches, double speed) {
         leftSpeed = 1;
     }
 
-    if (leftEncoder->Get() > INCH_TO_LEFT_ENCODER * inches && rightEncoder->Get() > INCH_TO_RIGHT_ENCODER * inches) {
+    if (leftEncoder->Get() > LEFT_ENCODER_TICKS_PER_INCH * inches &&
+        rightEncoder->Get() > RIGHT_ENCODER_TICKS_PER_INCH * inches) {
         leftSpeed = 0;
         rightSpeed = 0;
     }

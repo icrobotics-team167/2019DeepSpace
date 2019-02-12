@@ -38,22 +38,18 @@ public:
     ~DriveBase();
 
     void drive(double leftSpeed, double rightSpeed);
-    void tankDrive(double leftSpeed, double rightSpeed);
     void straightDrive(double inches, double speed);
 
     void pointTurn(double angle, double speed);
-    
-    double navxInitValue;
 
-    const double INCH_TO_LEFT_ENCODER = 116.711067093;
-    const double INCH_TO_RIGHT_ENCODER = 117.837349601;
-
-    double previousError = 0;
-    double totalError = 0;
+    const double LEFT_ENCODER_TICKS_PER_INCH = 116.711067093;
+    const double RIGHT_ENCODER_TICKS_PER_INCH = 117.837349601;
 
     const double KP = 0.02;
     const double KI = 0.0001;
     const double KD = 0.01;
+    double previousError = 0;
+    double totalError = 0;
 
     frc::Encoder *getLeftEncoder();
     frc::Encoder *getRightEncoder();
@@ -61,6 +57,7 @@ public:
     void setLowGear();
     void setHighGear();
 
+    double navxInitValue;
     AHRS *getNavx();
     void updateNavx();
 };
