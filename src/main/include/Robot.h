@@ -14,7 +14,7 @@
 #include "Subsystems/Cargo.h"
 
 #include "Auto/AutoRoutine.h"
-#include "Auto/EncoderTest.h"
+#include "Auto/AutoTest.h"
 
 #include <string>
 

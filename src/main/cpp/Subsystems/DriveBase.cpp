@@ -61,7 +61,7 @@ DriveBase::~DriveBase() {
  * Sets the speeds on each side of the robot.
  * 
  * @author Vladimir Tivanski
- * @since 2-9-2019
+ * @since 2-11-2019
  * 
  * @param leftSpeed The speed that the left motor group will drive at
  * @param rightSpeed The speed that the right motor group will drive at
@@ -79,51 +79,37 @@ void DriveBase::drive(double leftSpeed, double rightSpeed) {
 }
 
 /**
- * Standard implementation of tank drive.
- * Updates the navx initial value so straightDrive() can be called after
- * driving with a controller.
- * 
- * @author Vladimir Tivanski
- * @since 2-10-2019
- * 
- * @param leftSpeed The speed that the left motor group will drive at
- * @param rightSpeed The speed that the right motor group will drive at
- */ 
-void DriveBase::tankDrive(double leftSpeed, double rightSpeed) {
-    drive(leftSpeed, rightSpeed);
-
-    navxInitValue = navx->GetAngle();
-}
-
-/**
  * Drives straigt by adjusting the speeds so that the robot will 
  * realign itself if it drives slightly off track.
  * 
  * @author Vladimir Tivanski
+ * @author Dominic Rutkowski
  * @since 2-10-2019
  * 
  * @param inches The number of inches that the robot is to drive
  * @param speed The speed that both motor groups will drive at
+ * 
+ * @returns True if the drive is complete, false otherwise
  */ 
-void DriveBase::straightDrive(double inches, double speed) {
+bool DriveBase::straightDrive(double inches, double speed) {
     double rotationAngle = navx->GetAngle();
     
-    SmartDashboard::PutNumber("rotation angle", rotationAngle);
-    SmartDashboard::PutNumber("Heading", navxInitValue);
+    SmartDashboard::PutNumber("Rotation angle: ", rotationAngle);
+    SmartDashboard::PutNumber("Heading: ", navxInitValue);
 
     double headingError = navxInitValue - rotationAngle;
     double diffError = headingError - previousError;   
     
-    SmartDashboard::PutNumber("Heading Error", headingError);
-    SmartDashboard::PutNumber("diff Error", diffError);
+    SmartDashboard::PutNumber("Heading error: ", headingError);
+    SmartDashboard::PutNumber("Differential error: ", diffError);
 
     double leftSpeed = speed + (KP * headingError + KI * totalError + KD * diffError);
     double rightSpeed = speed - (KP * headingError + KI * totalError + KD * diffError);
 
 
-    SmartDashboard::PutNumber("Total Error", totalError);
-    SmartDashboard::PutNumber("Left Speed", leftSpeed);
-    SmartDashboard::PutNumber("Right Speed", rightSpeed);
+    SmartDashboard::PutNumber("Total error: ", totalError);
+    SmartDashboard::PutNumber("Left speed: ", leftSpeed);
+    SmartDashboard::PutNumber("Right speed: ", rightSpeed);
 
     if (rightSpeed > 1) {
         rightSpeed = 1;
@@ -133,15 +119,17 @@ void DriveBase::straightDrive(double inches, double speed) {
         leftSpeed = 1;
     }
 
-    if (leftEncoder->Get() > INCH_TO_LEFT_ENCODER * inches && rightEncoder->Get() > INCH_TO_RIGHT_ENCODER * inches) {
-        leftSpeed = 0;
-        rightSpeed = 0;
+    if (leftEncoder->Get() > LEFT_ENCODER_TICKS_PER_INCH * inches &&
+        rightEncoder->Get() > RIGHT_ENCODER_TICKS_PER_INCH * inches) {
+        return true;
     }
 
     drive(leftSpeed, rightSpeed);
 
     previousError = headingError;
     totalError += headingError;
+
+    return false;
 }
 
 /**
@@ -153,15 +141,19 @@ void DriveBase::straightDrive(double inches, double speed) {
  * 
  * @param angle The angle to turn (positive is clockwise, negative is counterclockwise)
  * @param speed The speed at which the robot will turn
+ * 
+ * @returns True if the turn is complete, false otherwise
  */
-void DriveBase::pointTurn(double angle, double speed) {
+bool DriveBase::pointTurn(double angle, double speed) {
     if (abs(navx->GetAngle() - navxInitValue) < angle) {
-        if (angle > 0) {
+        if (angle >= 0) {
             drive(speed, -speed);
-        } else if (angle < 0) {
+        } else {
             drive(-speed, speed);
         }
+        return false;
     }
+    return true;
 }
 
 /**
@@ -209,6 +201,17 @@ frc::Encoder *DriveBase::getRightEncoder() {
 }
 
 /**
+ * Resets the value of each encoder to 0
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-11-2019
+ */
+void DriveBase::resetEncoders() {
+    leftEncoder->Reset();
+    rightEncoder->Reset();
+}
+
+/**
  * Gets the NavX
  * 
  * @author Dominic Rutkowski
@@ -219,4 +222,14 @@ frc::Encoder *DriveBase::getRightEncoder() {
  */
 AHRS *DriveBase::getNavx() {
     return navx;
+}
+
+/**
+ * Updates naxvInitValue to the current bearing
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-11-2019
+ */
+void DriveBase::updateNavx() {
+    navxInitValue = navx->GetAngle();
 }

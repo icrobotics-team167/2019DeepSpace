@@ -4,9 +4,10 @@
 
 /**
  * Initializes pointers to the subsystems of an auto routine
+ * and updates the navx init value in preparation for auto
  * 
  * @author Dominic Rutkowski
- * @since 2-10-2019
+ * @since 2-11-2019
  * 
  * @param *driveBase A pointer to the DriveBase subsystem
  * @param *claw A pointer to the Claw subsystem
@@ -20,4 +21,6 @@ AutoRoutine::AutoRoutine(DriveBase *driveBase, Claw *claw, Elevator *elevator, B
     this->elevator = elevator;
     this->bling = bling;
     this->cargo = cargo;
+
+    driveBase->updateNavx();
 }

@@ -56,7 +56,7 @@ void Robot::AutonomousInit() {
         // Default Auto goes here
     }
 
-    autoRoutine = new EncoderTest(driveBase, claw, elevator, bling, cargo);
+    autoRoutine = new AutoTest(driveBase, claw, elevator, bling, cargo);
 }
 
 void Robot::AutonomousPeriodic() {
@@ -77,7 +77,8 @@ void Robot::TeleopPeriodic() {
     // These values are reversed for some reason
     double leftY = -controller->GetY(Joystick::JoystickHand::kLeftHand);
     double rightY = -controller->GetY(Joystick::JoystickHand::kRightHand);
-    driveBase->tankDrive(leftY, rightY);
+    driveBase->drive(leftY, rightY);
+    driveBase->updateNavx();
     
     if (controller->GetTriggerAxis(Joystick::JoystickHand::kLeftHand) > 0.3) {
         claw->closeClaw();
