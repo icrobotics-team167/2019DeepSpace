@@ -43,6 +43,7 @@ void AutoTest::run() {
             break;
         case AutoState::turn180:
             if (driveBase->pointTurn(180, 0.3)) {
+                driveBase->drive(0, 0);
                 driveBase->updateNavx();
                 autoState = AutoState::done;
             }
