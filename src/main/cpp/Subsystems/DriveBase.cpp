@@ -25,7 +25,8 @@ DriveBase::DriveBase() {
     limelightNetworkTable = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
 
     // Gear shifting solenoid
-    gearShifterSolenoid = new frc::Solenoid(PNEUMATIC_CONTROLLER, GEAR_SHIFTER_SOLENOID);
+    lowGearSolenoid = new frc::Solenoid(PNEUMATIC_CONTROLLER, LOW_GEAR_SOLENOID);
+    highGearSolenoid = new frc::Solenoid(PNEUMATIC_CONTROLLER, HIGH_GEAR_SOLENOID);
 
     // Drivetrain encoders
     leftEncoder = new frc::Encoder(LEFT_ENCODER_A, LEFT_ENCODER_B, false);
@@ -50,7 +51,8 @@ DriveBase::~DriveBase() {
     // Automatically deallocated since the limelight is a smart_ptr
 
     // Gear shifting solenoid
-    delete gearShifterSolenoid;
+    delete lowGearSolenoid;
+    delete highGearSolenoid;
 
     // Drivetrain encoders
     delete leftEncoder;
@@ -163,7 +165,8 @@ bool DriveBase::pointTurn(double angle, double speed) {
  * @since 2-10-2019
  */
 void DriveBase::setLowGear() {
-    gearShifterSolenoid->Set(false);
+    lowGearSolenoid->Set(true);
+    highGearSolenoid->Set(false);
 }
 
 /**
@@ -173,7 +176,8 @@ void DriveBase::setLowGear() {
  * @since 2-10-2019
  */
 void DriveBase::setHighGear() {
-    gearShifterSolenoid->Set(true);
+    lowGearSolenoid->Set(false);
+    highGearSolenoid->Set(true);
 }
 
 /**

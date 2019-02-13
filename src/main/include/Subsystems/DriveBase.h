@@ -29,7 +29,8 @@ private:
     std::shared_ptr<NetworkTable> limelightNetworkTable;
 
     // Gear shifting solenoid
-    frc::Solenoid *gearShifterSolenoid;
+    frc::Solenoid *lowGearSolenoid;
+    frc::Solenoid *highGearSolenoid;
     
     // Drivetrain encoders
     frc::Encoder *leftEncoder;

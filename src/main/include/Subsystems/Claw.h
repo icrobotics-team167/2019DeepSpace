@@ -8,7 +8,8 @@
 class Claw {
 private:
     // Claw opening and closing solenoid
-    frc::Solenoid *clawSolenoid;
+    frc::Solenoid *clawOpenSolenoid;
+    frc::Solenoid *clawClosedSolenoid;
 
     // Claw raising and lowering solenoid
     frc::Solenoid *pivotSolenoid;

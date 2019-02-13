@@ -2,7 +2,8 @@
 
 Claw::Claw() {
     // Claw opening and closing solenoid
-    clawSolenoid = new frc::Solenoid(PNEUMATIC_CONTROLLER, CLAW_SOLENOID);
+    clawOpenSolenoid = new frc::Solenoid(PNEUMATIC_CONTROLLER, CLAW_OPEN_SOLENOID);
+    clawClosedSolenoid = new frc::Solenoid(PNEUMATIC_CONTROLLER, CLAW_CLOSED_SOLENOID);
     
     // Claw raising and lowering solenoid
     pivotSolenoid = new frc::Solenoid(PNEUMATIC_CONTROLLER, PIVOT_SOLENOID);
@@ -10,7 +11,8 @@ Claw::Claw() {
 
 Claw::~Claw() {
     // Claw opening and closing solenoid
-    delete clawSolenoid;
+    delete clawOpenSolenoid;
+    delete clawClosedSolenoid;
 
     // Claw raising and lowering solenoid
     delete pivotSolenoid;
@@ -23,7 +25,8 @@ Claw::~Claw() {
  * @since 2-9-2019
  */
 void Claw::openClaw() {
-    clawSolenoid->Set(true);
+    clawOpenSolenoid->Set(true);
+    clawClosedSolenoid->Set(false);
 }
 
 /**
@@ -33,7 +36,8 @@ void Claw::openClaw() {
  * @since 2-9-2019
  */
 void Claw::closeClaw() {
-    clawSolenoid->Set(false);
+    clawOpenSolenoid->Set(false);
+    clawClosedSolenoid->Set(true);
 }
 
 /**
