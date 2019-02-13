@@ -9,7 +9,7 @@
 class Elevator {
 private:
     // Elevator motor
-    TalonSRX *talon;
+    TalonSRX *talon; 
 
     // Elevator encoder
     frc::Encoder *encoder;
@@ -23,6 +23,7 @@ public:
     ~Elevator();
     void raiseElevator(double speed);
     void lowerElevator(double speed);
+    void stopElevator();
 };
 
 #endif

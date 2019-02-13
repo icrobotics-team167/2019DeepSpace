@@ -80,6 +80,7 @@ void Robot::TeleopPeriodic() {
     driveBase->drive(leftY, rightY);
     driveBase->updateNavx();
     
+    // Claw open/close
     if (controller->GetTriggerAxis(Joystick::JoystickHand::kLeftHand) > 0.3) {
         claw->closeClaw();
     }
@@ -87,6 +88,7 @@ void Robot::TeleopPeriodic() {
         claw->openClaw();
     }
 
+    // Gear shifting
     if (controller->GetBumper(Joystick::JoystickHand::kLeftHand)) {
         driveBase->setLowGear();
     }
@@ -94,6 +96,7 @@ void Robot::TeleopPeriodic() {
         driveBase->setHighGear();
     }
 
+    // Claw raise/lower
     if (controller->GetAButton()) {
         claw->moveClawUp();
     }
@@ -101,11 +104,18 @@ void Robot::TeleopPeriodic() {
         claw->moveClawDown();
     }
 
+    // Elevator raise/lower
     if (controller->GetXButton()) {
         elevator->raiseElevator(1);
     }
+    else {
+        elevator->stopElevator();
+    }
     if (controller->GetYButton()) {
         elevator->lowerElevator(1);
+    }
+    else {
+        elevator->stopElevator();
     }
 }
 
