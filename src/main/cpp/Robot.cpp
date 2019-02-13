@@ -100,6 +100,13 @@ void Robot::TeleopPeriodic() {
     if (controller->GetBButton()) {
         claw->moveClawDown();
     }
+
+    if (controller->GetXButton()) {
+        elevator->raiseElevator(1);
+    }
+    if (controller->GetYButton()) {
+        elevator->lowerElevator(1);
+    }
 }
 
 void Robot::TestPeriodic() {}

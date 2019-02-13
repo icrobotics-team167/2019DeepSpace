@@ -21,6 +21,8 @@ private:
 public:
     Elevator();
     ~Elevator();
+    void raiseElevator(double speed);
+    void lowerElevator(double speed);
 };
 
 #endif
