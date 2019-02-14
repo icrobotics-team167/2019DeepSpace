@@ -71,16 +71,18 @@ void Robot::AutonomousPeriodic() {
 
 void Robot::TeleopInit() {
     controller = new frc::XboxController(0);
+    
 }
 
 void Robot::TeleopPeriodic() {
+    //Joysticks
     // These values are reversed for some reason
     double leftY = -controller->GetY(Joystick::JoystickHand::kLeftHand);
     double rightY = -controller->GetY(Joystick::JoystickHand::kRightHand);
     driveBase->drive(leftY, rightY);
     driveBase->updateNavx();
     
-    // Claw open/close
+    // Triggers
     if (controller->GetTriggerAxis(Joystick::JoystickHand::kLeftHand) > 0.3) {
         claw->closeClaw();
     }
@@ -88,7 +90,7 @@ void Robot::TeleopPeriodic() {
         claw->openClaw();
     }
 
-    // Gear shifting
+    // Bumpers
     if (controller->GetBumper(Joystick::JoystickHand::kLeftHand)) {
         driveBase->setLowGear();
     }
@@ -96,26 +98,52 @@ void Robot::TeleopPeriodic() {
         driveBase->setHighGear();
     }
 
-    // Claw raise/lower
+    // A Button
     if (controller->GetAButton()) {
         claw->moveClawUp();
     }
+
+    // B Button
     if (controller->GetBButton()) {
         claw->moveClawDown();
     }
 
-    // Elevator raise/lower
+    // X Button
     if (controller->GetXButton()) {
         elevator->raiseElevator(1);
     }
     else {
         elevator->stopElevator();
     }
+
+    // Y Button
     if (controller->GetYButton()) {
-        elevator->lowerElevator(1);
+        elevator->lowerElevator(1); 
     }
     else {
         elevator->stopElevator();
+    }
+
+    // Stick Buttons
+    if (controller->GetStickButton(Joystick::JoystickHand::kLeftHand)) {
+        cargo->runFrontOut(1);
+    }
+    else {
+        cargo->stopFrontOut();
+    }
+    if (controller->GetStickButton(Joystick::JoystickHand::kRightHand)) {
+        cargo->runBackOut(1);
+    }
+    else {
+        cargo->stopBackOut();
+    }
+
+    // Start Button
+    if (controller->GetStartButton()) {
+        cargo->runIntake(1);
+    }
+    else {
+        cargo->stopIntake();
     }
 }
 

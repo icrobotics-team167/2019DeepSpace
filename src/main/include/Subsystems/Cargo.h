@@ -14,11 +14,17 @@ private:
     frc::AnalogInput *lightSensor;
 
     // Cargo out
-    TalonSRX *leftOutTalon;
-    TalonSRX *rightOutTalon;
+    TalonSRX *frontOutTalon;
+    TalonSRX *backOutTalon;
 public:
     Cargo();
     ~Cargo();
+    void runIntake(double speed);
+    void stopIntake();
+    void runFrontOut(double speed);
+    void stopFrontOut();
+    void runBackOut(double speed);
+    void stopBackOut();
 };
 
 #endif
