@@ -1,5 +1,5 @@
-#ifndef SINGLE_XBOX_CONTROLLER_H
-#define SINGLE_XBOX_CONTROLLER_H
+#ifndef DOUBLE_XBOX_CONTROLLER_H
+#define DOUBLE_XBOX_CONTROLLER_H
 
 #include "Controls/GenericController.h"
 #include <frc/WPILib.h>
