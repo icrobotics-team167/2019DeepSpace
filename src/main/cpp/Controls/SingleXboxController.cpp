@@ -72,6 +72,10 @@ bool SingleXboxController::getLowerElevator() {
     return false;
 }
 
+double SingleXboxController::getElevatorSpeed() {
+    return 0;
+}
+
 bool SingleXboxController::getRunFrontOut() {
     if (xboxController->GetStickButton(frc::Joystick::JoystickHand::kLeftHand)) {
         return true;

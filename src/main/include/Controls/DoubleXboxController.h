@@ -4,12 +4,13 @@
 #include "Controls/GenericController.h"
 #include <frc/WPILib.h>
 
-class SingleXboxController : public GenericController {
+class DoubleXboxController : public GenericController {
 private:
-    frc::XboxController *xboxController;
+    frc::XboxController *xboxController1;
+    frc::XboxController *xboxController2;
 public:
-    SingleXboxController();
-    ~SingleXboxController();
+    DoubleXboxController();
+    ~DoubleXboxController();
     double getDrivetrainLeftSpeed() override;
     double getDrivetrainRightSpeed() override;
     bool getOpenClaw() override;
