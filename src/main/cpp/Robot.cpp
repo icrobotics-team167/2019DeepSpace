@@ -70,79 +70,64 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
-    controller = new frc::XboxController(0);
-    
+    controller = new SingleXboxController();
 }
 
 void Robot::TeleopPeriodic() {
-    //Joysticks
-    // These values are reversed for some reason
-    double leftY = -controller->GetY(Joystick::JoystickHand::kLeftHand);
-    double rightY = -controller->GetY(Joystick::JoystickHand::kRightHand);
+    // Driving
+    double leftY = controller->getDrivetrainLeftSpeed();
+    double rightY = controller->getDrivetrainRightSpeed();
     driveBase->drive(leftY, rightY);
     driveBase->updateNavx();
     
-    // Triggers
-    if (controller->GetTriggerAxis(Joystick::JoystickHand::kLeftHand) > 0.3) {
+    // Open and close claw
+    if (controller->getCloseClaw()) {
         claw->closeClaw();
-    }
-    if (controller->GetTriggerAxis(Joystick::JoystickHand::kRightHand) > 0.3) {
+    } else if (controller->getOpenClaw()) {
         claw->openClaw();
     }
 
-    // Bumpers
-    if (controller->GetBumper(Joystick::JoystickHand::kLeftHand)) {
+    // Gear shifting
+    if (controller->getSetLowGear()) {
         driveBase->setLowGear();
-    }
-    if (controller->GetBumper(Joystick::JoystickHand::kRightHand)) {
+    } else if (controller->getSetHighGear()) {
         driveBase->setHighGear();
     }
 
-    // A Button
-    if (controller->GetAButton()) {
+    // Claw raising and lowering
+    if (controller->getRaiseClaw()) {
         claw->moveClawUp();
-    }
-
-    // B Button
-    if (controller->GetBButton()) {
+    } else if (controller->getLowerClaw()) {
         claw->moveClawDown();
     }
 
-    // X Button
-    if (controller->GetXButton()) {
+    // Elevator raising and lowering
+    if (controller->getRaiseElevator()) {
         elevator->raiseElevator(1);
-    }
-    else {
+    } else if (controller->getLowerElevator()) {
+        elevator->lowerElevator(1);
+    } else {
         elevator->stopElevator();
     }
 
-    // Y Button
-    if (controller->GetYButton()) {
-        elevator->lowerElevator(1); 
-    }
-    else {
-        elevator->stopElevator();
-    }
-
-    // Stick Buttons
-    if (controller->GetStickButton(Joystick::JoystickHand::kLeftHand)) {
+    // Front out
+    if (controller->getRunFrontOut()) {
         cargo->runFrontOut(1);
-    }
-    else {
+    } else {
         cargo->stopFrontOut();
     }
-    if (controller->GetStickButton(Joystick::JoystickHand::kRightHand)) {
+
+    // Back out
+    if (controller->getRunBackOut()) {
         cargo->runBackOut(1);
-    }
-    else {
+    } else {
         cargo->stopBackOut();
     }
 
     // Start Button
-    if (controller->GetStartButton()) {
+    if (controller->getRunIntake()) {
         cargo->runIntake(1);
-    }
-    else {
+    } else {
         cargo->stopIntake();
     }
 }

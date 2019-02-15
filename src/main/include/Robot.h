@@ -16,6 +16,9 @@
 #include "Auto/AutoRoutine.h"
 #include "Auto/AutoTest.h"
 
+#include "Controls/GenericController.h"
+#include "Controls/SingleXboxController.h"
+
 #include <string>
 
 #include <frc/TimedRobot.h>
@@ -51,5 +54,5 @@ private:
 
     AutoRoutine *autoRoutine;
 
-    frc::XboxController *controller;
+    GenericController *controller;
 };
