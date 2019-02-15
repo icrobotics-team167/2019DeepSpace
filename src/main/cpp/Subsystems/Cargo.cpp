@@ -7,8 +7,8 @@ Cargo::Cargo() {
     lightSensor = new frc::AnalogInput(CARGO_LIGHT_SENSOR);
 
     // Cargo out
-    leftOutTalon = new TalonSRX(CARGO_LEFT_OUT_TALON);
-    rightOutTalon = new TalonSRX(CARGO_RIGHT_OUT_TALON);
+    frontOutTalon = new TalonSRX(CARGO_LEFT_OUT_TALON);
+    backOutTalon = new TalonSRX(CARGO_RIGHT_OUT_TALON);
 }
 
 Cargo::~Cargo() {
@@ -18,6 +18,30 @@ Cargo::~Cargo() {
     delete lightSensor;
 
     // Cargo out
-    delete leftOutTalon;
-    delete rightOutTalon;
+    delete frontOutTalon;
+    delete backOutTalon;
+}
+
+void Cargo::runIntake(double speed) {
+    intakeTalon->Set(ControlMode::PercentOutput, speed);
+}
+
+void Cargo::stopIntake() {
+    intakeTalon->Set(ControlMode::PercentOutput, 0);
+}
+
+void Cargo::runFrontOut(double speed) {
+    frontOutTalon->Set(ControlMode::PercentOutput, speed);
+}
+
+void Cargo::stopFrontOut() {
+    frontOutTalon->Set(ControlMode::PercentOutput, 0);
+}
+
+void Cargo::runBackOut(double speed) {
+    backOutTalon->Set(ControlMode::PercentOutput, speed);
+}
+
+void Cargo::stopBackOut() {
+    backOutTalon->Set(ControlMode::PercentOutput, 0);
 }

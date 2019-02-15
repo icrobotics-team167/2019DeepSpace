@@ -21,9 +21,6 @@ DriveBase::DriveBase() {
         DriverStation::ReportError(error.c_str());
     }
 
-    // Limelight
-    limelightNetworkTable = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
-
     // Gear shifting solenoid
     lowGearSolenoid = new frc::Solenoid(PNEUMATIC_CONTROLLER, LOW_GEAR_SOLENOID);
     highGearSolenoid = new frc::Solenoid(PNEUMATIC_CONTROLLER, HIGH_GEAR_SOLENOID);
@@ -107,7 +104,6 @@ bool DriveBase::straightDrive(double inches, double speed) {
 
     double leftSpeed = speed + (KP * headingError + KI * totalError + KD * diffError);
     double rightSpeed = speed - (KP * headingError + KI * totalError + KD * diffError);
-
 
     SmartDashboard::PutNumber("Total error: ", totalError);
     SmartDashboard::PutNumber("Left speed: ", leftSpeed);

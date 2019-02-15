@@ -25,3 +25,15 @@ Elevator::~Elevator() {
     delete middleLimitSwitch;
     delete topLimitSwitch;
 }
+
+void Elevator::raiseElevator(double speed) {
+    talon->Set(ControlMode::PercentOutput, speed);
+}
+
+void Elevator::lowerElevator(double speed) {
+    talon->Set(ControlMode::PercentOutput, -speed);
+}
+
+void Elevator::stopElevator() {
+    talon->Set(ControlMode::PercentOutput, 0);
+}

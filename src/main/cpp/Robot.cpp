@@ -14,7 +14,7 @@
 void Robot::RobotInit() {
     m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
     m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
-    frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+    SmartDashboard::PutData("Auto Modes", &m_chooser);
 
     driveBase = new DriveBase();
     claw = new Claw();
@@ -70,35 +70,65 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
-    controller = new frc::XboxController(0);
+    controller = new SingleXboxController();
 }
 
 void Robot::TeleopPeriodic() {
-    // These values are reversed for some reason
-    double leftY = -controller->GetY(Joystick::JoystickHand::kLeftHand);
-    double rightY = -controller->GetY(Joystick::JoystickHand::kRightHand);
+    // Driving
+    double leftY = controller->getDrivetrainLeftSpeed();
+    double rightY = controller->getDrivetrainRightSpeed();
     driveBase->drive(leftY, rightY);
     driveBase->updateNavx();
     
-    if (controller->GetTriggerAxis(Joystick::JoystickHand::kLeftHand) > 0.3) {
+    // Open and close claw
+    if (controller->getCloseClaw()) {
         claw->closeClaw();
-    }
-    if (controller->GetTriggerAxis(Joystick::JoystickHand::kRightHand) > 0.3) {
+    } else if (controller->getOpenClaw()) {
         claw->openClaw();
     }
 
-    if (controller->GetBumper(Joystick::JoystickHand::kLeftHand)) {
+    // Gear shifting
+    if (controller->getSetLowGear()) {
         driveBase->setLowGear();
-    }
-    if (controller->GetBumper(Joystick::JoystickHand::kRightHand)) {
+    } else if (controller->getSetHighGear()) {
         driveBase->setHighGear();
     }
 
-    if (controller->GetAButton()) {
+    // Claw raising and lowering
+    if (controller->getRaiseClaw()) {
         claw->moveClawUp();
-    }
-    if (controller->GetBButton()) {
+    } else if (controller->getLowerClaw()) {
         claw->moveClawDown();
+    }
+
+    // Elevator raising and lowering
+    if (controller->getRaiseElevator()) {
+        elevator->raiseElevator(1);
+    } else if (controller->getLowerElevator()) {
+        elevator->lowerElevator(1);
+    } else {
+        elevator->stopElevator();
+    }
+
+    // Front out
+    if (controller->getRunFrontOut()) {
+        cargo->runFrontOut(1);
+    } else {
+        cargo->stopFrontOut();
+    }
+
+    // Back out
+    if (controller->getRunBackOut()) {
+        cargo->runBackOut(1);
+    } else {
+        cargo->stopBackOut();
+    }
+
+    // Start Button
+    if (controller->getRunIntake()) {
+        cargo->runIntake(1);
+    } else {
+        cargo->stopIntake();
     }
 }
 
