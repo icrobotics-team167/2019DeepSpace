@@ -33,6 +33,7 @@ void AutoTest::run() {
         case AutoState::init:
             driveBase->resetEncoders();
             driveBase->updateNavx();
+            driveBase->resetError();
             autoState = AutoState::drive100;
             break;
         case AutoState::drive100:
