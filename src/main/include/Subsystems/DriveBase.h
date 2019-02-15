@@ -44,14 +44,21 @@ public:
     bool straightDrive(double inches, double speed);
     bool pointTurn(double angle, double speed);
 
+    bool driveToReflection(double speed);
+
     const double LEFT_ENCODER_TICKS_PER_INCH = 116.711067093;
     const double RIGHT_ENCODER_TICKS_PER_INCH = 117.837349601;
 
-    const double KP = 0.02;
-    const double KI = 0.0001;
-    const double KD = 0.01;
+    const double straightDriveKP = 0.02;
+    const double straightDriveKI = 0.0001;
+    const double straightDriveKD = 0.01;
     double previousError = 0;
     double totalError = 0;
+    const double limelightKP = 0.005;
+    const double limelightKI = 0.00001;
+    const double limelightKD = 0.0025;
+
+    void resetError();
 
     frc::Encoder *getLeftEncoder();
     frc::Encoder *getRightEncoder();
@@ -62,6 +69,12 @@ public:
 
     AHRS *getNavx();
     void updateNavx();
+
+    void updateLimelight();
+    double getLimelightTx();
+    double getLimelightTy();
+    double getLimelightTa();
+    double getLimelightTs();
 };
 
 #endif

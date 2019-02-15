@@ -18,6 +18,7 @@
 
 #include "Controls/GenericController.h"
 #include "Controls/SingleXboxController.h"
+#include "Controls/DoubleXboxController.h"
 
 #include <string>
 

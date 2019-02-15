@@ -31,7 +31,13 @@ void Robot::RobotInit() {
  * <p> This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() {
+    driveBase->updateLimelight();
+    SmartDashboard::PutNumber("Limelight tx: ", driveBase->getLimelightTx());
+    SmartDashboard::PutNumber("Limelight ty: ", driveBase->getLimelightTy());
+    SmartDashboard::PutNumber("Limelight ta: ", driveBase->getLimelightTa());
+    SmartDashboard::PutNumber("Limelight ts: ", driveBase->getLimelightTs());
+}
 
 /**
  * This autonomous (along with the chooser code above) shows how to select
@@ -70,7 +76,7 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
-    controller = new SingleXboxController();
+    controller = new DoubleXboxController();
 }
 
 void Robot::TeleopPeriodic() {

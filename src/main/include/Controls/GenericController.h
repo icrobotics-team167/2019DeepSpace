@@ -14,6 +14,7 @@ public:
     virtual bool getLowerClaw() = 0;
     virtual bool getRaiseElevator() = 0;
     virtual bool getLowerElevator() = 0;
+    virtual double getElevatorSpeed() = 0;
     virtual bool getRunFrontOut() = 0;
     virtual bool getRunBackOut() = 0;
     virtual bool getRunIntake() = 0;

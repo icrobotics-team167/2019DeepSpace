@@ -102,8 +102,8 @@ bool DriveBase::straightDrive(double inches, double speed) {
     SmartDashboard::PutNumber("Heading error: ", headingError);
     SmartDashboard::PutNumber("Differential error: ", diffError);
 
-    double leftSpeed = speed + (KP * headingError + KI * totalError + KD * diffError);
-    double rightSpeed = speed - (KP * headingError + KI * totalError + KD * diffError);
+    double leftSpeed = speed + (straightDriveKP * headingError + straightDriveKI * totalError + straightDriveKD * diffError);
+    double rightSpeed = speed - (straightDriveKP * headingError + straightDriveKI * totalError + straightDriveKD * diffError);
 
     SmartDashboard::PutNumber("Total error: ", totalError);
     SmartDashboard::PutNumber("Left speed: ", leftSpeed);
@@ -112,13 +112,19 @@ bool DriveBase::straightDrive(double inches, double speed) {
     if (rightSpeed > 1) {
         rightSpeed = 1;
     }
-
+    if (rightSpeed < -1) {
+        rightSpeed = -1;
+    }
     if (leftSpeed > 1) {
         leftSpeed = 1;
+    }
+    if (leftSpeed < -1) {
+        leftSpeed = -1;
     }
 
     if (leftEncoder->Get() > LEFT_ENCODER_TICKS_PER_INCH * inches &&
         rightEncoder->Get() > RIGHT_ENCODER_TICKS_PER_INCH * inches) {
+        resetError();
         return true;
     }
 
@@ -151,7 +157,58 @@ bool DriveBase::pointTurn(double angle, double speed) {
         }
         return false;
     }
+    resetError();
     return true;
+}
+
+/**
+ * Drives to the reflective tape
+ * 
+ * @author Dominic Rutkowski
+ * @author Vladimir Tivanski
+ * @asince 2-15-2019
+ * 
+ * @param speed The speed at which the robot will drive
+ * 
+ * @returns True if the drive is complete, false otherwise
+ */
+bool DriveBase::driveToReflection(double speed) {
+    double tx = getLimelightTx();
+    double headingError = 0 - tx;
+    double diffError = headingError - previousError;
+    double leftSpeed = speed + (limelightKP * headingError + limelightKI * totalError + limelightKD * diffError);
+    double rightSpeed = speed - (limelightKP * headingError + limelightKI * totalError + limelightKD * diffError);
+    if (rightSpeed > 1) {
+        rightSpeed = 1;
+    }
+    if (rightSpeed < -1) {
+        rightSpeed = -1;
+    }
+    if (leftSpeed > 1) {
+        leftSpeed = 1;
+    }
+    if (leftSpeed < -1) {
+        leftSpeed = -1;
+    }
+    if (tx == 0 && getLimelightTa() == 0) {
+        resetError();
+        return true;
+    }
+    drive(leftSpeed, rightSpeed);
+    previousError = headingError;
+    totalError += headingError;
+    return false;
+}
+
+/**
+ * Resets the PID error values
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-15-2019
+ */
+void DriveBase::resetError() {
+    previousError = 0;
+    totalError = 0;
 }
 
 /**
@@ -232,4 +289,25 @@ AHRS *DriveBase::getNavx() {
  */
 void DriveBase::updateNavx() {
     navxInitValue = navx->GetAngle();
+}
+
+void DriveBase::updateLimelight() {
+    limelightNetworkTable = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
+    limelightNetworkTable->PutNumber("ledMode", 3);
+}
+
+double DriveBase::getLimelightTx() {
+    return limelightNetworkTable->GetNumber("tx", 0.0);
+}
+
+double DriveBase::getLimelightTy() {
+    return limelightNetworkTable->GetNumber("ty", 0.0);
+}
+
+double DriveBase::getLimelightTa() {
+    return limelightNetworkTable->GetNumber("ta", 0.0);
+}
+
+double DriveBase::getLimelightTs() {
+    return limelightNetworkTable->GetNumber("ts", 0.0);
 }
