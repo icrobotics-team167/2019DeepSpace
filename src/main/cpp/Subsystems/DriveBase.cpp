@@ -289,7 +289,8 @@ void DriveBase::updateNavx() {
 
 void DriveBase::updateLimelight() {
     limelightNetworkTable = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
-    limelightNetworkTable->PutNumber("ledMode", 3);
+    limelightNetworkTable->PutNumber("ledMode", limelightVision ? 3 : 1);
+    limelightNetworkTable->PutNumber("camMode", limelightVision ? 0 : 1);
 }
 
 double DriveBase::getLimelightTx() {
@@ -306,4 +307,12 @@ double DriveBase::getLimelightTa() {
 
 double DriveBase::getLimelightTs() {
     return limelightNetworkTable->GetNumber("ts", 0.0);
+}
+
+void DriveBase::setLimelightVision() {
+    limelightVision = true;
+}
+
+void DriveBase::setLimelightCamera() {
+    limelightVision = false;
 }

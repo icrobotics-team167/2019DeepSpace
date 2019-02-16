@@ -39,7 +39,7 @@ void Cargo::stopFrontOut() {
 }
 
 void Cargo::runBackOut(double speed) {
-    backOutTalon->Set(ControlMode::PercentOutput, speed);
+    backOutTalon->Set(ControlMode::PercentOutput, -speed);
 }
 
 void Cargo::stopBackOut() {

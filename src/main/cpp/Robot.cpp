@@ -62,6 +62,7 @@ void Robot::AutonomousInit() {
         // Default Auto goes here
     }
 
+    driveBase->setLimelightVision();
     autoRoutine = new AutoTest(driveBase, claw, elevator, bling, cargo);
 }
 
@@ -77,6 +78,7 @@ void Robot::AutonomousPeriodic() {
 
 void Robot::TeleopInit() {
     controller = new DoubleXboxController();
+    driveBase->setLimelightCamera();
 }
 
 void Robot::TeleopPeriodic() {
@@ -116,26 +118,28 @@ void Robot::TeleopPeriodic() {
         elevator->stopElevator();
     }
 
-    // Front out
+    // Cargo out
     if (controller->getRunFrontOut()) {
-        cargo->runFrontOut(1);
-    } else {
-        cargo->stopFrontOut();
-    }
-
-    // Back out
-    if (controller->getRunBackOut()) {
-        cargo->runBackOut(1);
+        cargo->runFrontOut(-1);
+        cargo->runBackOut(-0.5);
+    } else if (controller->getRunBackOut()) {
+        cargo->runBackOut(0.6);
+        cargo->runFrontOut(-0.6);
+    } else if (controller->getRunIntake()) {
+        cargo->runIntake(1);
+        cargo->runBackOut(0.6);
+        cargo->runFrontOut(-0.6);
     } else {
         cargo->stopBackOut();
-    }
-
-    // Start Button
-    if (controller->getRunIntake()) {
-        cargo->runIntake(1);
-    } else {
+        cargo->stopFrontOut();
         cargo->stopIntake();
     }
+    
+    if (controller->getSetLimelightVision()) {
+        driveBase->setLimelightVision();
+    } else if (controller->getSetLimelightCamera()) {
+        driveBase->setLimelightCamera();
+    } 
 }
 
 void Robot::TestPeriodic() {}

@@ -78,7 +78,7 @@ bool DoubleXboxController::getLowerElevator() {
     return false;
 }
 
-double  DoubleXboxController::getElevatorSpeed() {
+double DoubleXboxController::getElevatorSpeed() {
     double stickY = xboxController2->GetY(frc::Joystick::JoystickHand::kRightHand);
     if(stickY >= 0.3 || stickY <= -0.3) {
         return stickY;
@@ -102,6 +102,20 @@ bool DoubleXboxController::getRunBackOut() {
 
 bool DoubleXboxController::getRunIntake() {
     if (xboxController2->GetTriggerAxis(frc::Joystick::JoystickHand::kLeftHand) > 0.3) {
+        return true;
+    }
+    return false;
+}
+
+bool DoubleXboxController::getSetLimelightVision() {
+    if (xboxController1->GetStartButton()) {
+        return true;
+    }
+    return false;
+}
+
+bool DoubleXboxController::getSetLimelightCamera() {
+    if (xboxController1->GetBackButton()) {
         return true;
     }
     return false;

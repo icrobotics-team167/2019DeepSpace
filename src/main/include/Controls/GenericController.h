@@ -18,6 +18,8 @@ public:
     virtual bool getRunFrontOut() = 0;
     virtual bool getRunBackOut() = 0;
     virtual bool getRunIntake() = 0;
+    virtual bool getSetLimelightVision() = 0;
+    virtual bool getSetLimelightCamera() = 0;
 };
 
 #endif

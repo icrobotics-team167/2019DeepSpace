@@ -96,3 +96,11 @@ bool SingleXboxController::getRunIntake() {
     }
     return false;
 }
+
+bool SingleXboxController::getSetLimelightVision() {
+    return false;
+}
+
+bool SingleXboxController::getSetLimelightCamera() {
+    return false;
+}

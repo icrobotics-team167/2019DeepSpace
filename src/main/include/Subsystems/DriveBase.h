@@ -74,6 +74,9 @@ public:
     double getLimelightTy();
     double getLimelightTa();
     double getLimelightTs();
+    bool limelightVision = true;
+    void setLimelightVision();
+    void setLimelightCamera();
 };
 
 #endif

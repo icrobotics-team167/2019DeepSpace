@@ -25,6 +25,8 @@ public:
     bool getRunFrontOut() override;
     bool getRunBackOut() override;
     bool getRunIntake() override;
+    bool getSetLimelightVision() override;
+    bool getSetLimelightCamera() override;
 };
 
 #endif
