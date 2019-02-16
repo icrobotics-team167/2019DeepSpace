@@ -43,7 +43,7 @@ void Claw::closeClaw() {
  * @since 2-10-2019
  */
 void Claw::moveClawUp() {
-    pivotSolenoid->Set(true);
+    pivotSolenoid->Set(false);
 }
 
 /**
@@ -53,5 +53,5 @@ void Claw::moveClawUp() {
  * @since 2-10-2019
  */
 void Claw::moveClawDown() {
-    pivotSolenoid->Set(false);
+    pivotSolenoid->Set(true);
 }

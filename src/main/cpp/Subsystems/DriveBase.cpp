@@ -21,6 +21,8 @@ DriveBase::DriveBase() {
         DriverStation::ReportError(error.c_str());
     }
 
+    updateLimelight();
+
     // Gear shifting solenoid
     gearShifterSolenoid = new frc::Solenoid(PNEUMATIC_CONTROLLER, GEAR_SHIFTER_SOLENOID);
 
