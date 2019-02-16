@@ -76,7 +76,7 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
-    controller = new DoubleXboxController();
+    controller = new SingleXboxController();
 }
 
 void Robot::TeleopPeriodic() {
