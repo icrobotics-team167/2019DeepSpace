@@ -218,7 +218,7 @@ void DriveBase::resetError() {
  * @since 2-10-2019
  */
 void DriveBase::setLowGear() {
-    gearShifterSolenoid->Set(false);
+    gearShifterSolenoid->Set(true);
 }
 
 /**
@@ -228,7 +228,7 @@ void DriveBase::setLowGear() {
  * @since 2-10-2019
  */
 void DriveBase::setHighGear() {
-    gearShifterSolenoid->Set(true);
+    gearShifterSolenoid->Set(false);
 }
 
 /**
