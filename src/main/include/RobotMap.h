@@ -67,7 +67,7 @@
 #define CARGO_LIGHT_SENSOR 3
 
 // Cargo out 
-#define CARGO_LEFT_OUT_TALON 13
-#define CARGO_RIGHT_OUT_TALON 14
+#define CARGO_BACK_OUT_TALON 13
+#define CARGO_FRONT_OUT_TALON 14
 
 #endif

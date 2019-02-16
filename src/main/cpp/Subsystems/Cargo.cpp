@@ -7,8 +7,8 @@ Cargo::Cargo() {
     lightSensor = new frc::AnalogInput(CARGO_LIGHT_SENSOR);
 
     // Cargo out
-    frontOutTalon = new TalonSRX(CARGO_LEFT_OUT_TALON);
-    backOutTalon = new TalonSRX(CARGO_RIGHT_OUT_TALON);
+    backOutTalon = new TalonSRX(CARGO_BACK_OUT_TALON);
+    frontOutTalon = new TalonSRX(CARGO_FRONT_OUT_TALON);
 }
 
 Cargo::~Cargo() {
