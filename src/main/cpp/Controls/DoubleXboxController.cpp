@@ -12,7 +12,7 @@ DoubleXboxController::~DoubleXboxController() {
 
 double DoubleXboxController::getDrivetrainLeftSpeed() {
     double yVal = -xboxController1->GetY(frc::Joystick::JoystickHand::kLeftHand);
-    if (yVal >= 0.2 || yVal <= 0.2) {
+    if (yVal >= DRIVETRAIN_DEADZONE || yVal <= -DRIVETRAIN_DEADZONE) {
         return yVal;
     }
     return 0;
@@ -20,7 +20,7 @@ double DoubleXboxController::getDrivetrainLeftSpeed() {
 
 double DoubleXboxController::getDrivetrainRightSpeed() {
     double yVal = -xboxController1->GetY(frc::Joystick::JoystickHand::kRightHand);
-    if (yVal >= 0.2 || yVal <= 0.2) {
+    if (yVal >= DRIVETRAIN_DEADZONE || yVal <= -DRIVETRAIN_DEADZONE) {
         return yVal;
     }
     return 0;
