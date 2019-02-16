@@ -11,11 +11,19 @@ DoubleXboxController::~DoubleXboxController() {
 }
 
 double DoubleXboxController::getDrivetrainLeftSpeed() {
-    return -xboxController1->GetY(frc::Joystick::JoystickHand::kLeftHand);
+    double yVal = -xboxController1->GetY(frc::Joystick::JoystickHand::kLeftHand);
+    if (yVal >= DRIVETRAIN_DEADZONE || yVal <= -DRIVETRAIN_DEADZONE) {
+        return yVal;
+    }
+    return 0;
 }
 
 double DoubleXboxController::getDrivetrainRightSpeed() {
-    return -xboxController1->GetY(frc::Joystick::JoystickHand::kRightHand);
+    double yVal = -xboxController1->GetY(frc::Joystick::JoystickHand::kRightHand);
+    if (yVal >= DRIVETRAIN_DEADZONE || yVal <= -DRIVETRAIN_DEADZONE) {
+        return yVal;
+    }
+    return 0;
 }
 
 bool DoubleXboxController::getOpenClaw() {
