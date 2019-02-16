@@ -15,6 +15,7 @@
 
 #include "Auto/AutoRoutine.h"
 #include "Auto/AutoTest.h"
+#include "Auto/NullAuto.h"
 
 #include "Controls/GenericController.h"
 #include "Controls/SingleXboxController.h"

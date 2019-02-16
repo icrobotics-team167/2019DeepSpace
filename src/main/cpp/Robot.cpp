@@ -63,7 +63,7 @@ void Robot::AutonomousInit() {
     }
 
     driveBase->setLimelightVision();
-    autoRoutine = new AutoTest(driveBase, claw, elevator, bling, cargo);
+    autoRoutine = new NullAuto(driveBase, claw, elevator, bling, cargo);
 }
 
 void Robot::AutonomousPeriodic() {
@@ -123,7 +123,7 @@ void Robot::TeleopPeriodic() {
     // Cargo out
     if (controller->getRunFrontOut()) {
         cargo->runFrontOut(1);
-        cargo->runBackOut(0.5);
+        cargo->runBackOut(1);
     } else if (controller->getRunBackOut()) {
         cargo->runBackOut(0.6);
         cargo->runFrontOut(-0.6);
