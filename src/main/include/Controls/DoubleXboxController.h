@@ -8,6 +8,7 @@ class DoubleXboxController : public GenericController {
 private:
     frc::XboxController *xboxController1;
     frc::XboxController *xboxController2;
+    const double DRIVETRAIN_DEADZONE = 0.07;
 public:
     DoubleXboxController();
     ~DoubleXboxController();
