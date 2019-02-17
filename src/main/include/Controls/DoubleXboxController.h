@@ -9,6 +9,7 @@ private:
     frc::XboxController *xboxController1;
     frc::XboxController *xboxController2;
     const double DRIVETRAIN_DEADZONE = 0.07;
+    const double ELEVATOR_DEADZONE = 0.3;
 public:
     DoubleXboxController();
     ~DoubleXboxController();
@@ -20,12 +21,12 @@ public:
     bool getSetLowGear() override;
     bool getRaiseClaw() override;
     bool getLowerClaw() override;
-    bool getRaiseElevator() override;
-    bool getLowerElevator() override;
     double getElevatorSpeed() override;
     bool getRunFrontOut() override;
     bool getRunBackOut() override;
     bool getRunIntake() override;
+    bool getSetLimelightVision() override;
+    bool getSetLimelightCamera() override;
 };
 
 #endif

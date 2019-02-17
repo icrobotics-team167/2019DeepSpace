@@ -7,6 +7,7 @@
 class SingleXboxController : public GenericController {
 private:
     frc::XboxController *xboxController;
+    const double DRIVETRAIN_DEADZONE = 0.07;
 public:
     SingleXboxController();
     ~SingleXboxController();
@@ -18,12 +19,12 @@ public:
     bool getSetLowGear() override;
     bool getRaiseClaw() override;
     bool getLowerClaw() override;
-    bool getRaiseElevator() override;
-    bool getLowerElevator() override;
     double getElevatorSpeed() override;
     bool getRunFrontOut() override;
     bool getRunBackOut() override;
     bool getRunIntake() override;
+    bool getSetLimelightVision() override;
+    bool getSetLimelightCamera() override;
 };
 
 #endif

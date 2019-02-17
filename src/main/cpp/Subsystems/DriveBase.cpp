@@ -21,6 +21,8 @@ DriveBase::DriveBase() {
         DriverStation::ReportError(error.c_str());
     }
 
+    updateLimelight();
+
     // Gear shifting solenoid
     lowGearSolenoid = new frc::Solenoid(PNEUMATIC_CONTROLLER, LOW_GEAR_SOLENOID);
     highGearSolenoid = new frc::Solenoid(PNEUMATIC_CONTROLLER, HIGH_GEAR_SOLENOID);
@@ -97,15 +99,15 @@ bool DriveBase::straightDrive(double inches, double speed) {
     SmartDashboard::PutNumber("Heading: ", navxInitValue);
 
     double headingError = navxInitValue - rotationAngle;
-    double diffError = headingError - previousError;   
+    double diffError = headingError - straightDrivePreviousError;   
     
     SmartDashboard::PutNumber("Heading error: ", headingError);
     SmartDashboard::PutNumber("Differential error: ", diffError);
 
-    double leftSpeed = speed + (straightDriveKP * headingError + straightDriveKI * totalError + straightDriveKD * diffError);
-    double rightSpeed = speed - (straightDriveKP * headingError + straightDriveKI * totalError + straightDriveKD * diffError);
+    double leftSpeed = speed + (straightDriveKP * headingError + straightDriveKI * straightDriveTotalError + straightDriveKD * diffError);
+    double rightSpeed = speed - (straightDriveKP * headingError + straightDriveKI * straightDriveTotalError + straightDriveKD * diffError);
 
-    SmartDashboard::PutNumber("Total error: ", totalError);
+    SmartDashboard::PutNumber("Total error: ", straightDriveTotalError);
     SmartDashboard::PutNumber("Left speed: ", leftSpeed);
     SmartDashboard::PutNumber("Right speed: ", rightSpeed);
 
@@ -124,14 +126,15 @@ bool DriveBase::straightDrive(double inches, double speed) {
 
     if (leftEncoder->Get() > LEFT_ENCODER_TICKS_PER_INCH * inches &&
         rightEncoder->Get() > RIGHT_ENCODER_TICKS_PER_INCH * inches) {
-        resetError();
+        straightDrivePreviousError = 0;
+        straightDriveTotalError = 0;
         return true;
     }
 
     drive(leftSpeed, rightSpeed);
 
-    previousError = headingError;
-    totalError += headingError;
+    straightDrivePreviousError = headingError;
+    straightDriveTotalError += headingError;
 
     return false;
 }
@@ -157,7 +160,6 @@ bool DriveBase::pointTurn(double angle, double speed) {
         }
         return false;
     }
-    resetError();
     return true;
 }
 
@@ -174,41 +176,37 @@ bool DriveBase::pointTurn(double angle, double speed) {
  */
 bool DriveBase::driveToReflection(double speed) {
     double tx = getLimelightTx();
-    double headingError = 0 - tx;
-    double diffError = headingError - previousError;
-    double leftSpeed = speed + (limelightKP * headingError + limelightKI * totalError + limelightKD * diffError);
-    double rightSpeed = speed - (limelightKP * headingError + limelightKI * totalError + limelightKD * diffError);
-    if (rightSpeed > 1) {
-        rightSpeed = 1;
-    }
-    if (rightSpeed < -1) {
-        rightSpeed = -1;
-    }
-    if (leftSpeed > 1) {
-        leftSpeed = 1;
-    }
-    if (leftSpeed < -1) {
-        leftSpeed = -1;
-    }
-    if (tx == 0 && getLimelightTa() == 0) {
-        resetError();
+    double ty = getLimelightTy();
+    double ta = getLimelightTa();
+    double ts = getLimelightTs();
+    double tv = getLimelightTv();
+
+    if (tv > 0) {
+        if (ta >= limelightTargetArea) {
+            return true;
+        }
+        double turn = tx * limelightSteerK;
+        double drive = (limelightTargetArea - ta) * speed;
+        double leftSpeed = drive + turn;
+        double rightSpeed = drive - turn;
+        if (leftSpeed > limelightMaxDriveSpeed) {
+            leftSpeed = limelightMaxDriveSpeed;
+        }
+        if (leftSpeed < -limelightMaxDriveSpeed) {
+            leftSpeed = -limelightMaxDriveSpeed;
+        }
+        if (rightSpeed > limelightMaxDriveSpeed) {
+            rightSpeed = limelightMaxDriveSpeed;
+        }
+        if (rightSpeed < -limelightMaxDriveSpeed) {
+            rightSpeed = -limelightMaxDriveSpeed;
+        }
+        DriveBase::drive(leftSpeed, rightSpeed);
+        return false;
+    } else {
+        drive(0, 0);
         return true;
     }
-    drive(leftSpeed, rightSpeed);
-    previousError = headingError;
-    totalError += headingError;
-    return false;
-}
-
-/**
- * Resets the PID error values
- * 
- * @author Dominic Rutkowski
- * @since 2-15-2019
- */
-void DriveBase::resetError() {
-    previousError = 0;
-    totalError = 0;
 }
 
 /**
@@ -291,9 +289,16 @@ void DriveBase::updateNavx() {
     navxInitValue = navx->GetAngle();
 }
 
+/**
+ * Updates the Limelight vision values
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-17-2019
+ */
 void DriveBase::updateLimelight() {
     limelightNetworkTable = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
-    limelightNetworkTable->PutNumber("ledMode", 3);
+    limelightNetworkTable->PutNumber("ledMode", limelightVision ? 3 : 1);
+    limelightNetworkTable->PutNumber("camMode", limelightVision ? 0 : 1);
 }
 
 double DriveBase::getLimelightTx() {
@@ -310,4 +315,16 @@ double DriveBase::getLimelightTa() {
 
 double DriveBase::getLimelightTs() {
     return limelightNetworkTable->GetNumber("ts", 0.0);
+}
+
+double DriveBase::getLimelightTv() {
+    return limelightNetworkTable->GetNumber("tv", 0.0);
+}
+
+void DriveBase::setLimelightVision() {
+    limelightVision = true;
+}
+
+void DriveBase::setLimelightCamera() {
+    limelightVision = false;
 }

@@ -1,23 +1,17 @@
 #include "Subsystems/Bling.h"
 
 Bling::Bling() {
-    // LEDs
-    leftLED = new frc::DigitalOutput(LEFT_LED);
-    rightLED = new frc::DigitalOutput(RIGHT_LED);
+    // Blinkin
+    blinkin = new frc::Spark(BLINKIN);
 
-    // Line-tracking sensors
-    lightSensorLeft = new frc::AnalogInput(LIGHT_SENSOR_LEFT);
-    lightSensorMiddle = new frc::AnalogInput(LIGHT_SENSOR_MIDDLE);
-    lightSensorRight = new frc::AnalogInput(LIGHT_SENSOR_RIGHT);
+    double patternVal;
 }
 
 Bling::~Bling() {
-    // LEDs
-    delete leftLED;
-    delete rightLED;    
+    // Blinkin
+    delete blinkin;   
+}
 
-    // Line-tracking sensors
-    delete lightSensorLeft;
-    delete lightSensorMiddle;
-    delete lightSensorRight;
+void Bling::RunLEDStrip(double pattern) {
+    blinkin->Set(pattern);
 }

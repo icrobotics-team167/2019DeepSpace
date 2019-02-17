@@ -52,13 +52,13 @@ public:
     const double straightDriveKP = 0.02;
     const double straightDriveKI = 0.0001;
     const double straightDriveKD = 0.01;
-    double previousError = 0;
-    double totalError = 0;
-    const double limelightKP = 0.005;
-    const double limelightKI = 0.00001;
-    const double limelightKD = 0.0025;
+    double straightDrivePreviousError = 0;
+    double straightDriveTotalError = 0;
 
-    void resetError();
+    const double limelightSteerK = 0.05;
+    const double limelightTargetArea = 13;
+    const double limelightMaxDriveSpeed = 0.65;
+    const double limelightMaxTurnSpeed = 1;
 
     frc::Encoder *getLeftEncoder();
     frc::Encoder *getRightEncoder();
@@ -75,6 +75,10 @@ public:
     double getLimelightTy();
     double getLimelightTa();
     double getLimelightTs();
+    double getLimelightTv();
+    bool limelightVision = true;
+    void setLimelightVision();
+    void setLimelightCamera();
 };
 
 #endif

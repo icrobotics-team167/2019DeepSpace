@@ -62,7 +62,8 @@ void Robot::AutonomousInit() {
         // Default Auto goes here
     }
 
-    autoRoutine = new AutoTest(driveBase, claw, elevator, bling, cargo);
+    driveBase->setLimelightVision();
+    autoRoutine = new LimelightTest(driveBase, claw, elevator, bling, cargo);
 }
 
 void Robot::AutonomousPeriodic() {
@@ -77,12 +78,21 @@ void Robot::AutonomousPeriodic() {
 
 void Robot::TeleopInit() {
     controller = new DoubleXboxController();
+    driveBase->setLimelightCamera();
+    claw->moveClawDown();
 }
 
 void Robot::TeleopPeriodic() {
+    bling->RunLEDStrip(0.53);
     // Driving
     double leftY = controller->getDrivetrainLeftSpeed();
     double rightY = controller->getDrivetrainRightSpeed();
+    if (leftY < 0.2 && leftY > -0.2) {
+        leftY = 0; 
+    }
+    if (rightY < 0.2 && rightY > -0.2) {
+        rightY = 0;
+    }
     driveBase->drive(leftY, rightY);
     driveBase->updateNavx();
     
@@ -107,35 +117,36 @@ void Robot::TeleopPeriodic() {
         claw->moveClawDown();
     }
 
-    // Elevator raising and lowering
-    if (controller->getRaiseElevator()) {
-        elevator->raiseElevator(1);
-    } else if (controller->getLowerElevator()) {
-        elevator->lowerElevator(1);
-    } else {
-        elevator->stopElevator();
-    }
+    // // Elevator raising and lowering
+    // if (controller->getRaiseElevator()) {
+    //     elevator->raiseElevator(1);
+    // } else if (controller->getLowerElevator()) {
+    //     elevator->lowerElevator(1);
+    // } else {
+    //     elevator->stopElevator();
+    // }
 
-    // Front out
+    elevator->raiseElevator(controller->getElevatorSpeed());
+
+    // Cargo out
     if (controller->getRunFrontOut()) {
-        cargo->runFrontOut(1);
-    } else {
-        cargo->stopFrontOut();
-    }
-
-    // Back out
-    if (controller->getRunBackOut()) {
-        cargo->runBackOut(1);
-    } else {
-        cargo->stopBackOut();
-    }
-
-    // Start Button
-    if (controller->getRunIntake()) {
+        cargo->ejectCargo();
+    } else if (controller->getRunBackOut()) {
+        cargo->holdCargo();
+    } else if (controller->getRunIntake()) {
         cargo->runIntake(1);
+        cargo->holdCargo();
     } else {
+        cargo->stopFront();
+        cargo->stopBack();
         cargo->stopIntake();
     }
+    
+    if (controller->getSetLimelightVision()) {
+        driveBase->setLimelightVision();
+    } else if (controller->getSetLimelightCamera()) {
+        driveBase->setLimelightCamera();
+    } 
 }
 
 void Robot::TestPeriodic() {}

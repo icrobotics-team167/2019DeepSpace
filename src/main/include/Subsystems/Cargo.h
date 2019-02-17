@@ -21,10 +21,12 @@ public:
     ~Cargo();
     void runIntake(double speed);
     void stopIntake();
-    void runFrontOut(double speed);
-    void stopFrontOut();
-    void runBackOut(double speed);
-    void stopBackOut();
+    void runFront(double speed);
+    void stopFront();
+    void runBack(double speed);
+    void stopBack();
+    void ejectCargo();
+    void holdCargo();
 };
 
 #endif

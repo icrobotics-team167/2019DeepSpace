@@ -53,14 +53,8 @@
 #define ELEVATOR_LIMIT_SWITCH_TOP 8
 
 // ***** Bling *****
-// LEDs
-#define LEFT_LED 9
-#define RIGHT_LED 10
-
-// Line-tracking sensors
-#define LIGHT_SENSOR_LEFT 0
-#define LIGHT_SENSOR_MIDDLE 1
-#define LIGHT_SENSOR_RIGHT 2
+// Blinkin
+#define BLINKIN 0
 
 // ***** Cargo *****
 // Cargo intake
@@ -69,7 +63,7 @@
 #define CARGO_LIGHT_SENSOR 3
 
 // Cargo out 
-#define CARGO_LEFT_OUT_TALON 13
-#define CARGO_RIGHT_OUT_TALON 14
+#define CARGO_BACK_OUT_TALON 13
+#define CARGO_FRONT_OUT_TALON 14
 
 #endif
