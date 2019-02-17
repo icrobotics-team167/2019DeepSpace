@@ -77,7 +77,7 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
-    controller = new DoubleXboxController();
+    controller = new SingleXboxController();
     driveBase->setLimelightCamera();
     claw->moveClawDown();
 }
@@ -87,12 +87,6 @@ void Robot::TeleopPeriodic() {
     // Driving
     double leftY = controller->getDrivetrainLeftSpeed();
     double rightY = controller->getDrivetrainRightSpeed();
-    if (leftY < 0.2 && leftY > -0.2) {
-        leftY = 0; 
-    }
-    if (rightY < 0.2 && rightY > -0.2) {
-        rightY = 0;
-    }
     driveBase->drive(leftY, rightY);
     driveBase->updateNavx();
     
