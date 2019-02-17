@@ -63,7 +63,7 @@ void Robot::AutonomousInit() {
     }
 
     driveBase->setLimelightVision();
-    autoRoutine = new LimelightTest(driveBase, claw, elevator, bling, cargo);
+    autoRoutine = new BackRocket(driveBase, claw, elevator, bling, cargo);
 }
 
 void Robot::AutonomousPeriodic() {
@@ -146,7 +146,10 @@ void Robot::TeleopPeriodic() {
         driveBase->setLimelightVision();
     } else if (controller->getSetLimelightCamera()) {
         driveBase->setLimelightCamera();
-    } 
+    }
+
+    SmartDashboard::PutNumber("Left encoder: ", driveBase->getLeftEncoder()->Get());
+    SmartDashboard::PutNumber("Right encoder: ", driveBase->getRightEncoder()->Get()); 
 }
 
 void Robot::TestPeriodic() {}

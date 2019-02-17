@@ -27,7 +27,7 @@ DriveBase::DriveBase() {
     gearShifterSolenoid = new frc::Solenoid(PNEUMATIC_CONTROLLER, GEAR_SHIFTER_SOLENOID);
 
     // Drivetrain encoders
-    leftEncoder = new frc::Encoder(LEFT_ENCODER_A, LEFT_ENCODER_B, false);
+    leftEncoder = new frc::Encoder(LEFT_ENCODER_A, LEFT_ENCODER_B, true);
     rightEncoder = new frc::Encoder(RIGHT_ENCODER_A, RIGHT_ENCODER_B, true);
 }
 
@@ -91,6 +91,10 @@ void DriveBase::drive(double leftSpeed, double rightSpeed) {
  * @returns True if the drive is complete, false otherwise
  */ 
 bool DriveBase::straightDrive(double inches, double speed) {
+    if (inches > 5) {
+        inches -= 2.3;
+    }
+    
     double rotationAngle = navx->GetAngle();
     
     SmartDashboard::PutNumber("Rotation angle: ", rotationAngle);
@@ -122,13 +126,14 @@ bool DriveBase::straightDrive(double inches, double speed) {
         leftSpeed = -1;
     }
 
-    if (leftEncoder->Get() > LEFT_ENCODER_TICKS_PER_INCH * inches &&
-        rightEncoder->Get() > RIGHT_ENCODER_TICKS_PER_INCH * inches) {
+    if (abs(leftEncoder->Get()) > LEFT_ENCODER_TICKS_PER_INCH * inches &&
+        abs(rightEncoder->Get()) > RIGHT_ENCODER_TICKS_PER_INCH * inches) {
         straightDrivePreviousError = 0;
         straightDriveTotalError = 0;
+        drive(0, 0);
         return true;
     }
-
+ 
     drive(leftSpeed, rightSpeed);
 
     straightDrivePreviousError = headingError;
@@ -150,7 +155,7 @@ bool DriveBase::straightDrive(double inches, double speed) {
  * @returns True if the turn is complete, false otherwise
  */
 bool DriveBase::pointTurn(double angle, double speed) {
-    if (abs(navx->GetAngle() - navxInitValue) < angle) {
+    if (abs(navx->GetAngle() - navxInitValue) < abs(angle)) {
         if (angle >= 0) {
             drive(speed, -speed);
         } else {
@@ -158,6 +163,7 @@ bool DriveBase::pointTurn(double angle, double speed) {
         }
         return false;
     }
+    drive(0, 0);
     return true;
 }
 
@@ -198,6 +204,9 @@ bool DriveBase::driveToReflection(double speed) {
         }
         if (rightSpeed < -limelightMaxDriveSpeed) {
             rightSpeed = -limelightMaxDriveSpeed;
+        }
+        if (ta > 1.5) {
+            setLowGear();
         }
         DriveBase::drive(leftSpeed, rightSpeed);
         return false;

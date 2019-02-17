@@ -29,10 +29,11 @@ void LimelightTest::run() {
         case AutoState::init:
             driveBase->resetEncoders();
             driveBase->updateNavx();
+            driveBase->setHighGear();
             autoState = AutoState::limelightTest;
             break;
         case AutoState::limelightTest:
-            if (driveBase->driveToReflection(0.25)) {
+            if (driveBase->driveToReflection(0.15)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 autoState = AutoState::done;

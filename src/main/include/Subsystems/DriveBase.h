@@ -45,8 +45,8 @@ public:
 
     bool driveToReflection(double speed);
 
-    const double LEFT_ENCODER_TICKS_PER_INCH = 116.711067093;
-    const double RIGHT_ENCODER_TICKS_PER_INCH = 117.837349601;
+    const double LEFT_ENCODER_TICKS_PER_INCH = 116.619420989;
+    const double RIGHT_ENCODER_TICKS_PER_INCH = 116.193064549;
 
     const double straightDriveKP = 0.02;
     const double straightDriveKI = 0.0001;
@@ -54,8 +54,8 @@ public:
     double straightDrivePreviousError = 0;
     double straightDriveTotalError = 0;
 
-    const double limelightSteerK = 0.05;
-    const double limelightTargetArea = 13;
+    const double limelightSteerK = 0.1;
+    const double limelightTargetArea = 4;
     const double limelightMaxDriveSpeed = 0.65;
     const double limelightMaxTurnSpeed = 1;
 
