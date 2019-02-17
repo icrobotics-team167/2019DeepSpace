@@ -54,7 +54,8 @@
 
 // ***** Bling *****
 // Blinkin
-#define BLINKIN 0
+#define BLINKIN1 0
+#define BLINKIN2 1
 
 // ***** Cargo *****
 // Cargo intake

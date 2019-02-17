@@ -80,10 +80,12 @@ void Robot::TeleopInit() {
     controller = new SingleXboxController();
     driveBase->setLimelightCamera();
     claw->moveClawDown();
+    driveBase->setHighGear();
+    bling->RunLEDStrip1(0.77); // green
+    bling->RunLEDStrip2(0.77);
 }
 
 void Robot::TeleopPeriodic() {
-    //bling->RunLEDStrip(0.53);
     // Driving
     double leftY = controller->getDrivetrainLeftSpeed();
     double rightY = controller->getDrivetrainRightSpeed();
@@ -93,25 +95,34 @@ void Robot::TeleopPeriodic() {
     // Open and close claw
     if (controller->getCloseClaw()) {
         claw->closeClaw();
-        bling->RunLEDStrip(0.53);
+        //bling->RunLEDStrip1(0);
+        //bling->RunLEDStrip1(0);
     } else if (controller->getOpenClaw()) {
         claw->openClaw();
-        bling->RunLEDStrip(0.57);
+        //bling->RunLEDStrip1(0);
+        //bling->RunLEDStrip1(0);
     }
 
     // Gear shifting
     if (controller->getSetLowGear()) {
-        bling->RunLEDStrip(0.67);
         driveBase->setLowGear();
+        bling->RunLEDStrip1(0.69); // gold
+        bling->RunLEDStrip2(0.69);
     } else if (controller->getSetHighGear()) {
         driveBase->setHighGear();
+        bling->RunLEDStrip1(0.77); // green
+        bling->RunLEDStrip2(0.77);
     }
 
     // Claw raising and lowering
     if (controller->getRaiseClaw()) {
         claw->moveClawUp();
+        //bling->RunLEDStrip1(0);
+        //bling->RunLEDStrip1(0);
     } else if (controller->getLowerClaw()) {
         claw->moveClawDown();
+        //bling->RunLEDStrip1(0);
+        //bling->RunLEDStrip1(0);
     }
 
     // // Elevator raising and lowering

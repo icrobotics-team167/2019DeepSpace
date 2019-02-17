@@ -8,12 +8,14 @@
 class Bling {
 private:
     // Blinkin
-    frc::Spark *blinkin;
+    frc::Spark *blinkin1;
+    frc::Spark *blinkin2;
     double patternVal;
 public:
     Bling();
     ~Bling();
-    void RunLEDStrip(double pattern);
+    void RunLEDStrip1(double pattern);
+    void RunLEDStrip2(double pattern);
 };
 
 #endif
