@@ -130,18 +130,15 @@ void Robot::TeleopPeriodic() {
 
     // Cargo out
     if (controller->getRunFrontOut()) {
-        cargo->runFrontOut(1);
-        cargo->runBackOut(1);
+        cargo->ejectCargo();
     } else if (controller->getRunBackOut()) {
-        cargo->runBackOut(0.6);
-        cargo->runFrontOut(-0.6);
+        cargo->holdCargo();
     } else if (controller->getRunIntake()) {
         cargo->runIntake(1);
-        cargo->runBackOut(0.6);
-        cargo->runFrontOut(-0.6);
+        cargo->holdCargo();
     } else {
-        cargo->stopBackOut();
-        cargo->stopFrontOut();
+        cargo->stopFront();
+        cargo->stopBack();
         cargo->stopIntake();
     }
     

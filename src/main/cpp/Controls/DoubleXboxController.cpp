@@ -10,121 +10,196 @@ DoubleXboxController::~DoubleXboxController() {
     delete xboxController2;
 }
 
+/**
+ * Determines at what speed to drive the left motor group based on
+ * the Y axis value of the first controller's left joystick
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-17-2019
+ * 
+ * @returns A double on [-1, 1] representing at what speed the left motors will drive
+ */
 double DoubleXboxController::getDrivetrainLeftSpeed() {
-    double yVal = -xboxController1->GetY(frc::Joystick::JoystickHand::kLeftHand);
-    if (yVal >= DRIVETRAIN_DEADZONE || yVal <= -DRIVETRAIN_DEADZONE) {
-        return yVal;
+    double left1Y = -xboxController1->GetY(frc::Joystick::JoystickHand::kLeftHand);
+    if (left1Y >= DRIVETRAIN_DEADZONE || left1Y <= -DRIVETRAIN_DEADZONE) {
+        return left1Y;
     }
     return 0;
 }
 
+/**
+ * Determines at what speed to drive the right motor group based on
+ * the Y axis value of the first controller's right joystick
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-17-2019
+ * 
+ * @returns A double on [-1, 1] representing at what speed the right motors will drive
+ */
 double DoubleXboxController::getDrivetrainRightSpeed() {
-    double yVal = -xboxController1->GetY(frc::Joystick::JoystickHand::kRightHand);
-    if (yVal >= DRIVETRAIN_DEADZONE || yVal <= -DRIVETRAIN_DEADZONE) {
-        return yVal;
+    double right1Y = -xboxController1->GetY(frc::Joystick::JoystickHand::kRightHand);
+    if (right1Y >= DRIVETRAIN_DEADZONE || right1Y <= -DRIVETRAIN_DEADZONE) {
+        return right1Y;
     }
     return 0;
 }
 
+/**
+ * Determines whether to open the claw based on if the first controller's 
+ * right trigger is pressed
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-17-2019
+ * 
+ * @returns True if the claw should open, false otherwise
+ */
 bool DoubleXboxController::getOpenClaw() {
-    if (xboxController1->GetTriggerAxis(frc::Joystick::JoystickHand::kRightHand) > 0.3) {
-        return true;
-    }
-    return false;
+    return xboxController1->GetTriggerAxis(frc::Joystick::JoystickHand::kRightHand) > 0.3;
 }
 
+/**
+ * Determines whether to close the claw based on if the first controller's 
+ * left trigger is pressed
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-17-2019
+ * 
+ * @returns True if the claw should close, false otherwise
+ */
 bool DoubleXboxController::getCloseClaw() {
-    if (xboxController1->GetTriggerAxis(frc::Joystick::JoystickHand::kLeftHand) > 0.3) {
-        return true;
-    }
-    return false;
+    return xboxController1->GetTriggerAxis(frc::Joystick::JoystickHand::kLeftHand) > 0.3;
 }
 
+/**
+ * Determines whether to change to high gear based on if the first controller's
+ * right bumper is pressed
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-17-2019
+ * 
+ * @returns True if the robot should switch to high gear, false otherwise
+ */
 bool DoubleXboxController::getSetHighGear() {
-    if (xboxController1->GetBumper(frc::Joystick::JoystickHand::kRightHand)) {
-        return true;
-    }
-    return false;
+    return xboxController1->GetBumper(frc::Joystick::JoystickHand::kRightHand);
 }
 
+/**
+ * Determines whether to change to low gear based on if the first controller's
+ * left bumper is pressed
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-17-2019
+ * 
+ * @returns True if the robot should switch to low gear, false otherwise
+ */
 bool DoubleXboxController::getSetLowGear() {
-    if (xboxController1->GetBumper(frc::Joystick::JoystickHand::kLeftHand)) {
-        return true;
-    }
-    return false;
+    return xboxController1->GetBumper(frc::Joystick::JoystickHand::kLeftHand);
 }
 
+/**
+ * Determines whether to raise the claw based on if the first controller's
+ * A button is pressed
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-17-2019
+ * 
+ * @returns True if the claw should be raised, false otherwise
+ */
 bool DoubleXboxController::getRaiseClaw() {
-    if (xboxController1->GetAButton()) {
-        return true;
-    }
-    return false;
+    return xboxController1->GetAButton();
 }
 
+/**
+ * Determines whether to raise the claw based on if the first controller's
+ * B button is pressed
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-17-2019
+ * 
+ * @returns True if the claw should be lowered, false otherwise
+ */
 bool DoubleXboxController::getLowerClaw() {
-    if (xboxController1->GetBButton()) {
-        return true;
-    }
-    return false;
+    return xboxController1->GetBButton();
 }
 
-bool DoubleXboxController::getRaiseElevator() {
-    /*
-    if (xboxController2->getXButton()) {
-        return true;
-    }
-    */
-    return false;
-}
-
-bool DoubleXboxController::getLowerElevator() {
-    /*
-    if (xboxController2->GetYButton()) {
-        return true;
-    }
-    */
-    return false;
-}
-
+/**
+ * Determines what speed to operate the elevator at based on the
+ * Y axis value of the second controller's right joystick
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-17-2019
+ * 
+ * @returns A double on [-1, 1] representing what speed the elevator should drive at
+ */
 double DoubleXboxController::getElevatorSpeed() {
-    double stickY = xboxController2->GetY(frc::Joystick::JoystickHand::kRightHand);
-    if(stickY >= 0.3 || stickY <= -0.3) {
-        return stickY;
+    double right2Y = xboxController2->GetY(frc::Joystick::JoystickHand::kRightHand);
+    if(right2Y >= ELEVATOR_DEADZONE || right2Y <= -ELEVATOR_DEADZONE) {
+        return right2Y;
     }
     return 0;
 }
 
+/**
+ * Determines whether to run the front cargo out based on if the second controller's
+ * left bumper is pressed
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-17-2019
+ * 
+ * @returns True if the front cargo out should run, false otherwise
+ */
 bool DoubleXboxController::getRunFrontOut() {
-    if (xboxController2->GetBumper(frc::Joystick::JoystickHand::kLeftHand)) {
-        return true;
-    }
-    return false;
+    return xboxController2->GetBumper(frc::Joystick::JoystickHand::kLeftHand);
 }
 
+/**
+ * Determines whether to run the back cargo out based on if the second controller's
+ * right bumper is pressed
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-17-2019
+ * 
+ * @returns True if the back cargo out should run, false otherwise
+ */
 bool DoubleXboxController::getRunBackOut() {
-    if (xboxController2->GetBumper(frc::Joystick::JoystickHand::kRightHand)) {
-        return true;
-    }
-    return false;
+    return xboxController2->GetBumper(frc::Joystick::JoystickHand::kRightHand);
 }
 
+/**
+ * Determines whether to run the cargo intake based on if the second controller's
+ * left trigger is pressed
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-17-2019
+ * 
+ * @returns True if the cargo intake should run, false otherwise
+ */
 bool DoubleXboxController::getRunIntake() {
-    if (xboxController2->GetTriggerAxis(frc::Joystick::JoystickHand::kLeftHand) > 0.3) {
-        return true;
-    }
-    return false;
+    return xboxController2->GetTriggerAxis(frc::Joystick::JoystickHand::kLeftHand) > 0.3;
 }
 
+/**
+ * Determines whether to set the Limelight to vision mode based on if the first
+ * controller's start button is pressed
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-17-2019
+ * 
+ * @returns True if the Limelight should be switched to vision mode, false otherwise
+ */
 bool DoubleXboxController::getSetLimelightVision() {
-    if (xboxController1->GetStartButton()) {
-        return true;
-    }
-    return false;
+    return xboxController1->GetStartButton();
 }
 
+/**
+ * Determines whether to set the Limelight to camera mode based on if the first
+ * controller's back button is pressed
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-17-2019
+ * 
+ * @returns True if the Limelight should be switched to camera mode, false otherwise
+ */
 bool DoubleXboxController::getSetLimelightCamera() {
-    if (xboxController1->GetBackButton()) {
-        return true;
-    }
-    return false;
+    return xboxController1->GetBackButton();
 }
