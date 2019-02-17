@@ -1,10 +1,10 @@
-#include "Auto/NullAuto.h"
+#include "Auto/LimelightTest.h"
 
 /**
- * Initializes the null auto routine
+ * Initializes the Limelight test auto routine
  * 
  * @author Dominic Rutkowski
- * @since 2-15-2019
+ * @since 2-17-2019
  * 
  * @param *driveBase A pointer to the DriveBase subsystem
  * @param *claw A pointer to the Claw subsystem
@@ -12,24 +12,31 @@
  * @param *bling A pointer to the Bling subsystem
  * @param *Cargo A pointer to the Cargo subsystem
  */ 
-NullAuto::NullAuto(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo):
+LimelightTest::LimelightTest(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo):
 AutoRoutine(driveBase, claw, elevator, bling, cargo)
 {
     autoState = AutoState::init;
 }
 
 /**
- * Sits on the HAB platform for 15 seconds
+ * Drives to the Limelight vision target
  * 
  * @author Dominic Rutkowski
- * @since 2-10-2019
+ * @since 2-17-2019
  */ 
-void NullAuto::run() {
+void LimelightTest::run() {
     switch (autoState) {
         case AutoState::init:
             driveBase->resetEncoders();
             driveBase->updateNavx();
-            autoState = AutoState::done;
+            autoState = AutoState::limelightTest;
+            break;
+        case AutoState::limelightTest:
+            if (driveBase->driveToReflection(0.25)) {
+                driveBase->resetEncoders();
+                driveBase->updateNavx();
+                autoState = AutoState::done;
+            }
             break;
         case AutoState::done:
             break;

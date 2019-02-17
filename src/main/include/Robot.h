@@ -16,6 +16,7 @@
 #include "Auto/AutoRoutine.h"
 #include "Auto/AutoTest.h"
 #include "Auto/NullAuto.h"
+#include "Auto/LimelightTest.h"
 
 #include "Controls/GenericController.h"
 #include "Controls/SingleXboxController.h"

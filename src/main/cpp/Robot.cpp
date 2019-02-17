@@ -63,7 +63,7 @@ void Robot::AutonomousInit() {
     }
 
     driveBase->setLimelightVision();
-    autoRoutine = new NullAuto(driveBase, claw, elevator, bling, cargo);
+    autoRoutine = new LimelightTest(driveBase, claw, elevator, bling, cargo);
 }
 
 void Robot::AutonomousPeriodic() {

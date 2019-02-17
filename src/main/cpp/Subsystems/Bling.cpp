@@ -12,6 +12,6 @@ Bling::~Bling() {
     delete blinkin;   
 }
 
-Bling::RunLEDStrip(double pattern) {
+void Bling::RunLEDStrip(double pattern) {
     blinkin->Set(pattern);
 }
