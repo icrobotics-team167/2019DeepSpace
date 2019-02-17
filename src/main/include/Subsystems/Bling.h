@@ -7,17 +7,13 @@
 
 class Bling {
 private:
-    // LEDs
-    frc::DigitalOutput *leftLED;
-    frc::DigitalOutput *rightLED;
-
-    // Line-tracking sensors
-    frc::AnalogInput *lightSensorLeft;
-    frc::AnalogInput *lightSensorMiddle;
-    frc::AnalogInput *lightSensorRight;
+    // Blinkin
+    frc::Spark *blinkin;
+    double patternVal;
 public:
     Bling();
     ~Bling();
+    void RunLEDStrip(double pattern);
 };
 
 #endif
