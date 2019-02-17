@@ -9,92 +9,65 @@ SingleXboxController::~SingleXboxController() {
 }
 
 double SingleXboxController::getDrivetrainLeftSpeed() {
-    return -xboxController->GetY(frc::Joystick::JoystickHand::kLeftHand);
+    double leftY = -xboxController->GetY(frc::Joystick::JoystickHand::kLeftHand);
+    if (leftY >= DRIVETRAIN_DEADZONE || leftY <= -DRIVETRAIN_DEADZONE) {
+        return leftY;
+    }
+    return 0;
 }
 
 double SingleXboxController::getDrivetrainRightSpeed() {
-    return -xboxController->GetY(frc::Joystick::JoystickHand::kRightHand);
+    double rightY = -xboxController->GetY(frc::Joystick::JoystickHand::kRightHand);
+    if (rightY >= DRIVETRAIN_DEADZONE || rightY <= DRIVETRAIN_DEADZONE) {
+        return rightY;
+    }
+    return 0;
 }
 
 bool SingleXboxController::getOpenClaw() {
-    if (xboxController->GetTriggerAxis(frc::Joystick::JoystickHand::kRightHand) > 0.3) {
-        return true;
-    }
-    return false;
+    return xboxController->GetTriggerAxis(frc::Joystick::JoystickHand::kRightHand) > 0.3;
 }
 
 bool SingleXboxController::getCloseClaw() {
-    if (xboxController->GetTriggerAxis(frc::Joystick::JoystickHand::kLeftHand) > 0.3) {
-        return true;
-    }
-    return false;
+    return xboxController->GetTriggerAxis(frc::Joystick::JoystickHand::kLeftHand) > 0.3;
 }
 
 bool SingleXboxController::getSetHighGear() {
-    if (xboxController->GetBumper(frc::Joystick::JoystickHand::kRightHand)) {
-        return true;
-    }
-    return false;
+    return xboxController->GetBumper(frc::Joystick::JoystickHand::kRightHand);
 }
 
 bool SingleXboxController::getSetLowGear() {
-    if (xboxController->GetBumper(frc::Joystick::JoystickHand::kLeftHand)) {
-        return true;
-    }
-    return false;
+    return xboxController->GetBumper(frc::Joystick::JoystickHand::kLeftHand);
 }
 
 bool SingleXboxController::getRaiseClaw() {
-    if (xboxController->GetAButton()) {
-        return true;
-    }
-    return false;
+    return xboxController->GetAButton();
 }
 
 bool SingleXboxController::getLowerClaw() {
-    if (xboxController->GetBButton()) {
-        return true;
-    }
-    return false;
-}
-
-bool SingleXboxController::getRaiseElevator() {
-    if (xboxController->GetXButton()) {
-        return true;
-    }
-    return false;
-}
-
-bool SingleXboxController::getLowerElevator() {
-    if (xboxController->GetYButton()) {
-        return true;
-    }
-    return false;
+    return xboxController->GetBButton();
 }
 
 double SingleXboxController::getElevatorSpeed() {
+    if (xboxController->GetXButton()) {
+        return 1;
+    }
+    if (xboxController->GetYButton()) {
+        return -1;
+    }
     return 0;
 }
 
 bool SingleXboxController::getRunFrontOut() {
-    if (xboxController->GetStickButton(frc::Joystick::JoystickHand::kLeftHand)) {
-        return true;
-    }
-    return false;
+    return xboxController->GetStickButton(frc::Joystick::JoystickHand::kLeftHand);
 }
 
 bool SingleXboxController::getRunBackOut() {
-    if (xboxController->GetStickButton(frc::Joystick::JoystickHand::kRightHand)) {
-        return true;
-    }
-    return false;
+    return xboxController->GetStickButton(frc::Joystick::JoystickHand::kRightHand);
 }
 
 bool SingleXboxController::getRunIntake() {
-    if (xboxController->GetStartButton()) {
-        return true;
-    }
-    return false;
+    return xboxController->GetStartButton();
 }
 
 bool SingleXboxController::getSetLimelightVision() {

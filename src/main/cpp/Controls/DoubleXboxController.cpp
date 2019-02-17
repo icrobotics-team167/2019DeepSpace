@@ -11,120 +11,69 @@ DoubleXboxController::~DoubleXboxController() {
 }
 
 double DoubleXboxController::getDrivetrainLeftSpeed() {
-    double yVal = -xboxController1->GetY(frc::Joystick::JoystickHand::kLeftHand);
-    if (yVal >= DRIVETRAIN_DEADZONE || yVal <= -DRIVETRAIN_DEADZONE) {
-        return yVal;
+    double left1Y = -xboxController1->GetY(frc::Joystick::JoystickHand::kLeftHand);
+    if (left1Y >= DRIVETRAIN_DEADZONE || left1Y <= -DRIVETRAIN_DEADZONE) {
+        return left1Y;
     }
     return 0;
 }
 
 double DoubleXboxController::getDrivetrainRightSpeed() {
-    double yVal = -xboxController1->GetY(frc::Joystick::JoystickHand::kRightHand);
-    if (yVal >= DRIVETRAIN_DEADZONE || yVal <= -DRIVETRAIN_DEADZONE) {
-        return yVal;
+    double right1Y = -xboxController1->GetY(frc::Joystick::JoystickHand::kRightHand);
+    if (right1Y >= DRIVETRAIN_DEADZONE || right1Y <= -DRIVETRAIN_DEADZONE) {
+        return right1Y;
     }
     return 0;
 }
 
 bool DoubleXboxController::getOpenClaw() {
-    if (xboxController1->GetTriggerAxis(frc::Joystick::JoystickHand::kRightHand) > 0.3) {
-        return true;
-    }
-    return false;
+    return xboxController1->GetTriggerAxis(frc::Joystick::JoystickHand::kRightHand) > 0.3;
 }
 
 bool DoubleXboxController::getCloseClaw() {
-    if (xboxController1->GetTriggerAxis(frc::Joystick::JoystickHand::kLeftHand) > 0.3) {
-        return true;
-    }
-    return false;
+    return xboxController1->GetTriggerAxis(frc::Joystick::JoystickHand::kLeftHand) > 0.3;
 }
 
 bool DoubleXboxController::getSetHighGear() {
-    if (xboxController1->GetBumper(frc::Joystick::JoystickHand::kRightHand)) {
-        return true;
-    }
-    return false;
+    return xboxController1->GetBumper(frc::Joystick::JoystickHand::kRightHand);
 }
 
 bool DoubleXboxController::getSetLowGear() {
-    if (xboxController1->GetBumper(frc::Joystick::JoystickHand::kLeftHand)) {
-        return true;
-    }
-    return false;
+    return xboxController1->GetBumper(frc::Joystick::JoystickHand::kLeftHand);
 }
 
 bool DoubleXboxController::getRaiseClaw() {
-    if (xboxController1->GetAButton()) {
-        return true;
-    }
-    return false;
+    return xboxController1->GetAButton();
 }
 
 bool DoubleXboxController::getLowerClaw() {
-    if (xboxController1->GetBButton()) {
-        return true;
-    }
-    return false;
-}
-
-bool DoubleXboxController::getRaiseElevator() {
-    /*
-    if (xboxController2->getXButton()) {
-        return true;
-    }
-    */
-    return false;
-}
-
-bool DoubleXboxController::getLowerElevator() {
-    /*
-    if (xboxController2->GetYButton()) {
-        return true;
-    }
-    */
-    return false;
+    return xboxController1->GetBButton();
 }
 
 double DoubleXboxController::getElevatorSpeed() {
-    double stickY = xboxController2->GetY(frc::Joystick::JoystickHand::kRightHand);
-    if(stickY >= 0.3 || stickY <= -0.3) {
-        return stickY;
+    double right2Y = xboxController2->GetY(frc::Joystick::JoystickHand::kRightHand);
+    if(right2Y >= ELEVATOR_DEADZONE || right2Y <= -ELEVATOR_DEADZONE) {
+        return right2Y;
     }
     return 0;
 }
 
 bool DoubleXboxController::getRunFrontOut() {
-    if (xboxController2->GetBumper(frc::Joystick::JoystickHand::kLeftHand)) {
-        return true;
-    }
-    return false;
+    return xboxController2->GetBumper(frc::Joystick::JoystickHand::kLeftHand);
 }
 
 bool DoubleXboxController::getRunBackOut() {
-    if (xboxController2->GetBumper(frc::Joystick::JoystickHand::kRightHand)) {
-        return true;
-    }
-    return false;
+    return xboxController2->GetBumper(frc::Joystick::JoystickHand::kRightHand);
 }
 
 bool DoubleXboxController::getRunIntake() {
-    if (xboxController2->GetTriggerAxis(frc::Joystick::JoystickHand::kLeftHand) > 0.3) {
-        return true;
-    }
-    return false;
+    return xboxController2->GetTriggerAxis(frc::Joystick::JoystickHand::kLeftHand) > 0.3;
 }
 
 bool DoubleXboxController::getSetLimelightVision() {
-    if (xboxController1->GetStartButton()) {
-        return true;
-    }
-    return false;
+    return xboxController1->GetStartButton();
 }
 
 bool DoubleXboxController::getSetLimelightCamera() {
-    if (xboxController1->GetBackButton()) {
-        return true;
-    }
-    return false;
+    return xboxController1->GetBackButton();
 }
