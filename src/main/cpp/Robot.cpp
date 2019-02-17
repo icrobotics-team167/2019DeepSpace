@@ -83,7 +83,7 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
-    bling->RunLEDStrip(0.53);
+    //bling->RunLEDStrip(0.53);
     // Driving
     double leftY = controller->getDrivetrainLeftSpeed();
     double rightY = controller->getDrivetrainRightSpeed();
@@ -99,12 +99,15 @@ void Robot::TeleopPeriodic() {
     // Open and close claw
     if (controller->getCloseClaw()) {
         claw->closeClaw();
+        bling->RunLEDStrip(0.53);
     } else if (controller->getOpenClaw()) {
         claw->openClaw();
+        bling->RunLEDStrip(0.57);
     }
 
     // Gear shifting
     if (controller->getSetLowGear()) {
+        bling->RunLEDStrip(0.67);
         driveBase->setLowGear();
     } else if (controller->getSetHighGear()) {
         driveBase->setHighGear();
