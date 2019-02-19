@@ -7,13 +7,14 @@
 
 class Bling {
 private:
-    // Blinkin
-    frc::Spark *blinkin;
-    double patternVal;
+    // Blinkins
+    frc::Spark *leftBlinkin;
+    frc::Spark *rightBlinkin;
 public:
     Bling();
     ~Bling();
-    void RunLEDStrip(double pattern);
+    void RunLeftLEDStrip(double pattern);
+    void RunRightLEDStrip(double pattern);
 };
 
 #endif

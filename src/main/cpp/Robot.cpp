@@ -79,11 +79,13 @@ void Robot::AutonomousPeriodic() {
 void Robot::TeleopInit() {
     controller = new DoubleXboxController();
     driveBase->setLimelightCamera();
+    driveBase->setHighGear();
+    bling->RunLeftLEDStrip(0.77); // green
+    bling->RunRightLEDStrip(0.77);
     claw->moveClawDown();
 }
 
 void Robot::TeleopPeriodic() {
-    bling->RunLEDStrip(0.53);
     // Driving
     double leftY = controller->getDrivetrainLeftSpeed();
     double rightY = controller->getDrivetrainRightSpeed();
@@ -106,8 +108,12 @@ void Robot::TeleopPeriodic() {
     // Gear shifting
     if (controller->getSetLowGear()) {
         driveBase->setLowGear();
+        bling->RunLeftLEDStrip(0.69); // yellow
+        bling->RunRightLEDStrip(0.69); 
     } else if (controller->getSetHighGear()) {
         driveBase->setHighGear();
+        bling->RunLeftLEDStrip(0.77); // green
+        bling->RunRightLEDStrip(0.77);
     }
 
     // Claw raising and lowering
@@ -146,6 +152,11 @@ void Robot::TeleopPeriodic() {
         driveBase->setLimelightVision();
     } else if (controller->getSetLimelightCamera()) {
         driveBase->setLimelightCamera();
+    }
+
+    if (elevator->atMiddle()) {
+        bling->RunLeftLEDStrip(0.61); // red
+        bling->RunRightLEDStrip(0.61);
     }
 
     SmartDashboard::PutNumber("Left encoder: ", driveBase->getLeftEncoder()->Get());

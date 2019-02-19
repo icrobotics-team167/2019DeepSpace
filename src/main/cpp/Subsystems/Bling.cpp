@@ -1,17 +1,21 @@
 #include "Subsystems/Bling.h"
 
 Bling::Bling() {
-    // Blinkin
-    blinkin = new frc::Spark(BLINKIN);
-
-    double patternVal;
+    // Blinkins
+    leftBlinkin = new frc::Spark(LEFT_BLINKIN);
+    rightBlinkin = new frc::Spark(RIGHT_BLINKIN);
 }
 
 Bling::~Bling() {
-    // Blinkin
-    delete blinkin;   
+    // Blinkins
+    delete leftBlinkin; 
+    delete rightBlinkin;  
 }
 
-void Bling::RunLEDStrip(double pattern) {
-    blinkin->Set(pattern);
+void Bling::RunLeftLEDStrip(double pattern) {
+    leftBlinkin->Set(pattern);
+}
+
+void Bling::RunRightLEDStrip(double pattern) {
+    rightBlinkin->Set(pattern);
 }
