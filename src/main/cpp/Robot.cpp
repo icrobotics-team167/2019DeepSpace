@@ -123,15 +123,6 @@ void Robot::TeleopPeriodic() {
         claw->moveClawDown();
     }
 
-    // // Elevator raising and lowering
-    // if (controller->getRaiseElevator()) {
-    //     elevator->raiseElevator(1);
-    // } else if (controller->getLowerElevator()) {
-    //     elevator->lowerElevator(1);
-    // } else {
-    //     elevator->stopElevator();
-    // }
-
     elevator->raiseElevator(controller->getElevatorSpeed());
 
     // Cargo out
