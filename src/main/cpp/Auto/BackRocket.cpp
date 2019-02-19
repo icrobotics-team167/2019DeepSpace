@@ -32,6 +32,11 @@ void BackRocket::run() {
             driveBase->setLowGear();
             driveBase->setLimelightVision();
             claw->moveClawDown();
+            autoState = AutoState::openClaw;
+            Wait(0.5);
+            break;
+        case AutoState::openClaw:
+            claw->openClaw();
             autoState = AutoState::driveOffHAB;
             Wait(0.1);
             break;
@@ -44,7 +49,7 @@ void BackRocket::run() {
             }
             break;
         case AutoState::alignWithBack:
-            if (driveBase->pointTurn(-20, 0.3)) {
+            if (driveBase->pointTurn(-20, 0.5)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 driveBase->setHighGear();
@@ -53,7 +58,7 @@ void BackRocket::run() {
             }
             break;
         case AutoState::driveBack:
-            if (driveBase->straightDrive(166, -1)) {
+            if (driveBase->straightDrive(160, -1)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 driveBase->setLowGear();
@@ -62,7 +67,7 @@ void BackRocket::run() {
             }
             break;
         case AutoState::turnToRocket:
-            if (driveBase->pointTurn(40, 0.3)) {
+            if (driveBase->pointTurn(45, 0.5)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 autoState = AutoState::driveToRocket;
@@ -70,7 +75,7 @@ void BackRocket::run() {
             }
             break;
         case AutoState::driveToRocket:
-            if (driveBase->driveToReflection(0.25)) {
+            if (driveBase->driveToReflection(0.35)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 autoState = AutoState::driveIntoRocket;
@@ -78,23 +83,83 @@ void BackRocket::run() {
             }
             break;
         case AutoState::driveIntoRocket:
-            if (driveBase->straightDrive(27, 0.75)) {
+            if (driveBase->straightDrive(27, 0.55)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 autoState = AutoState::score;
-                Wait(0.3);
+                Wait(0.6);
             }
             break;
         case AutoState::score:
             claw->closeClaw();
-            if (driveBase->straightDrive(10, -0.6)) {
+            if (driveBase->straightDrive(64, -1)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
-                autoState = AutoState::done;
+                autoState = AutoState::turnTowardsHumanPlayer;
                 Wait(0.1);
             }
             break;
+        case AutoState::turnTowardsHumanPlayer:
+            if (driveBase->pointTurn(-15, 0.5)) {
+                driveBase->resetEncoders();
+                driveBase->updateNavx();
+                driveBase->setHighGear();
+                autoState = AutoState::driveToHumanPlayer;
+                Wait(0.1);
+            }
+            break;
+        case AutoState::driveToHumanPlayer:
+            if (driveBase->straightDrive(150, 1)) {
+                driveBase->resetEncoders();
+                driveBase->updateNavx();
+                driveBase->setLowGear();
+                autoState = AutoState::driveCloserToHumanPlayer;
+                Wait(0.1);
+            }
+            break;
+        case AutoState::driveCloserToHumanPlayer:
+            if (driveBase->driveToReflection(0.35)) {
+                driveBase->resetEncoders();
+                driveBase->updateNavx();
+                autoState = AutoState::driveIntoHumanPlayer;
+                Wait(0.2);
+            }
+            break;
+        case AutoState::driveIntoHumanPlayer:
+            if (driveBase->straightDrive(24, 0.5)) {
+                driveBase->resetEncoders();
+                driveBase->updateNavx();
+                autoState = AutoState::pickUpHatch;
+                Wait(0.3);
+            }
+            break;
+        case AutoState::pickUpHatch:
+            claw->openClaw();
+            if (driveBase->straightDrive(20, -0.5)) {
+                driveBase->resetEncoders();
+                driveBase->updateNavx();
+                autoState = AutoState::turn180;
+                Wait(0.1);
+            }
+            break;
+        case AutoState::turn180:
+            if (driveBase->pointTurn(-158, 1)) {
+                driveBase->resetEncoders();
+                driveBase->updateNavx();
+                autoState = AutoState::startToRocketAgain;
+                Wait(0.1);
+            }
+            break;
+        case AutoState::startToRocketAgain:
+            if (driveBase->driveToReflection(0.45)) {
+                driveBase->resetEncoders();
+                driveBase->updateNavx();
+                autoState = AutoState::done;
+                Wait(0.2);
+            }
+            break;
         case AutoState::done:
+            driveBase->setHighGear();
             break;
     }
 }

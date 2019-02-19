@@ -23,7 +23,7 @@ Claw::~Claw() {
  * @since 2-9-2019
  */
 void Claw::openClaw() {
-    clawSolenoid->Set(false);
+    clawSolenoid->Set(true);
 }
 
 /**
@@ -33,7 +33,7 @@ void Claw::openClaw() {
  * @since 2-9-2019
  */
 void Claw::closeClaw() {
-    clawSolenoid->Set(true);
+    clawSolenoid->Set(false);
 }
 
 /**

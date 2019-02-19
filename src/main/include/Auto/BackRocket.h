@@ -6,7 +6,9 @@
 class BackRocket : public AutoRoutine {
 private:
     enum class AutoState {
-        init, driveOffHAB, alignWithBack, driveBack, turnToRocket, driveToRocket, driveIntoRocket, score, done
+        init, openClaw, driveOffHAB, alignWithBack, driveBack, turnToRocket, driveToRocket, driveIntoRocket, score,
+        backOffFromRocket, turnTowardsHumanPlayer, driveToHumanPlayer, driveCloserToHumanPlayer, driveIntoHumanPlayer,
+        pickUpHatch, turnToRocketAgain, driveTowardsFrontRocket, driveIntoRocketAgain, scoreAgain, turn180, startToRocketAgain, done
     };
     AutoState autoState;
 public:
