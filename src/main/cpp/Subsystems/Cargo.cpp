@@ -95,8 +95,8 @@ void Cargo::stopBack() {
  * @since 2-17-2019 
  */
 void Cargo::ejectCargo() {
-    runFront(1);
-    runBack(1);
+    runFront(0.6);
+    runBack(0.6);
 }
 
 /**
