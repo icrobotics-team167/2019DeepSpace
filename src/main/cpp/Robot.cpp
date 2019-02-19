@@ -158,6 +158,14 @@ void Robot::TeleopPeriodic() {
         bling->RunLeftLEDStrip(0.61); // red
         bling->RunRightLEDStrip(0.61);
     }
+    else if (driveBase->getIsInHighGear()) {
+        bling->RunLeftLEDStrip(0.77); // green
+        bling->RunRightLEDStrip(0.77);
+    }
+    else {
+        bling->RunLeftLEDStrip(0.69); // yellow
+        bling->RunRightLEDStrip(0.69);
+    }
 
     SmartDashboard::PutNumber("Left encoder: ", driveBase->getLeftEncoder()->Get());
     SmartDashboard::PutNumber("Right encoder: ", driveBase->getRightEncoder()->Get()); 

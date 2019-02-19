@@ -34,6 +34,9 @@ private:
     // Drivetrain encoders
     frc::Encoder *leftEncoder;
     frc::Encoder *rightEncoder;
+
+    // Current gear
+    bool isInHighGear;
 public:
     DriveBase();
     ~DriveBase();
@@ -78,6 +81,8 @@ public:
     bool limelightVision = true;
     void setLimelightVision();
     void setLimelightCamera();
+
+    bool getIsInHighGear();
 };
 
 #endif

@@ -29,6 +29,9 @@ DriveBase::DriveBase() {
     // Drivetrain encoders
     leftEncoder = new frc::Encoder(LEFT_ENCODER_A, LEFT_ENCODER_B, true);
     rightEncoder = new frc::Encoder(RIGHT_ENCODER_A, RIGHT_ENCODER_B, true);
+
+    // Current gear
+    bool isInHighGear;
 }
 
 DriveBase::~DriveBase() {
@@ -224,6 +227,7 @@ bool DriveBase::driveToReflection(double speed) {
  */
 void DriveBase::setLowGear() {
     gearShifterSolenoid->Set(true);
+    isInHighGear = false;
 }
 
 /**
@@ -234,6 +238,7 @@ void DriveBase::setLowGear() {
  */
 void DriveBase::setHighGear() {
     gearShifterSolenoid->Set(false);
+    isInHighGear = true;
 }
 
 /**
@@ -332,4 +337,8 @@ void DriveBase::setLimelightVision() {
 
 void DriveBase::setLimelightCamera() {
     limelightVision = false;
+}
+
+bool DriveBase::getIsInHighGear() {
+    return isInHighGear;
 }
