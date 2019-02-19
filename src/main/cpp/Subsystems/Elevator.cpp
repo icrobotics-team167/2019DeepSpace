@@ -37,3 +37,7 @@ void Elevator::lowerElevator(double speed) {
 void Elevator::stopElevator() {
     talon->Set(ControlMode::PercentOutput, 0);
 }
+
+bool Elevator::atMiddle() {
+    return !middleLimitSwitch->Get();
+} 

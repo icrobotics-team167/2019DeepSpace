@@ -24,6 +24,7 @@ public:
     void raiseElevator(double speed);
     void lowerElevator(double speed);
     void stopElevator();
+    bool atMiddle();
 };
 
 #endif
