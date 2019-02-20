@@ -25,6 +25,9 @@ public:
     bool getRunIntake() override;
     bool getSetLimelightVision() override;
     bool getSetLimelightCamera() override;
+    bool getDriveWithLimelight() override;
+    bool getDriveStraight() override;
+    bool getDriveStraightReverse() override;
 };
 
 #endif

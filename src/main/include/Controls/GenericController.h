@@ -18,6 +18,9 @@ public:
     virtual bool getRunIntake() = 0;
     virtual bool getSetLimelightVision() = 0;
     virtual bool getSetLimelightCamera() = 0;
+    virtual bool getDriveWithLimelight() = 0;
+    virtual bool getDriveStraight() = 0;
+    virtual bool getDriveStraightReverse() = 0;
 };
 
 #endif

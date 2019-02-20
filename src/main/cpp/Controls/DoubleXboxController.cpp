@@ -203,3 +203,39 @@ bool DoubleXboxController::getSetLimelightVision() {
 bool DoubleXboxController::getSetLimelightCamera() {
     return xboxController1->GetBackButton();
 }
+
+/**
+ * Determines whether to drive with the Limelight
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-19-2019
+ * 
+ * @returns True if the robot should drive with the Limelight, false otherwise
+ */
+bool DoubleXboxController::getDriveWithLimelight() {
+    return xboxController1->GetXButton();
+}
+
+/**
+ * Determines whether to drive straight
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-19-2019
+ * 
+ * @returns True if the robot should drive straight, false otherwise
+ */
+bool DoubleXboxController::getDriveStraight() {
+    return xboxController1->GetPOV() == 0;
+}
+
+/**
+ * Determines whether to drive straight in reverse
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-19-2019
+ * 
+ * @returns True if the robot should drive straight in reverse, false otherwise
+ */
+bool DoubleXboxController::getDriveStraightReverse() {
+    return xboxController1->GetPOV() == 180;
+}

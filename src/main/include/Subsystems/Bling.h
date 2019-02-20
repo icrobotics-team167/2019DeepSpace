@@ -7,15 +7,26 @@
 
 class Bling {
 private:
-    // Blinkin
-    frc::Spark *blinkin1;
-    frc::Spark *blinkin2;
-    double patternVal;
+    // Blinkins
+    frc::Spark *leftBlinkin;
+    frc::Spark *rightBlinkin;
 public:
     Bling();
     ~Bling();
-    void RunLEDStrip1(double pattern);
-    void RunLEDStrip2(double pattern);
+    void RunLeftLEDStrip(double pattern);
+    void RunRightLEDStrip(double pattern);
+
+    /*
+    static const double SOLID_PINK;
+    static const double SOLID_RED;
+    static const double SOLID_ORANGE;
+    static const double SOLID_GOLD;
+    static const double SOLID_YELLOW;
+    static const double SOLID_GREEN;
+    static const double SOLID_BLUE;
+    static const double SOLID_VIOLET;
+    static const double SOLID_WHITE;
+    */
 };
 
 #endif

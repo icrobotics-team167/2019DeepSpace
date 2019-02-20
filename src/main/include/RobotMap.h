@@ -53,9 +53,9 @@
 #define ELEVATOR_LIMIT_SWITCH_TOP 8
 
 // ***** Bling *****
-// Blinkin
-#define BLINKIN1 0
-#define BLINKIN2 1
+// Blinkin LED strips
+#define LEFT_BLINKIN 0
+#define RIGHT_BLINKIN 1
 
 // ***** Cargo *****
 // Cargo intake

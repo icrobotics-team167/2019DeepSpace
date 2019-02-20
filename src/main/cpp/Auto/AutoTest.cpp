@@ -33,22 +33,24 @@ void AutoTest::run() {
         case AutoState::init:
             driveBase->resetEncoders();
             driveBase->updateNavx();
+            driveBase->setLowGear();
             autoState = AutoState::drive100;
             break;
         case AutoState::drive100:
-            if (driveBase->straightDrive(100, 0.3)) {
-                driveBase->updateNavx();
-                autoState = AutoState::turn180;
-            }
-            break;
-        case AutoState::turn180:
-            if (driveBase->pointTurn(180, 0.3)) {
-                driveBase->drive(0, 0);
+            if (driveBase->straightDrive(150, 0.3)) {
                 driveBase->updateNavx();
                 autoState = AutoState::done;
             }
             break;
+        // case AutoState::turn180:
+        //     if (driveBase->pointTurn(180, 0.3)) {
+        //         driveBase->drive(0, 0);
+        //         driveBase->updateNavx();
+        //         autoState = AutoState::done;
+        //     }
+        //     break;
         case AutoState::done:
+            driveBase->drive(0, 0);
             break;
     }
     SmartDashboard::PutNumber("Left encoder: ", leftEncoder->Get());

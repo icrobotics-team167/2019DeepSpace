@@ -63,7 +63,7 @@ void Robot::AutonomousInit() {
     }
 
     driveBase->setLimelightVision();
-    autoRoutine = new LimelightTest(driveBase, claw, elevator, bling, cargo);
+    autoRoutine = new BackRocket(driveBase, claw, elevator, bling, cargo);
 }
 
 void Robot::AutonomousPeriodic() {
@@ -79,17 +79,32 @@ void Robot::AutonomousPeriodic() {
 void Robot::TeleopInit() {
     controller = new SingleXboxController();
     driveBase->setLimelightCamera();
+    driveBase->setHighGear();
+    bling->RunLeftLEDStrip(0.77); // green
+    bling->RunRightLEDStrip(0.77);
     claw->moveClawDown();
     driveBase->setHighGear();
-    bling->RunLEDStrip1(0.77); // green
-    bling->RunLEDStrip2(0.77);
+    bling->RunLeftLEDStrip(0.77); // green
+    bling->RunRightLEDStrip(0.77);
 }
 
 void Robot::TeleopPeriodic() {
     // Driving
     double leftY = controller->getDrivetrainLeftSpeed();
     double rightY = controller->getDrivetrainRightSpeed();
-    driveBase->drive(leftY, rightY);
+    
+    if (controller->getDriveWithLimelight()) {
+        driveBase->driveToReflection(0.35);
+    } else if (controller->getDriveStraight()) {
+        driveBase->straightDrive(1, rightY == 0 ? 0.2 : rightY);
+        driveBase->resetEncoders();
+    } else if (controller->getDriveStraightReverse()) {
+        driveBase->straightDrive(1, rightY == 0 ? -0.2 : -rightY);
+        driveBase->resetEncoders();
+    } else {
+        driveBase->drive(leftY, rightY);
+    }
+
     driveBase->updateNavx();
     
     // Open and close claw
@@ -106,12 +121,12 @@ void Robot::TeleopPeriodic() {
     // Gear shifting
     if (controller->getSetLowGear()) {
         driveBase->setLowGear();
-        bling->RunLEDStrip1(0.69); // gold
-        bling->RunLEDStrip2(0.69);
+        bling->RunLeftLEDStrip(0.69); // yellow
+        bling->RunRightLEDStrip(0.69); 
     } else if (controller->getSetHighGear()) {
         driveBase->setHighGear();
-        bling->RunLEDStrip1(0.77); // green
-        bling->RunLEDStrip2(0.77);
+        bling->RunLeftLEDStrip(0.77); // green
+        bling->RunRightLEDStrip(0.77);
     }
 
     // Claw raising and lowering
@@ -124,15 +139,6 @@ void Robot::TeleopPeriodic() {
         //bling->RunLEDStrip1(0);
         //bling->RunLEDStrip1(0);
     }
-
-    // // Elevator raising and lowering
-    // if (controller->getRaiseElevator()) {
-    //     elevator->raiseElevator(1);
-    // } else if (controller->getLowerElevator()) {
-    //     elevator->lowerElevator(1);
-    // } else {
-    //     elevator->stopElevator();
-    // }
 
     elevator->raiseElevator(controller->getElevatorSpeed());
 
@@ -154,7 +160,23 @@ void Robot::TeleopPeriodic() {
         driveBase->setLimelightVision();
     } else if (controller->getSetLimelightCamera()) {
         driveBase->setLimelightCamera();
-    } 
+    }
+
+    if (elevator->atMiddle()) {
+        bling->RunLeftLEDStrip(0.61); // red
+        bling->RunRightLEDStrip(0.61);
+    }
+    else if (driveBase->getIsInHighGear()) {
+        bling->RunLeftLEDStrip(0.77); // green
+        bling->RunRightLEDStrip(0.77);
+    }
+    else {
+        bling->RunLeftLEDStrip(0.69); // yellow
+        bling->RunRightLEDStrip(0.69);
+    }
+
+    SmartDashboard::PutNumber("Left encoder: ", driveBase->getLeftEncoder()->Get());
+    SmartDashboard::PutNumber("Right encoder: ", driveBase->getRightEncoder()->Get()); 
 }
 
 void Robot::TestPeriodic() {}
