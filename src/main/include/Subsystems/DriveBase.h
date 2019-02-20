@@ -49,8 +49,8 @@ public:
 
     bool driveToReflection(double speed);
 
-    const double LEFT_ENCODER_TICKS_PER_INCH = 116.619420989;
-    const double RIGHT_ENCODER_TICKS_PER_INCH = 116.193064549;
+    const double LEFT_ENCODER_TICKS_PER_INCH = 116.711067093;
+    const double RIGHT_ENCODER_TICKS_PER_INCH = 117.837349601;
 
     const double straightDriveKP = 0.02;
     const double straightDriveKI = 0.0001;
