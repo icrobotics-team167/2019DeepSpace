@@ -145,6 +145,39 @@ bool DriveBase::straightDrive(double inches, double speed) {
     return false;
 }
 
+void DriveBase::teleopStraightDrive(double speed) {
+    double rotationAngle = navx->GetAngle();
+    
+    double headingError = navxInitValue - rotationAngle;
+    double diffError = headingError - straightDrivePreviousError;   
+    
+    double leftSpeed = speed + (straightDriveKP * headingError + straightDriveKI * straightDriveTotalError + straightDriveKD * diffError);
+    double rightSpeed = speed - (straightDriveKP * headingError + straightDriveKI * straightDriveTotalError + straightDriveKD * diffError);
+
+   if (rightSpeed > 1) {
+        rightSpeed = 1;
+    }
+    if (rightSpeed < -1) {
+        rightSpeed = -1;
+    }
+    if (leftSpeed > 1) {
+        leftSpeed = 1;
+    }
+    if (leftSpeed < -1) {
+        leftSpeed = -1;
+    }
+
+    drive(leftSpeed, rightSpeed);
+
+    straightDrivePreviousError = headingError;
+    straightDriveTotalError += headingError;
+}
+
+void DriveBase::resetPID() {
+    straightDrivePreviousError = 0;
+    straightDriveTotalError = 0;
+}
+
 /**
  * Standard implementation of a point turn
  * 
@@ -212,6 +245,43 @@ bool DriveBase::driveToReflection(double speed) {
         }
         if (ta > 1.5) {
             setLowGear();
+        }
+        DriveBase::drive(leftSpeed, rightSpeed);
+        return false;
+    } else {
+        drive(0, 0);
+        return true;
+    }
+}
+
+bool DriveBase::teleopDriveToReflection(double speed) {
+    setLimelightVision();
+
+    double tx = getLimelightTx();
+    double ty = getLimelightTy();
+    double ta = getLimelightTa();
+    double ts = getLimelightTs();
+    double tv = getLimelightTv();
+
+    if (tv > 0) {
+        if (ta >= limelightTargetArea) {
+            return true;
+        }
+        double turn = tx * limelightSteerK;
+        double drive = (limelightTargetArea - ta) * speed;
+        double leftSpeed = drive + turn;
+        double rightSpeed = drive - turn;
+        if (leftSpeed > limelightMaxDriveSpeed) {
+            leftSpeed = limelightMaxDriveSpeed;
+        }
+        if (leftSpeed < -limelightMaxDriveSpeed) {
+            leftSpeed = -limelightMaxDriveSpeed;
+        }
+        if (rightSpeed > limelightMaxDriveSpeed) {
+            rightSpeed = limelightMaxDriveSpeed;
+        }
+        if (rightSpeed < -limelightMaxDriveSpeed) {
+            rightSpeed = -limelightMaxDriveSpeed;
         }
         DriveBase::drive(leftSpeed, rightSpeed);
         return false;

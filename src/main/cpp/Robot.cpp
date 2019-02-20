@@ -83,6 +83,8 @@ void Robot::TeleopInit() {
     bling->RunLeftLEDStrip(0.77); // green
     bling->RunRightLEDStrip(0.77);
     claw->moveClawDown();
+    Wait(0.5);
+    claw->openClaw();
 }
 
 void Robot::TeleopPeriodic() {
@@ -91,14 +93,15 @@ void Robot::TeleopPeriodic() {
     double rightY = controller->getDrivetrainRightSpeed();
     
     if (controller->getDriveWithLimelight()) {
-        driveBase->driveToReflection(0.35);
+        driveBase->teleopDriveToReflection(0.2);
     } else if (controller->getDriveStraight()) {
-        driveBase->straightDrive(1, rightY == 0 ? 0.2 : rightY);
+        driveBase->teleopStraightDrive(rightY == 0 ? 0.35 : rightY);
         driveBase->resetEncoders();
     } else if (controller->getDriveStraightReverse()) {
-        driveBase->straightDrive(1, rightY == 0 ? -0.2 : -rightY);
+        driveBase->teleopStraightDrive(rightY == 0 ? -0.35 : rightY);
         driveBase->resetEncoders();
     } else {
+        driveBase->resetPID();
         driveBase->drive(leftY, rightY);
     }
 

@@ -32,6 +32,7 @@ void BackRocket::run() {
             driveBase->setLowGear();
             driveBase->setLimelightVision();
             claw->moveClawDown();
+            Wait(0.5);
             autoState = AutoState::openClaw;
             Wait(0.5);
             break;
@@ -138,11 +139,11 @@ void BackRocket::run() {
             if (driveBase->straightDrive(20, -0.5)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
-                autoState = AutoState::turn180;
+                autoState = AutoState::turnToRocketAgain;
                 Wait(0.1);
             }
             break;
-        case AutoState::turn180:
+        case AutoState::turnToRocketAgain:
             if (driveBase->pointTurn(-158, 1)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
