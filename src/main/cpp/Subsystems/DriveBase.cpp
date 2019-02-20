@@ -182,6 +182,8 @@ bool DriveBase::pointTurn(double angle, double speed) {
  * @returns True if the drive is complete, false otherwise
  */
 bool DriveBase::driveToReflection(double speed) {
+    setLimelightVision();
+
     double tx = getLimelightTx();
     double ty = getLimelightTy();
     double ta = getLimelightTa();

@@ -89,13 +89,19 @@ void Robot::TeleopPeriodic() {
     // Driving
     double leftY = controller->getDrivetrainLeftSpeed();
     double rightY = controller->getDrivetrainRightSpeed();
-    if (leftY < 0.2 && leftY > -0.2) {
-        leftY = 0; 
+    
+    if (controller->getDriveWithLimelight()) {
+        driveBase->driveToReflection(0.35);
+    } else if (controller->getDriveStraight()) {
+        driveBase->straightDrive(1, rightY == 0 ? 0.2 : rightY);
+        driveBase->resetEncoders();
+    } else if (controller->getDriveStraightReverse()) {
+        driveBase->straightDrive(1, rightY == 0 ? -0.2 : -rightY);
+        driveBase->resetEncoders();
+    } else {
+        driveBase->drive(leftY, rightY);
     }
-    if (rightY < 0.2 && rightY > -0.2) {
-        rightY = 0;
-    }
-    driveBase->drive(leftY, rightY);
+
     driveBase->updateNavx();
     
     // Open and close claw
