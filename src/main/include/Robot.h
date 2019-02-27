@@ -19,6 +19,7 @@
 #include "Auto/LimelightTest.h"
 #include "Auto/FrontRocket.h"
 #include "Auto/BackRocket.h"
+#include "Auto/CargoShip.h"
 
 #include "Controls/GenericController.h"
 #include "Controls/SingleXboxController.h"

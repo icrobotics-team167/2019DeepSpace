@@ -45,9 +45,11 @@ public:
     void drive(double leftSpeed, double rightSpeed);
 
     bool straightDrive(double inches, double speed);
+    void teleopStraightDrive(double speed);
     bool pointTurn(double angle, double speed);
 
     bool driveToReflection(double speed);
+    bool teleopDriveToReflection(double speed);
 
     const double LEFT_ENCODER_TICKS_PER_INCH = 116.711067093;
     const double RIGHT_ENCODER_TICKS_PER_INCH = 117.837349601;
@@ -57,6 +59,8 @@ public:
     const double straightDriveKD = 0.01;
     double straightDrivePreviousError = 0;
     double straightDriveTotalError = 0;
+
+    void resetPID();
 
     const double limelightSteerK = 0.1;
     const double limelightTargetArea = 4;
