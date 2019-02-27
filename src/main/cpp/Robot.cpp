@@ -77,7 +77,7 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
-    controller = new SingleXboxController();
+    controller = new DoubleXboxController();
     driveBase->setLimelightCamera();
     driveBase->setHighGear();
     bling->RunLeftLEDStrip(0.77); // green
