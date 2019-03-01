@@ -6,7 +6,7 @@
 class CargoShip : public AutoRoutine {
 private:
     enum class AutoState {
-        init, openClaw, driveToCargoShipFront, driveIntoCargoShipFront, score,
+        init, openClaw, driveOffHAB, driveToCargoShipFront, driveIntoCargoShipFront, score,
         turnTowardsHumanPlayer, driveCloserToHumanPlayer, turnTowardsHumanPlayerAgain,
         driveToHumanPlayer, driveIntoHumanPlayer, pickUpHatch, turn180, driveFromHumanPlayer,
         turnTowardsCargoShip, driveCloserToCargoShip, turnTowardsCargoShipAgain, driveToCargoShipSide,

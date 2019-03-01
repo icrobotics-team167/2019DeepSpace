@@ -37,11 +37,19 @@ void CargoShip::run() {
             break;
         case AutoState::openClaw:
             claw->openClaw();
-            autoState = AutoState::driveToCargoShipFront;
+            autoState = AutoState::driveOffHAB;
             Wait(0.1);
             break;
+        case AutoState::driveOffHAB:
+            if (driveBase->straightDrive(24, 0.75)) {
+                driveBase->resetEncoders();
+                driveBase->updateNavx();
+                autoState = AutoState::driveToCargoShipFront;
+                Wait(0.1);
+            }
+            break;
         case AutoState::driveToCargoShipFront:
-            if (driveBase->driveToReflection(0.6)) {
+            if (driveBase->driveToReflection(0.35)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 autoState = AutoState::driveIntoCargoShipFront;
@@ -58,16 +66,17 @@ void CargoShip::run() {
             break;
         case AutoState::score:
             claw->closeClaw();
-            if (driveBase->straightDrive(20, -1)) {
+            if (driveBase->straightDrive(14, -1)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
-                autoState = AutoState::done;
+                autoState = AutoState::turnTowardsHumanPlayer;
                 Wait(0.1);
             }
             break;
         case AutoState::turnTowardsHumanPlayer:
-            if (driveBase->pointTurn(-135, 0.3)) {
+            if (driveBase->pointTurn(-110, 0.5)) {
                 driveBase->resetEncoders();
+                driveBase->updateNavx();
                 driveBase->updateLimelight();
                 driveBase->setHighGear();
                 autoState = AutoState::driveCloserToHumanPlayer;
@@ -75,7 +84,7 @@ void CargoShip::run() {
             }
             break;
         case AutoState::driveCloserToHumanPlayer:
-            if (driveBase->straightDrive(130, 1)) {
+            if (driveBase->straightDrive(102.5, 1)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 driveBase->setLowGear();
@@ -84,15 +93,16 @@ void CargoShip::run() {
             }
             break;
         case AutoState::turnTowardsHumanPlayerAgain:
-            if (driveBase->pointTurn(135, 0.3)) {
+            if (driveBase->pointTurn(-58, 0.5)) {
                 driveBase->resetEncoders();
+                driveBase->updateNavx();
                 driveBase->updateLimelight();
                 autoState = AutoState::driveToHumanPlayer;
                 Wait(0.1);
             }
             break;
         case AutoState::driveToHumanPlayer:
-            if (driveBase->driveToReflection(0.6)) {
+            if (driveBase->driveToReflection(0.35)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 autoState = AutoState::driveIntoHumanPlayer;
@@ -100,51 +110,56 @@ void CargoShip::run() {
             }
             break;
         case AutoState::driveIntoHumanPlayer:
-            if (driveBase->straightDrive(24, 0.5)) {
+            if (driveBase->straightDrive(26, 0.5)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
+                driveBase->setHighGear();
                 autoState = AutoState::pickUpHatch;
-                Wait(0.3);
+                Wait(0.6);
             }
             break;
         case AutoState::pickUpHatch:
             claw->openClaw();
-            if (driveBase->straightDrive(20, -1)) {
+            if (driveBase->straightDrive(140, -1)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
-                autoState = AutoState::driveFromHumanPlayer;
-                Wait(0.1);
-            }
-            break;
-        case AutoState::driveFromHumanPlayer:
-            if (driveBase->straightDrive(130, -1)) {
-                driveBase->resetEncoders();
-                driveBase->updateNavx();
+                driveBase->setLowGear();
                 autoState = AutoState::turnTowardsCargoShip;
                 Wait(0.1);
             }
             break;
+        // case AutoState::driveFromHumanPlayer:
+        //     if (driveBase->straightDrive(130, -1)) {
+        //         driveBase->resetEncoders();
+        //         driveBase->updateNavx();
+        //         autoState = AutoState::turnTowardsCargoShip;
+        //         Wait(0.1);
+        //     }
+        //     break;
         case AutoState::turnTowardsCargoShip:
-            if (driveBase->pointTurn(30, 0.3)) {
+            if (driveBase->pointTurn(25, 0.5)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
+                driveBase->setHighGear();
                 autoState = AutoState::driveCloserToCargoShip;
                 Wait(0.1);
             }
             break;
         case AutoState::driveCloserToCargoShip:
-            if (driveBase->straightDrive(123, -1)) {
+            if (driveBase->straightDrive(72.5, -1)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
+                driveBase->setLowGear();
                 autoState = AutoState::turnTowardsCargoShipAgain;
                 Wait(0.1);
             }
             break;
         case AutoState::turnTowardsCargoShipAgain:
-            if (driveBase->pointTurn(-120, 0.3)) {
+            if (driveBase->pointTurn(-120, 0.5)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
-                autoState = AutoState::driveToCargoShipSide;
+                driveBase->setHighGear();
+                autoState = AutoState::done;
                 Wait(0.1);
             }
             break;

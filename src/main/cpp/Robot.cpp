@@ -63,7 +63,7 @@ void Robot::AutonomousInit() {
     }
 
     driveBase->setLimelightVision();
-    autoRoutine = new BackRocket(driveBase, claw, elevator, bling, cargo);
+    autoRoutine = new CargoShip(driveBase, claw, elevator, bling, cargo);
 }
 
 void Robot::AutonomousPeriodic() {
