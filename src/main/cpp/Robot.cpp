@@ -106,10 +106,9 @@ void Robot::TeleopPeriodic() {
         driveBase->resetEncoders();
     } else {
         driveBase->resetPID();
+        driveBase->updateNavx();
         driveBase->drive(leftY, rightY);
     }
-
-    driveBase->updateNavx();
     
     // Open and close claw
     if (controller->getCloseClaw()) {
@@ -178,9 +177,6 @@ void Robot::TeleopPeriodic() {
         bling->RunLeftLEDStrip(0.69); // yellow
         bling->RunRightLEDStrip(0.69);
     }
-
-    SmartDashboard::PutNumber("Left encoder: ", driveBase->getLeftEncoder()->Get());
-    SmartDashboard::PutNumber("Right encoder: ", driveBase->getRightEncoder()->Get()); 
 }
 
 void Robot::TestPeriodic() {}
