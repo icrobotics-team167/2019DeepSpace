@@ -12,9 +12,12 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 void Robot::RobotInit() {
-    m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
-    m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
-    SmartDashboard::PutData("Auto Modes", &m_chooser);
+    autoChooser.SetDefaultOption(nullAuto, nullAuto);
+    autoChooser.AddOption(leftBackRocket, leftBackRocket);
+    autoChooser.AddOption(rightBackRocket, rightBackRocket);
+    autoChooser.AddOption(leftCargoShip, leftCargoShip);
+    autoChooser.AddOption(rightCargoShip, rightCargoShip);
+    SmartDashboard::PutData("Auto Modes", &autoChooser);
 
     driveBase = new DriveBase();
     claw = new Claw();
@@ -51,28 +54,26 @@ void Robot::RobotPeriodic() {
  * make sure to add them to the chooser code above as well.
  */
 void Robot::AutonomousInit() {
-    m_autoSelected = m_chooser.GetSelected();
-    // m_autoSelected = SmartDashboard::GetString("Auto Selector",
-    //     kAutoNameDefault);
-    std::cout << "Auto selected: " << m_autoSelected << std::endl;
-
-    if (m_autoSelected == kAutoNameCustom) {
-        // Custom Auto goes here
-    } else {
-        // Default Auto goes here
-    }
+    selectedAuto = autoChooser.GetSelected();
+    selectedAuto = SmartDashboard::GetString("Auto Selector", nullAuto);
+    std::cout << "Auto selected: " << selectedAuto << std::endl;
 
     driveBase->setLimelightVision();
-    autoRoutine = new BackRocket(driveBase, claw, elevator, bling, cargo);
+
+    if (selectedAuto == leftBackRocket) {
+        autoRoutine = new LeftBackRocket(driveBase, claw, elevator, bling, cargo);
+    } else if (selectedAuto == rightBackRocket) {
+        autoRoutine = new RightBackRocket(driveBase, claw, elevator, bling, cargo);
+    } else if (selectedAuto == leftCargoShip) {
+        autoRoutine = new LeftCargoShip(driveBase, claw, elevator, bling, cargo);
+    } else if (selectedAuto == rightCargoShip) {
+        autoRoutine = new RightCargoShip(driveBase, claw, elevator, bling, cargo);
+    } else {
+        autoRoutine = new NullAuto(driveBase, claw, elevator, bling, cargo);
+    }
 }
 
 void Robot::AutonomousPeriodic() {
-    if (m_autoSelected == kAutoNameCustom) {
-        // Custom Auto goes here
-    } else {
-        // Default Auto goes here
-    }
-
     autoRoutine->run();
 }
 
@@ -83,6 +84,9 @@ void Robot::TeleopInit() {
     bling->RunLeftLEDStrip(0.77); // green
     bling->RunRightLEDStrip(0.77);
     claw->moveClawDown();
+    driveBase->setHighGear();
+    bling->RunLeftLEDStrip(0.77); // green
+    bling->RunRightLEDStrip(0.77);
     Wait(0.5);
     claw->openClaw();
 }
@@ -102,16 +106,19 @@ void Robot::TeleopPeriodic() {
         driveBase->resetEncoders();
     } else {
         driveBase->resetPID();
+        driveBase->updateNavx();
         driveBase->drive(leftY, rightY);
     }
-
-    driveBase->updateNavx();
     
     // Open and close claw
     if (controller->getCloseClaw()) {
         claw->closeClaw();
+        //bling->RunLEDStrip1(0);
+        //bling->RunLEDStrip1(0);
     } else if (controller->getOpenClaw()) {
         claw->openClaw();
+        //bling->RunLEDStrip1(0);
+        //bling->RunLEDStrip1(0);
     }
 
     // Gear shifting
@@ -128,8 +135,12 @@ void Robot::TeleopPeriodic() {
     // Claw raising and lowering
     if (controller->getRaiseClaw()) {
         claw->moveClawUp();
+        //bling->RunLEDStrip1(0);
+        //bling->RunLEDStrip1(0);
     } else if (controller->getLowerClaw()) {
         claw->moveClawDown();
+        //bling->RunLEDStrip1(0);
+        //bling->RunLEDStrip1(0);
     }
 
     elevator->raiseElevator(controller->getElevatorSpeed());
@@ -166,9 +177,6 @@ void Robot::TeleopPeriodic() {
         bling->RunLeftLEDStrip(0.69); // yellow
         bling->RunRightLEDStrip(0.69);
     }
-
-    SmartDashboard::PutNumber("Left encoder: ", driveBase->getLeftEncoder()->Get());
-    SmartDashboard::PutNumber("Right encoder: ", driveBase->getRightEncoder()->Get()); 
 }
 
 void Robot::TestPeriodic() {}

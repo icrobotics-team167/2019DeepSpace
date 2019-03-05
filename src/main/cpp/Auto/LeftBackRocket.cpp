@@ -1,7 +1,7 @@
-#include "Auto/BackRocket.h"
+#include "Auto/LeftBackRocket.h"
 
 /**
- * Initializes the back rocket auto routine
+ * Initializes the left back rocket auto routine
  * 
  * @author Dominic Rutkowski
  * @since 2-15-2019
@@ -12,19 +12,20 @@
  * @param *bling A pointer to the Bling subsystem
  * @param *Cargo A pointer to the Cargo subsystem
  */ 
-BackRocket::BackRocket(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo):
+LeftBackRocket::LeftBackRocket(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo):
 AutoRoutine(driveBase, claw, elevator, bling, cargo)
 {
     autoState = AutoState::init;
 }
 
 /**
- * Scores on the back rocket
+ * Scores on the left back rocket and almost scores
+ * on the left front rocket
  *  
  * @author Dominic Rutkowski
  * @since 2-17-2019
  */ 
-void BackRocket::run() {
+void LeftBackRocket::run() {
     switch (autoState) {
         case AutoState::init:
             driveBase->resetEncoders();

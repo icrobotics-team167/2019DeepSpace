@@ -14,12 +14,12 @@
 #include "Subsystems/Cargo.h"
 
 #include "Auto/AutoRoutine.h"
-#include "Auto/AutoTest.h"
 #include "Auto/NullAuto.h"
-#include "Auto/LimelightTest.h"
 #include "Auto/FrontRocket.h"
-#include "Auto/BackRocket.h"
-#include "Auto/CargoShip.h"
+#include "Auto/LeftBackRocket.h"
+#include "Auto/RightBackRocket.h"
+#include "Auto/LeftCargoShip.h"
+#include "Auto/RightCargoShip.h"
 
 #include "Controls/GenericController.h"
 #include "Controls/SingleXboxController.h"
@@ -47,10 +47,13 @@ public:
     Cargo *getCargo();
 
 private:
-    frc::SendableChooser<std::string> m_chooser;
-    const std::string kAutoNameDefault = "Default";
-    const std::string kAutoNameCustom = "My Auto";
-    std::string m_autoSelected;
+    frc::SendableChooser<std::string> autoChooser;
+    const std::string nullAuto = "Null Auto";
+    const std::string leftBackRocket = "Left Back Rocket";
+    const std::string rightBackRocket = "Right Back Rocket";
+    const std::string leftCargoShip = "Left Cargo Ship";
+    const std::string rightCargoShip = "Right Cargo Ship";
+    std::string selectedAuto;
 
     DriveBase *driveBase;
     Claw *claw;
