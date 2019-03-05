@@ -1,9 +1,9 @@
-#ifndef BACK_ROCKET_H
-#define BACK_ROCKET_H
+#ifndef RIGHT_BACK_ROCKET_H
+#define RIGHT_BACK_ROCKET_H
 
 #include "Auto/AutoRoutine.h"
 
-class BackRocket : public AutoRoutine {
+class RightBackRocket : public AutoRoutine {
 private:
     enum class AutoState {
         init, openClaw, driveOffHAB, alignWithBack, driveBack, turnToRocket, driveToRocket, driveIntoRocket, score,
@@ -12,8 +12,8 @@ private:
     };
     AutoState autoState;
 public:
-    BackRocket(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo);
-    ~BackRocket();
+    RightBackRocket(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo);
+    ~RightBackRocket();
     void run() override;
 };
 
