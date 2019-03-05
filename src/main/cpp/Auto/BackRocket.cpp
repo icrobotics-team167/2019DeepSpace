@@ -19,7 +19,7 @@ AutoRoutine(driveBase, claw, elevator, bling, cargo)
 }
 
 /**
- * Scores on the back rocket
+ * Scores on the back rocket and almost scores on the front rocket
  *  
  * @author Dominic Rutkowski
  * @since 2-17-2019

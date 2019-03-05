@@ -19,7 +19,7 @@ AutoRoutine(driveBase, claw, elevator, bling, cargo)
 }
 
 /**
- * Sits on the HAB platform for 15 seconds
+ * Scores on the front cargo ship and almost scores on the side cargo ship
  * 
  * @author Dominic Rutkowski
  * @since 2-10-2019
@@ -128,14 +128,6 @@ void CargoShip::run() {
                 Wait(0.1);
             }
             break;
-        // case AutoState::driveFromHumanPlayer:
-        //     if (driveBase->straightDrive(130, -1)) {
-        //         driveBase->resetEncoders();
-        //         driveBase->updateNavx();
-        //         autoState = AutoState::turnTowardsCargoShip;
-        //         Wait(0.1);
-        //     }
-        //     break;
         case AutoState::turnTowardsCargoShip:
             if (driveBase->pointTurn(25, 0.5)) {
                 driveBase->resetEncoders();

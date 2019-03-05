@@ -8,8 +8,8 @@ private:
     enum class AutoState {
         init, openClaw, driveOffHAB, driveToCargoShipFront, driveIntoCargoShipFront, score,
         turnTowardsHumanPlayer, driveCloserToHumanPlayer, turnTowardsHumanPlayerAgain,
-        driveToHumanPlayer, driveIntoHumanPlayer, pickUpHatch, turn180, driveFromHumanPlayer,
-        turnTowardsCargoShip, driveCloserToCargoShip, turnTowardsCargoShipAgain, driveToCargoShipSide,
+        driveToHumanPlayer, driveIntoHumanPlayer, pickUpHatch, turnTowardsCargoShip,
+        driveCloserToCargoShip, turnTowardsCargoShipAgain, driveToCargoShipSide,
         driveIntoCargoShipSide, scoreAgain, done
     };
     AutoState autoState;
