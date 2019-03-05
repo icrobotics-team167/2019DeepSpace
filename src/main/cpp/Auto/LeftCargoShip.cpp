@@ -1,7 +1,7 @@
-#include "Auto/CargoShip.h"
+#include "Auto/LeftCargoShip.h"
 
 /**
- * Initializes the cargo ship auto routine
+ * Initializes the left cargo ship auto routine
  * 
  * @author Dominic Rutkowski
  * @since 2-15-2019
@@ -12,19 +12,20 @@
  * @param *bling A pointer to the Bling subsystem
  * @param *Cargo A pointer to the Cargo subsystem
  */ 
-CargoShip::CargoShip(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo):
+LeftCargoShip::LeftCargoShip(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo):
 AutoRoutine(driveBase, claw, elevator, bling, cargo)
 {
     autoState = AutoState::init;
 }
 
 /**
- * Scores on the front cargo ship and almost scores on the side cargo ship
+ * Scores on the front left cargo ship and almost scores
+ * on the side left cargo ship
  * 
  * @author Dominic Rutkowski
  * @since 2-10-2019
  */ 
-void CargoShip::run() {
+void LeftCargoShip::run() {
     switch (autoState) {
         case AutoState::init:
             driveBase->resetEncoders();
