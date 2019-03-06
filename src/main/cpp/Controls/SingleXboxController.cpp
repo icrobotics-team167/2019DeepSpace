@@ -228,15 +228,3 @@ bool SingleXboxController::getDriveWithLimelight() {
 bool SingleXboxController::getDriveStraight() {
     return xboxController->GetPOV() == 0;
 }
-
-/**
- * Determines whether to drive straight in reverse
- * 
- * @author Dominic Rutkowski
- * @since 2-19-2019
- * 
- * @returns True if the robot should drive straight in reverse, false otherwise
- */
-bool SingleXboxController::getDriveStraightReverse() {
-    return xboxController->GetPOV() == 180;
-}

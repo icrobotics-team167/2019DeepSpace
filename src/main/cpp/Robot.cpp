@@ -99,10 +99,7 @@ void Robot::TeleopPeriodic() {
     if (controller->getDriveWithLimelight()) {
         driveBase->teleopDriveToReflection(0.2);
     } else if (controller->getDriveStraight()) {
-        driveBase->teleopStraightDrive(rightY == 0 ? 0.35 : rightY);
-        driveBase->resetEncoders();
-    } else if (controller->getDriveStraightReverse()) {
-        driveBase->teleopStraightDrive(rightY == 0 ? -0.35 : rightY);
+        driveBase->teleopStraightDrive(leftY);
         driveBase->resetEncoders();
     } else {
         driveBase->resetPID();
