@@ -12,6 +12,7 @@ private:
 
     // Claw raising and lowering solenoid
     frc::Solenoid *pivotSolenoid;
+    frc::Solenoid *pivotSolenoidReversed;
 public:
     Claw();
     ~Claw();

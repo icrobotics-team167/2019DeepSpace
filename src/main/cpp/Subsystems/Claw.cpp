@@ -6,6 +6,7 @@ Claw::Claw() {
     
     // Claw raising and lowering solenoid
     pivotSolenoid = new frc::Solenoid(PNEUMATIC_CONTROLLER, PIVOT_SOLENOID);
+    pivotSolenoidReversed = new frc::Solenoid(PNEUMATIC_CONTROLLER, PIVOT_SOLENOID_REVERSED);
 }
 
 Claw::~Claw() {
@@ -44,6 +45,7 @@ void Claw::closeClaw() {
  */
 void Claw::moveClawUp() {
     pivotSolenoid->Set(false);
+    pivotSolenoidReversed->Set(true);
 }
 
 /**
@@ -54,4 +56,5 @@ void Claw::moveClawUp() {
  */
 void Claw::moveClawDown() {
     pivotSolenoid->Set(true);
+    pivotSolenoidReversed->Set(false);
 }

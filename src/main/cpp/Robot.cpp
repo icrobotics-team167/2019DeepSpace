@@ -36,6 +36,8 @@ void Robot::RobotInit() {
  */
 void Robot::RobotPeriodic() {
     driveBase->updateLimelight();
+    SmartDashboard::PutNumber("Left encoder: ", driveBase->getLeftEncoder()->Get());
+    SmartDashboard::PutNumber("Right encoder: ", driveBase->getRightEncoder()->Get());
     SmartDashboard::PutNumber("Limelight tx: ", driveBase->getLimelightTx());
     SmartDashboard::PutNumber("Limelight ty: ", driveBase->getLimelightTy());
     SmartDashboard::PutNumber("Limelight ta: ", driveBase->getLimelightTa());

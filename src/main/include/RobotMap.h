@@ -36,6 +36,7 @@
 
 // Claw raising and lowering solenoid
 #define PIVOT_SOLENOID 0
+#define PIVOT_SOLENOID_REVERSED 7
 
 // ***** Elevator *****
 // Elevator motor
