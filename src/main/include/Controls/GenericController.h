@@ -14,12 +14,12 @@ public:
     virtual bool getLowerClaw() = 0;
     virtual double getElevatorSpeed() = 0;
     virtual bool getRunFrontOut() = 0;
-    virtual bool getRunBackOut() = 0;
     virtual bool getRunIntake() = 0;
     virtual bool getSetLimelightVision() = 0;
     virtual bool getSetLimelightCamera() = 0;
     virtual bool getDriveWithLimelight() = 0;
     virtual bool getDriveStraight() = 0;
+    virtual bool getReverseIntake() = 0;
 };
 
 #endif
