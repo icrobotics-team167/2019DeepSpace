@@ -6,6 +6,7 @@
 #include "Subsystems/Elevator.h"
 #include "Subsystems/Bling.h"
 #include "Subsystems/Cargo.h"
+#include "Controls/GenericController.h"
 
 #include <frc/WPILib.h>
 
@@ -22,8 +23,9 @@ protected:
     Elevator *elevator;
     Bling *bling;
     Cargo *cargo;
+    GenericController *controller;
 public:
-    AutoRoutine(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo);
+    AutoRoutine(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo, GenericController *controller);
     virtual void run() = 0;
 };
 

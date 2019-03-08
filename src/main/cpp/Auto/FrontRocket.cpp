@@ -12,8 +12,8 @@
  * @param *bling A pointer to the Bling subsystem
  * @param *Cargo A pointer to the Cargo subsystem
  */ 
-FrontRocket::FrontRocket(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo):
-AutoRoutine(driveBase, claw, elevator, bling, cargo)
+FrontRocket::FrontRocket(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo, GenericController *controller):
+AutoRoutine(driveBase, claw, elevator, bling, cargo, controller)
 {
     autoState = AutoState::init;
 }

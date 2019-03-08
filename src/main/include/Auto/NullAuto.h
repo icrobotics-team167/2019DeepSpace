@@ -10,7 +10,7 @@ private:
     };
     AutoState autoState;
 public:
-    NullAuto(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo);
+    NullAuto(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo, GenericController* controller);
     ~NullAuto();
     void run() override;
 };

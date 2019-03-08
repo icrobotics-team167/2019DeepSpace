@@ -24,6 +24,7 @@ void Robot::RobotInit() {
     elevator = new Elevator();
     bling = new Bling();
     cargo = new Cargo();
+    controller = new DoubleXboxController();
 }
 
 /**
@@ -73,7 +74,7 @@ void Robot::AutonomousInit() {
     // } else {
     //     autoRoutine = new NullAuto(driveBase, claw, elevator, bling, cargo);
     // }
-    autoRoutine = new LeftBackRocket(driveBase, claw, elevator, bling, cargo);
+    autoRoutine = new LeftBackRocket(driveBase, claw, elevator, bling, cargo, controller);
 }
 
 void Robot::AutonomousPeriodic() {
@@ -81,7 +82,6 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
-    controller = new DoubleXboxController();
     driveBase->setLimelightCamera();
     driveBase->setHighGear();
     bling->RunLeftLEDStrip(0.77); // green
@@ -166,8 +166,9 @@ void Robot::TeleopPeriodic() {
     }
 
     if (elevator->atMiddle()) {
-        bling->RunLeftLEDStrip(0.61); // red
-        bling->RunRightLEDStrip(0.61);
+        //bling->RunLeftLEDStrip(-0.17); // weird shit
+        
+        //bling->RunRightLEDStrip(-0.17);
     }
     else if (driveBase->getIsInHighGear()) {
         bling->RunLeftLEDStrip(0.77); // green

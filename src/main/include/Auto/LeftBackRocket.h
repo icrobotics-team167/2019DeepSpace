@@ -7,12 +7,12 @@ class LeftBackRocket : public AutoRoutine {
 private:
     enum class AutoState {
         init, openClaw, driveOffHAB, alignWithBack, driveBack, turnToRocket, driveToRocket, driveIntoRocket, score,
-        backOffFromRocket, turnTowardsHumanPlayer, driveToHumanPlayer, driveCloserToHumanPlayer, driveIntoHumanPlayer,
+        backOffFromRocket, turnTowardsHumanPlayer, teleop, driveToHumanPlayer, driveCloserToHumanPlayer, driveIntoHumanPlayer,
         pickUpHatch, turnToRocketAgain, driveTowardsFrontRocket, driveIntoRocketAgain, scoreAgain, startToRocketAgain, done
     };
     AutoState autoState;
 public:
-    LeftBackRocket(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo);
+    LeftBackRocket(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo, GenericController* controller);
     ~LeftBackRocket();
     void run() override;
 };
