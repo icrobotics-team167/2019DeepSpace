@@ -33,9 +33,8 @@ void LeftBackRocket::run() {
             driveBase->setLowGear();
             driveBase->setLimelightVision();
             claw->moveClawDown();
-            Wait(0.5);
             autoState = AutoState::openClaw;
-            Wait(0.5);
+            Wait(0.7);
             break;
         case AutoState::openClaw:
             claw->openClaw();
@@ -43,7 +42,7 @@ void LeftBackRocket::run() {
             Wait(0.1);
             break;
         case AutoState::driveOffHAB:
-            if (driveBase->straightDrive(47, -0.75)) {
+            if (driveBase->straightDrive(45, -0.75)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 autoState = AutoState::alignWithBack;
@@ -51,7 +50,7 @@ void LeftBackRocket::run() {
             }
             break;
         case AutoState::alignWithBack:
-            if (driveBase->pointTurn(-20, 0.5)) {
+            if (driveBase->pointTurn(-25, 0.5)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 driveBase->setHighGear();
@@ -60,7 +59,7 @@ void LeftBackRocket::run() {
             }
             break;
         case AutoState::driveBack:
-            if (driveBase->straightDrive(160, -1)) {
+            if (driveBase->straightDrive(124, -1)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 driveBase->setLowGear();
@@ -85,7 +84,7 @@ void LeftBackRocket::run() {
             }
             break;
         case AutoState::driveIntoRocket:
-            if (driveBase->straightDrive(27, 0.55)) {
+            if (driveBase->straightDrive(30, 0.55)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 autoState = AutoState::score;
@@ -94,7 +93,7 @@ void LeftBackRocket::run() {
             break;
         case AutoState::score:
             claw->closeClaw();
-            if (driveBase->straightDrive(64, -1)) {
+            if (driveBase->straightDrive(30, -1)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 autoState = AutoState::turnTowardsHumanPlayer;
@@ -106,7 +105,7 @@ void LeftBackRocket::run() {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 driveBase->setHighGear();
-                autoState = AutoState::driveToHumanPlayer;
+                autoState = AutoState::done;
                 Wait(0.1);
             }
             break;

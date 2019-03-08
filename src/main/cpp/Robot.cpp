@@ -62,17 +62,18 @@ void Robot::AutonomousInit() {
 
     driveBase->setLimelightVision();
 
-    if (selectedAuto == leftBackRocket) {
-        autoRoutine = new LeftBackRocket(driveBase, claw, elevator, bling, cargo);
-    } else if (selectedAuto == rightBackRocket) {
-        autoRoutine = new RightBackRocket(driveBase, claw, elevator, bling, cargo);
-    } else if (selectedAuto == leftCargoShip) {
-        autoRoutine = new LeftCargoShip(driveBase, claw, elevator, bling, cargo);
-    } else if (selectedAuto == rightCargoShip) {
-        autoRoutine = new RightCargoShip(driveBase, claw, elevator, bling, cargo);
-    } else {
-        autoRoutine = new NullAuto(driveBase, claw, elevator, bling, cargo);
-    }
+    // if (selectedAuto == leftBackRocket) {
+    //     autoRoutine = new LeftBackRocket(driveBase, claw, elevator, bling, cargo);
+    // } else if (selectedAuto == rightBackRocket) {
+    //     autoRoutine = new RightBackRocket(driveBase, claw, elevator, bling, cargo);
+    // } else if (selectedAuto == leftCargoShip) {
+    //     autoRoutine = new LeftCargoShip(driveBase, claw, elevator, bling, cargo);
+    // } else if (selectedAuto == rightCargoShip) {
+    //     autoRoutine = new RightCargoShip(driveBase, claw, elevator, bling, cargo);
+    // } else {
+    //     autoRoutine = new NullAuto(driveBase, claw, elevator, bling, cargo);
+    // }
+    autoRoutine = new LeftBackRocket(driveBase, claw, elevator, bling, cargo);
 }
 
 void Robot::AutonomousPeriodic() {
@@ -85,11 +86,11 @@ void Robot::TeleopInit() {
     driveBase->setHighGear();
     bling->RunLeftLEDStrip(0.77); // green
     bling->RunRightLEDStrip(0.77);
-    claw->moveClawDown();
+    // claw->moveClawDown();
     driveBase->setHighGear();
     bling->RunLeftLEDStrip(0.77); // green
     bling->RunRightLEDStrip(0.77);
-    Wait(0.5);
+    // Wait(0.5);
     claw->openClaw();
 }
 
