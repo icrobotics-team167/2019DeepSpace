@@ -218,3 +218,7 @@ bool DoubleXboxController::getDriveWithLimelight() {
 bool DoubleXboxController::getDriveStraight() {
     return xboxController1->GetYButton();
 }
+
+bool DoubleXboxController::getHoldElevator() {
+    return xboxController2->GetStickButton(frc::Joystick::JoystickHand::kLeftHand);
+}

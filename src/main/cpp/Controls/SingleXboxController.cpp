@@ -219,3 +219,7 @@ bool SingleXboxController::getDriveStraight() {
 bool SingleXboxController::getReverseIntake() {
     return false;
 }
+
+bool SingleXboxController::getHoldElevator() {
+    return false;
+}

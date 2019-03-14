@@ -20,6 +20,7 @@ public:
     virtual bool getDriveWithLimelight() = 0;
     virtual bool getDriveStraight() = 0;
     virtual bool getReverseIntake() = 0;
+    virtual bool getHoldElevator() = 0;
 };
 
 #endif

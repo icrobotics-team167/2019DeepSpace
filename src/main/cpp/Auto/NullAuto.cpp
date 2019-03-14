@@ -77,7 +77,11 @@ void NullAuto::run() {
                 //bling->RunLEDStrip1(0);
             }
 
-            elevator->raiseElevator(controller->getElevatorSpeed());
+            if (controller->getHoldElevator()) {
+                elevator->raiseElevator(-0.3);
+            } else {
+                elevator->raiseElevator(controller->getElevatorSpeed());
+            }
 
             // Cargo out
             if (controller->getRunFrontOut()) {

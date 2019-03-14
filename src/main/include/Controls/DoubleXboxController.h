@@ -29,6 +29,7 @@ public:
     bool getDriveWithLimelight() override;
     bool getDriveStraight() override;
     bool getReverseIntake() override;
+    bool getHoldElevator() override;
 };
 
 #endif

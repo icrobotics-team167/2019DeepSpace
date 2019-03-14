@@ -121,11 +121,11 @@ void RightCargoShip::run() {
             break;
         case AutoState::pickUpHatch:
             claw->openClaw();
-            if (driveBase->straightDrive(140, -1)) {
+            if (driveBase->straightDrive(40, -1)) { // 140
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 driveBase->setLowGear();
-                autoState = AutoState::turnTowardsCargoShip;
+                autoState = AutoState::done;
                 Wait(0.1);
             }
             break;

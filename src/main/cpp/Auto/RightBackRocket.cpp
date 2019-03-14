@@ -82,12 +82,12 @@ void RightBackRocket::run() {
             if (driveBase->driveToReflection(0.35)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
-                autoState = AutoState::driveIntoRocket;
+                autoState = AutoState::done;
                 Wait(0.2);
             }
             break;
         case AutoState::driveIntoRocket:
-            if (driveBase->straightDrive(30, 0.55)) {
+            if (driveBase->straightDrive(40, 0.55)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 autoState = AutoState::score;

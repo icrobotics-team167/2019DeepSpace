@@ -87,7 +87,7 @@ void LeftBackRocket::run() {
             }
             break;
         case AutoState::driveIntoRocket:
-            if (driveBase->straightDrive(32, 0.55)) {
+            if (driveBase->straightDrive(40, 0.55)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 autoState = AutoState::score;

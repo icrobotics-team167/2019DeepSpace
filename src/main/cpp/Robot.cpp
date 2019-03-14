@@ -74,7 +74,7 @@ void Robot::AutonomousInit() {
     // } else {
     //     autoRoutine = new NullAuto(driveBase, claw, elevator, bling, cargo);
     // }
-    autoRoutine = new LeftBackRocket(driveBase, claw, elevator, bling, cargo, controller);
+    autoRoutine = new RightBackRocket(driveBase, claw, elevator, bling, cargo, controller);
 }
 
 void Robot::AutonomousPeriodic() {
@@ -143,7 +143,11 @@ void Robot::TeleopPeriodic() {
         //bling->RunLEDStrip1(0);
     }
 
-    elevator->raiseElevator(controller->getElevatorSpeed());
+    if (controller->getHoldElevator()) {
+        elevator->raiseElevator(-0.3);
+    } else {
+        elevator->raiseElevator(controller->getElevatorSpeed());
+    }
 
     // Cargo out
     if (controller->getRunFrontOut()) {
