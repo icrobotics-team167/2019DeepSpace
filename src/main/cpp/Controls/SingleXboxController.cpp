@@ -156,19 +156,6 @@ bool SingleXboxController::getRunFrontOut() {
 }
 
 /**
- * Determines whether to run the back cargo out based on if the
- * right joystick is pressed
- * 
- * @author Dominic Rutkowski
- * @since 2-17-2019
- * 
- * @returns True if the back cargo out should run, false otherwise
- */
-bool SingleXboxController::getRunBackOut() {
-    return xboxController->GetStickButton(frc::Joystick::JoystickHand::kRightHand);
-}
-
-/**
  * Determines whether to run the cargo intake based on if the 
  * start button is pressed
  * 
@@ -227,4 +214,12 @@ bool SingleXboxController::getDriveWithLimelight() {
  */
 bool SingleXboxController::getDriveStraight() {
     return xboxController->GetPOV() == 0;
+}
+
+bool SingleXboxController::getReverseIntake() {
+    return false;
+}
+
+bool SingleXboxController::getHoldElevator() {
+    return false;
 }

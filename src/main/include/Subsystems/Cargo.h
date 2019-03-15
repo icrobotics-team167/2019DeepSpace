@@ -27,6 +27,7 @@ public:
     void stopBack();
     void ejectCargo();
     void holdCargo();
+    void reverseIntake();
 };
 
 #endif

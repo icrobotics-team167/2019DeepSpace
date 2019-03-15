@@ -96,7 +96,7 @@ void Cargo::stopBack() {
  */
 void Cargo::ejectCargo() {
     runFront(0.6);
-    runBack(0.6);
+    runBack(0.8);
 }
 
 /**
@@ -107,5 +107,9 @@ void Cargo::ejectCargo() {
  */
 void Cargo::holdCargo() {
     runFront(-0.6);
-    runBack(0.6);
+    runBack(0.8);
+}
+
+void Cargo::reverseIntake() {
+    intakeTalon->Set(ControlMode::PercentOutput, -0.5);
 }

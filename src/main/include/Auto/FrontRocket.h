@@ -10,7 +10,7 @@ private:
     };
     AutoState autoState;
 public:
-    FrontRocket(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo);
+    FrontRocket(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo, GenericController *controller);
     ~FrontRocket();
     void run() override;
 };

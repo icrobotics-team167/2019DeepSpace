@@ -12,8 +12,8 @@
  * @param *bling A pointer to the Bling subsystem
  * @param *Cargo A pointer to the Cargo subsystem
  */ 
-RightCargoShip::RightCargoShip(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo):
-AutoRoutine(driveBase, claw, elevator, bling, cargo)
+RightCargoShip::RightCargoShip(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo, GenericController *controller):
+AutoRoutine(driveBase, claw, elevator, bling, cargo, controller)
 {
     autoState = AutoState::init;
 }
@@ -121,11 +121,11 @@ void RightCargoShip::run() {
             break;
         case AutoState::pickUpHatch:
             claw->openClaw();
-            if (driveBase->straightDrive(140, -1)) {
+            if (driveBase->straightDrive(40, -1)) { // 140
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 driveBase->setLowGear();
-                autoState = AutoState::turnTowardsCargoShip;
+                autoState = AutoState::done;
                 Wait(0.1);
             }
             break;

@@ -45,6 +45,7 @@ public:
     void drive(double leftSpeed, double rightSpeed);
 
     bool straightDrive(double inches, double speed);
+    bool driveHeading(double inches, double avgSpd, double heading, double arc = 1.0);
     void teleopStraightDrive(double speed);
     bool pointTurn(double angle, double speed);
 

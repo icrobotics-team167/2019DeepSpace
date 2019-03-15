@@ -96,6 +96,7 @@ void DriveBase::drive(double leftSpeed, double rightSpeed) {
  * @returns True if the drive is complete, false otherwise
  */ 
 bool DriveBase::straightDrive(double inches, double speed) {
+    //low gear fudge factor
     if (inches > 5) {
         inches -= 2.3;
     }
@@ -104,13 +105,15 @@ bool DriveBase::straightDrive(double inches, double speed) {
     
     SmartDashboard::PutNumber("Rotation angle: ", rotationAngle);
     SmartDashboard::PutNumber("Heading: ", navxInitValue);
-
+    
+    //update error calcualtions for control system
     double headingError = navxInitValue - rotationAngle;
     double diffError = headingError - straightDrivePreviousError;   
     
     SmartDashboard::PutNumber("Heading error: ", headingError);
     SmartDashboard::PutNumber("Differential error: ", diffError);
 
+    //calculate left and right speeds for drive base heading correction
     double leftSpeed = speed + (straightDriveKP * headingError + straightDriveKI * straightDriveTotalError + straightDriveKD * diffError);
     double rightSpeed = speed - (straightDriveKP * headingError + straightDriveKI * straightDriveTotalError + straightDriveKD * diffError);
 
@@ -118,6 +121,7 @@ bool DriveBase::straightDrive(double inches, double speed) {
     SmartDashboard::PutNumber("Left speed: ", leftSpeed);
     SmartDashboard::PutNumber("Right speed: ", rightSpeed);
 
+    //set max/min limits on adjusted speed values
     if (rightSpeed > 1) {
         rightSpeed = 1;
     }
@@ -130,7 +134,7 @@ bool DriveBase::straightDrive(double inches, double speed) {
     if (leftSpeed < -1) {
         leftSpeed = -1;
     }
-
+    // target reached, reset encoders and stop motors
     if (abs(leftEncoder->Get()) > LEFT_ENCODER_TICKS_PER_INCH * inches &&
         abs(rightEncoder->Get()) > RIGHT_ENCODER_TICKS_PER_INCH * inches) {
         straightDrivePreviousError = 0;
@@ -145,6 +149,66 @@ bool DriveBase::straightDrive(double inches, double speed) {
     straightDriveTotalError += headingError;
 
     return false;
+}
+
+//drive to heading
+bool DriveBase::driveHeading(double inches, double avgSpd, double targetHeading, double arc)
+{
+    //low gear fudge factor
+    if (inches > 5) 
+    {
+        inches -= 2.3;
+    }
+
+    double currentHeading = navx->GetAngle();
+    
+    SmartDashboard::PutNumber("CurrentHeading: ", currentHeading);
+    SmartDashboard::PutNumber("TargetHeading: ", targetHeading);
+    
+    //update error calcualtions for control system
+    double headingError = targetHeading - currentHeading;
+    double diffError = headingError - straightDrivePreviousError;   
+    
+    SmartDashboard::PutNumber("Heading error: ", headingError);
+    SmartDashboard::PutNumber("Differential error: ", diffError);
+
+    //calculate left and right speeds for drive base heading correction
+    double leftSpeed = avgSpd + (straightDriveKP * headingError + straightDriveKI * straightDriveTotalError + straightDriveKD * diffError);
+    double rightSpeed = avgSpd - (straightDriveKP * headingError + straightDriveKI * straightDriveTotalError + straightDriveKD * diffError);
+
+    SmartDashboard::PutNumber("Total error: ", straightDriveTotalError);
+    SmartDashboard::PutNumber("Left speed: ", leftSpeed);
+    SmartDashboard::PutNumber("Right speed: ", rightSpeed);
+
+    //set max/min limits on adjusted speed values
+    if (rightSpeed > 1) {
+        rightSpeed = 1;
+    }
+    if (rightSpeed < -1) {
+        rightSpeed = -1;
+    }
+    if (leftSpeed > 1) {
+        leftSpeed = 1;
+    }
+    if (leftSpeed < -1) {
+        leftSpeed = -1;
+    }
+    // target reached, reset encoders and stop motors
+    if (abs(leftEncoder->Get()) > LEFT_ENCODER_TICKS_PER_INCH * inches &&
+        abs(rightEncoder->Get()) > RIGHT_ENCODER_TICKS_PER_INCH * inches) {
+        straightDrivePreviousError = 0;
+        straightDriveTotalError = 0;
+        drive(0, 0);
+        return true;
+    }
+ 
+    drive(leftSpeed, rightSpeed);
+
+    straightDrivePreviousError = headingError;
+    straightDriveTotalError += headingError;
+
+    return false;
+
 }
 
 void DriveBase::teleopStraightDrive(double speed) {
@@ -316,7 +380,7 @@ void DriveBase::setHighGear() {
     highGearSolenoid->Set(true);
     isInHighGear = true;
 }
-
+\
 /**
  * Gets the left encoder
  * 

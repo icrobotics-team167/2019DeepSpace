@@ -14,7 +14,7 @@ private:
     };
     AutoState autoState;
 public:
-    RightCargoShip(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo);
+    RightCargoShip(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo, GenericController *controller);
     ~RightCargoShip();
     void run() override;
 };

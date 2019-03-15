@@ -15,12 +15,13 @@
  * @param *bling A pointer to the Bling subsystem
  * @param *Cargo A pointer to the Cargo subsystem
  */ 
-AutoRoutine::AutoRoutine(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo) {
+AutoRoutine::AutoRoutine(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo, GenericController *controller) {
     this->driveBase = driveBase;
     this->claw = claw;
     this->elevator = elevator;
     this->bling = bling;
     this->cargo = cargo;
+    this->controller = controller;
 
     driveBase->updateNavx();
 }

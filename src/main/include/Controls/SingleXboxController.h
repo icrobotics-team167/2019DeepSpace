@@ -21,12 +21,13 @@ public:
     bool getLowerClaw() override;
     double getElevatorSpeed() override;
     bool getRunFrontOut() override;
-    bool getRunBackOut() override;
     bool getRunIntake() override;
     bool getSetLimelightVision() override;
     bool getSetLimelightCamera() override;
     bool getDriveWithLimelight() override;
     bool getDriveStraight() override;
+    bool getReverseIntake() override;
+    bool getHoldElevator() override;
 };
 
 #endif

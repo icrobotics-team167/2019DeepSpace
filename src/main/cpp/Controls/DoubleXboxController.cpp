@@ -149,20 +149,7 @@ double DoubleXboxController::getElevatorSpeed() {
  * @returns True if the front cargo out should run, false otherwise
  */
 bool DoubleXboxController::getRunFrontOut() {
-    return xboxController2->GetBumper(frc::Joystick::JoystickHand::kLeftHand);
-}
-
-/**
- * Determines whether to run the back cargo out based on if the second controller's
- * right bumper is pressed
- * 
- * @author Dominic Rutkowski
- * @since 2-17-2019
- * 
- * @returns True if the back cargo out should run, false otherwise
- */
-bool DoubleXboxController::getRunBackOut() {
-    return xboxController2->GetBumper(frc::Joystick::JoystickHand::kRightHand);
+    return xboxController2->GetTriggerAxis(frc::Joystick::JoystickHand::kRightHand) > 0.3;;
 }
 
 /**
@@ -176,6 +163,10 @@ bool DoubleXboxController::getRunBackOut() {
  */
 bool DoubleXboxController::getRunIntake() {
     return xboxController2->GetTriggerAxis(frc::Joystick::JoystickHand::kLeftHand) > 0.3;
+}
+
+bool DoubleXboxController::getReverseIntake() {
+    return xboxController2->GetBumper(frc::Joystick::JoystickHand::kLeftHand);
 }
 
 /**
@@ -226,4 +217,8 @@ bool DoubleXboxController::getDriveWithLimelight() {
  */
 bool DoubleXboxController::getDriveStraight() {
     return xboxController1->GetYButton();
+}
+
+bool DoubleXboxController::getHoldElevator() {
+    return xboxController2->GetStickButton(frc::Joystick::JoystickHand::kLeftHand);
 }
