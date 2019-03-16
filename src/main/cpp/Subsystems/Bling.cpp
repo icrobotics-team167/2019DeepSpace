@@ -12,6 +12,11 @@ Bling::~Bling() {
     delete rightBlinkin;  
 }
 
+void Bling::runBothLEDStrips(double pattern) {
+    runLeftLEDStrip(pattern);
+    runRightLEDStrip(pattern);
+}
+
 void Bling::runLeftLEDStrip(double pattern) {
     leftBlinkin->Set(pattern);
 }
@@ -19,3 +24,4 @@ void Bling::runLeftLEDStrip(double pattern) {
 void Bling::runRightLEDStrip(double pattern) {
     rightBlinkin->Set(pattern);
 }
+

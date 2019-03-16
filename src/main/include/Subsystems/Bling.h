@@ -13,6 +13,7 @@ private:
 public:
     Bling();
     ~Bling();
+    void runBothLEDStrips(double pattern);
     void runLeftLEDStrip(double pattern);
     void runRightLEDStrip(double pattern);
 

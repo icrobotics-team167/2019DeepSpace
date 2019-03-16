@@ -12,8 +12,7 @@ Teleop::Teleop(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *blin
 void Teleop::init() {
     driveBase->setLimelightCamera();
     driveBase->setHighGear();
-    bling->runLeftLEDStrip(bling->SOLID_GREEN);
-    bling->runRightLEDStrip(bling->SOLID_GREEN);
+    bling->runBothLEDStrips(bling->SOLID_GREEN);
 }
 
 void Teleop::periodic() {
@@ -85,10 +84,8 @@ void Teleop::periodic() {
     if (elevator->atMiddle()) {
         // Runs LEDs if the elevator is at the middle leveL?
     } else if (driveBase->getIsInHighGear()) {
-        bling->runLeftLEDStrip(bling->SOLID_GREEN);
-        bling->runRightLEDStrip(bling->SOLID_GREEN);
+        bling->runBothLEDStrips(bling->SOLID_GREEN);
     } else {
-        bling->runLeftLEDStrip(bling->SOLID_YELLOW);
-        bling->runRightLEDStrip(bling->SOLID_YELLOW);
+        bling->runBothLEDStrips(bling->SOLID_YELLOW);
     }
 }
