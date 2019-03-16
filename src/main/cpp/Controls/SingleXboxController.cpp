@@ -169,6 +169,18 @@ bool SingleXboxController::getRunIntake() {
 }
 
 /**
+ * Determines not to run the cargo intake in reverse
+ * 
+ * @author Dominic Rutkowski
+ * @since 3-15-2019
+ * 
+ * @returns True if the cargo intake should run in reverse, false otherwise
+ */
+bool SingleXboxController::getReverseIntake() {
+    return false;
+}
+
+/**
  * Determines not to set the Limelight to vision mode
  * 
  * @author Dominic Rutkowski
@@ -216,10 +228,15 @@ bool SingleXboxController::getDriveStraight() {
     return xboxController->GetPOV() == 0;
 }
 
-bool SingleXboxController::getReverseIntake() {
-    return false;
-}
-
+/**
+ * Determines not to hold the elevator at
+ * its current level
+ * 
+ * @author Dominic Rutkowski
+ * @since 3-15-2019
+ * 
+ * @returns True if the robot should hold its elevator, false otherwise
+ */
 bool SingleXboxController::getHoldElevator() {
     return false;
 }

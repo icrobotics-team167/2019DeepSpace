@@ -165,6 +165,15 @@ bool DoubleXboxController::getRunIntake() {
     return xboxController2->GetTriggerAxis(frc::Joystick::JoystickHand::kLeftHand) > 0.3;
 }
 
+/**
+ * Determines whether to run the cargo intake in reverse based on if the second controller's
+ * left bumper is pressed
+ * 
+ * @author Dominic Rutkowski
+ * @since 3-15-2019
+ * 
+ * @returns True if the cargo intake should run in reverse, false otherwise
+ */
 bool DoubleXboxController::getReverseIntake() {
     return xboxController2->GetBumper(frc::Joystick::JoystickHand::kLeftHand);
 }
@@ -219,6 +228,15 @@ bool DoubleXboxController::getDriveStraight() {
     return xboxController1->GetYButton();
 }
 
+/**
+ * Determines whether to hold the elevator at
+ * its current level
+ * 
+ * @author Dominic Rutkowsi
+ * @since 3-15-2019
+ * 
+ * @returns True if the robot should hold its elevator, false otherwise
+ */
 bool DoubleXboxController::getHoldElevator() {
     return xboxController2->GetStickButton(frc::Joystick::JoystickHand::kLeftHand);
 }
