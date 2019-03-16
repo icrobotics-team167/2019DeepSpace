@@ -13,20 +13,19 @@ private:
 public:
     Bling();
     ~Bling();
-    void RunLeftLEDStrip(double pattern);
-    void RunRightLEDStrip(double pattern);
+    void runBothLEDStrips(double pattern);
+    void runLeftLEDStrip(double pattern);
+    void runRightLEDStrip(double pattern);
 
-    /*
-    static const double SOLID_PINK;
-    static const double SOLID_RED;
-    static const double SOLID_ORANGE;
-    static const double SOLID_GOLD;
-    static const double SOLID_YELLOW;
-    static const double SOLID_GREEN;
-    static const double SOLID_BLUE;
-    static const double SOLID_VIOLET;
-    static const double SOLID_WHITE;
-    */
+    const double SOLID_PINK = 0.57;
+    const double SOLID_RED = 0.61;
+    const double SOLID_ORANGE = 0.61;
+    const double SOLID_GOLD = 0.67;
+    const double SOLID_YELLOW = 0.69;
+    const double SOLID_GREEN = 0.77;
+    const double SOLID_BLUE = 0.87;
+    const double SOLID_VIOLET = 0.91;
+    const double SOLID_WHITE = 0.93;
 };
 
 #endif

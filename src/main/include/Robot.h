@@ -25,6 +25,8 @@
 #include "Controls/SingleXboxController.h"
 #include "Controls/DoubleXboxController.h"
 
+#include "Teleop.h"
+
 #include <string>
 
 #include <frc/TimedRobot.h>
@@ -39,13 +41,6 @@ public:
     void TeleopInit() override;
     void TeleopPeriodic() override;
     void TestPeriodic() override;
-
-    DriveBase *getDriveBase();
-    Claw *getClaw();
-    Elevator *getElevator();
-    Bling *getBling();
-    Cargo *getCargo();
-
 private:
     frc::SendableChooser<std::string> autoChooser;
     const std::string nullAuto = "Null Auto";
@@ -64,4 +59,6 @@ private:
     AutoRoutine *autoRoutine;
 
     GenericController *controller;
+
+    Teleop *teleop;
 };

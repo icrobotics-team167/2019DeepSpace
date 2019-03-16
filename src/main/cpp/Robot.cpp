@@ -24,7 +24,10 @@ void Robot::RobotInit() {
     elevator = new Elevator();
     bling = new Bling();
     cargo = new Cargo();
+
     controller = new DoubleXboxController();
+
+    teleop = new Teleop(driveBase, claw, elevator, bling, cargo, controller);
 }
 
 /**
@@ -64,17 +67,17 @@ void Robot::AutonomousInit() {
     driveBase->setLimelightVision();
 
     // if (selectedAuto == leftBackRocket) {
-    //     autoRoutine = new LeftBackRocket(driveBase, claw, elevator, bling, cargo);
+    //     autoRoutine = new LeftBackRocket(driveBase, claw, elevator, bling, cargo, teleop);
     // } else if (selectedAuto == rightBackRocket) {
-    //     autoRoutine = new RightBackRocket(driveBase, claw, elevator, bling, cargo);
+    //     autoRoutine = new RightBackRocket(driveBase, claw, elevator, bling, cargo, teleop);
     // } else if (selectedAuto == leftCargoShip) {
-    //     autoRoutine = new LeftCargoShip(driveBase, claw, elevator, bling, cargo);
+    //     autoRoutine = new LeftCargoShip(driveBase, claw, elevator, bling, cargo, teleop);
     // } else if (selectedAuto == rightCargoShip) {
-    //     autoRoutine = new RightCargoShip(driveBase, claw, elevator, bling, cargo);
+    //     autoRoutine = new RightCargoShip(driveBase, claw, elevator, bling, cargo, teleop);
     // } else {
-    //     autoRoutine = new NullAuto(driveBase, claw, elevator, bling, cargo);
+    //     autoRoutine = new NullAuto(driveBase, claw, elevator, bling, cargo, teleop);
     // }
-    autoRoutine = new RightBackRocket(driveBase, claw, elevator, bling, cargo, controller);
+    autoRoutine = new RightBackRocket(driveBase, claw, elevator, bling, cargo, controller, teleop);
 }
 
 void Robot::AutonomousPeriodic() {
@@ -82,169 +85,14 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
-    driveBase->setLimelightCamera();
-    driveBase->setHighGear();
-    bling->RunLeftLEDStrip(0.77); // green
-    bling->RunRightLEDStrip(0.77);
-    // claw->moveClawDown();
-    driveBase->setHighGear();
-    bling->RunLeftLEDStrip(0.77); // green
-    bling->RunRightLEDStrip(0.77);
-    // Wait(0.5);
-    claw->openClaw();
+    teleop->init();
 }
 
 void Robot::TeleopPeriodic() {
-    // Driving
-    double leftY = controller->getDrivetrainLeftSpeed();
-    double rightY = controller->getDrivetrainRightSpeed();
-    
-    if (controller->getDriveWithLimelight()) {
-        driveBase->teleopDriveToReflection(0.2);
-    } else if (controller->getDriveStraight()) {
-        driveBase->teleopStraightDrive(leftY);
-        driveBase->resetEncoders();
-    } else {
-        driveBase->resetPID();
-        driveBase->updateNavx();
-        driveBase->drive(leftY, rightY);
-    }
-    
-    // Open and close claw
-    if (controller->getCloseClaw()) {
-        claw->closeClaw();
-        //bling->RunLEDStrip1(0);
-        //bling->RunLEDStrip1(0);
-    } else if (controller->getOpenClaw()) {
-        claw->openClaw();
-        //bling->RunLEDStrip1(0);
-        //bling->RunLEDStrip1(0);
-    }
-
-    // Gear shifting
-    if (controller->getSetLowGear()) {
-        driveBase->setLowGear();
-        bling->RunLeftLEDStrip(0.69); // yellow
-        bling->RunRightLEDStrip(0.69); 
-    } else if (controller->getSetHighGear()) {
-        driveBase->setHighGear();
-        bling->RunLeftLEDStrip(0.77); // green
-        bling->RunRightLEDStrip(0.77);
-    }
-
-    // Claw raising and lowering
-    if (controller->getRaiseClaw()) {
-        claw->moveClawUp();
-        //bling->RunLEDStrip1(0);
-        //bling->RunLEDStrip1(0);
-    } else if (controller->getLowerClaw()) {
-        claw->moveClawDown();
-        //bling->RunLEDStrip1(0);
-        //bling->RunLEDStrip1(0);
-    }
-
-    if (controller->getHoldElevator()) {
-        elevator->raiseElevator(-0.3);
-    } else {
-        elevator->raiseElevator(controller->getElevatorSpeed());
-    }
-
-    // Cargo out
-    if (controller->getRunFrontOut()) {
-        cargo->ejectCargo();
-    } else if (controller->getRunIntake()) {
-        cargo->runIntake(1);
-        cargo->holdCargo();
-    } else if (controller->getReverseIntake()) {
-        cargo->reverseIntake();
-    } else {
-        cargo->stopFront();
-        cargo->stopBack();
-        cargo->stopIntake();
-    }
-    
-    if (controller->getSetLimelightVision()) {
-        driveBase->setLimelightVision();
-    } else if (controller->getSetLimelightCamera()) {
-        driveBase->setLimelightCamera();
-    }
-
-    if (elevator->atMiddle()) {
-        //bling->RunLeftLEDStrip(-0.17); // weird shit
-        
-        //bling->RunRightLEDStrip(-0.17);
-    }
-    else if (driveBase->getIsInHighGear()) {
-        bling->RunLeftLEDStrip(0.77); // green
-        bling->RunRightLEDStrip(0.77);
-    }
-    else {
-        bling->RunLeftLEDStrip(0.69); // yellow
-        bling->RunRightLEDStrip(0.69);
-    }
+    teleop->periodic();
 }
 
 void Robot::TestPeriodic() {}
-
-/**
- * Gets the DriveBase
- * 
- * @author Dominic Rutkowski
- * @since 2-10-2019
- * 
- * @returns A pointer to the DriveBase
- */ 
-DriveBase *Robot::getDriveBase() {
-    return driveBase;
-}
-
-/**
- * Gets the Claw
- * 
- * @author Dominic Rutkowski
- * @since 2-10-2019
- * 
- * @returns A pointer to the Claw
- */ 
-Claw *Robot::getClaw() {
-    return claw;
-}
-
-/**
- * Gets the Elevator
- * 
- * @author Dominic Rutkowski
- * @since 2-10-2019
- * 
- * @returns A pointer to the Elevator
- */ 
-Elevator *Robot::getElevator() {
-    return elevator;
-}
-
-/**
- * Gets the Bling
- * 
- * @author Dominic Rutkowski
- * @since 2-10-2019
- * 
- * @returns A pointer to the Bling
- */ 
-Bling *Robot::getBling() {
-    return bling;
-}
-
-/**
- * Gets the Cargo
- * 
- * @author Dominic Rutkowski
- * @since 2-10-2019
- * 
- * @returns A pointer to the Cargo
- */ 
-Cargo *Robot::getCargo() {
-    return cargo;
-}
 
 #ifndef RUNNING_FRC_TESTS
 int main() { return frc::StartRobot<Robot>(); }

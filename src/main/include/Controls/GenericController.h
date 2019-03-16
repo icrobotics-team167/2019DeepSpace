@@ -2,25 +2,33 @@
 #define GENERIC_CONTROLLER_H
 
 class GenericController {
-private:
+protected:
+    const double DRIVETRAIN_DEADZONE = 0.07;
+    const double ELEVATOR_DEADZONE = 0.3;
 public:
-    virtual double getDrivetrainLeftSpeed() = 0;
-    virtual double getDrivetrainRightSpeed() = 0;
-    virtual bool getOpenClaw() = 0;
-    virtual bool getCloseClaw() = 0;
-    virtual bool getSetHighGear() = 0;
-    virtual bool getSetLowGear() = 0;
-    virtual bool getRaiseClaw() = 0;
-    virtual bool getLowerClaw() = 0;
-    virtual double getElevatorSpeed() = 0;
-    virtual bool getRunFrontOut() = 0;
-    virtual bool getRunIntake() = 0;
-    virtual bool getSetLimelightVision() = 0;
-    virtual bool getSetLimelightCamera() = 0;
-    virtual bool getDriveWithLimelight() = 0;
-    virtual bool getDriveStraight() = 0;
-    virtual bool getReverseIntake() = 0;
-    virtual bool getHoldElevator() = 0;
+    virtual bool limelightDrive() = 0;
+    virtual bool straightDrive() = 0;
+    virtual double drivetrainLeftSpeed() = 0;
+    virtual double drivetrainRightSpeed() = 0;
+
+    virtual bool openClaw() = 0;
+    virtual bool closeClaw() = 0;
+
+    virtual bool setLowGear() = 0;
+    virtual bool setHighGear() = 0;
+
+    virtual bool raiseClaw() = 0;
+    virtual bool lowerClaw() = 0;
+
+    virtual bool holdElevator() = 0;
+    virtual double elevatorSpeed() = 0;
+
+    virtual bool ejectCargo() = 0;
+    virtual bool runIntake() = 0;
+    virtual bool runIntakeReverse() = 0;
+
+    virtual bool setLimelightVisionMode() = 0;
+    virtual bool setLimelightCameraMode() = 0;
 };
 
 #endif
