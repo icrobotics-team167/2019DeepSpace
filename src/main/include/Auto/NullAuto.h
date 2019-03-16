@@ -6,11 +6,11 @@
 class NullAuto : public AutoRoutine {
 private:
     enum class AutoState {
-        init, teleop
+        init, done
     };
     AutoState autoState;
 public:
-    NullAuto(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo, GenericController* controller);
+    NullAuto(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo, GenericController* controller, Teleop *teleop);
     ~NullAuto();
     void run() override;
 };

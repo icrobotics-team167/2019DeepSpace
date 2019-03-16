@@ -25,6 +25,8 @@
 #include "Controls/SingleXboxController.h"
 #include "Controls/DoubleXboxController.h"
 
+#include "Teleop.h"
+
 #include <string>
 
 #include <frc/TimedRobot.h>
@@ -64,4 +66,6 @@ private:
     AutoRoutine *autoRoutine;
 
     GenericController *controller;
+
+    Teleop *teleop;
 };
