@@ -41,13 +41,6 @@ public:
     void TeleopInit() override;
     void TeleopPeriodic() override;
     void TestPeriodic() override;
-
-    DriveBase *getDriveBase();
-    Claw *getClaw();
-    Elevator *getElevator();
-    Bling *getBling();
-    Cargo *getCargo();
-
 private:
     frc::SendableChooser<std::string> autoChooser;
     const std::string nullAuto = "Null Auto";

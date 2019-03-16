@@ -94,66 +94,6 @@ void Robot::TeleopPeriodic() {
 
 void Robot::TestPeriodic() {}
 
-/**
- * Gets the DriveBase
- * 
- * @author Dominic Rutkowski
- * @since 2-10-2019
- * 
- * @returns A pointer to the DriveBase
- */ 
-DriveBase *Robot::getDriveBase() {
-    return driveBase;
-}
-
-/**
- * Gets the Claw
- * 
- * @author Dominic Rutkowski
- * @since 2-10-2019
- * 
- * @returns A pointer to the Claw
- */ 
-Claw *Robot::getClaw() {
-    return claw;
-}
-
-/**
- * Gets the Elevator
- * 
- * @author Dominic Rutkowski
- * @since 2-10-2019
- * 
- * @returns A pointer to the Elevator
- */ 
-Elevator *Robot::getElevator() {
-    return elevator;
-}
-
-/**
- * Gets the Bling
- * 
- * @author Dominic Rutkowski
- * @since 2-10-2019
- * 
- * @returns A pointer to the Bling
- */ 
-Bling *Robot::getBling() {
-    return bling;
-}
-
-/**
- * Gets the Cargo
- * 
- * @author Dominic Rutkowski
- * @since 2-10-2019
- * 
- * @returns A pointer to the Cargo
- */ 
-Cargo *Robot::getCargo() {
-    return cargo;
-}
-
 #ifndef RUNNING_FRC_TESTS
 int main() { return frc::StartRobot<Robot>(); }
 #endif
