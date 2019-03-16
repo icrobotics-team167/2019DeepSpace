@@ -6,7 +6,7 @@
 class NullAuto : public AutoRoutine {
 private:
     enum class AutoState {
-        init, done
+        init, teleop
     };
     AutoState autoState;
 public:

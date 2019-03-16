@@ -9,6 +9,30 @@ SingleXboxController::~SingleXboxController() {
 }
 
 /**
+ * Determines not to drive with the Limelight
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-19-2019
+ * 
+ * @returns True if the robot should drive with the Limelight, false otherwise
+ */
+bool SingleXboxController::limelightDrive() {
+    return false;
+}
+
+/**
+ * Determines whether to drive straight
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-19-2019
+ * 
+ * @returns True if the robot should drive straight, false otherwise
+ */
+bool SingleXboxController::straightDrive() {
+    return xboxController->GetPOV() == 0;
+}
+
+/**
  * Determines at what speed to drive the left motor group based on
  * the Y axis value of left joystick
  * 
@@ -17,7 +41,7 @@ SingleXboxController::~SingleXboxController() {
  * 
  * @returns A double on [-1, 1] representing at what speed the left motors will drive
  */
-double SingleXboxController::getDrivetrainLeftSpeed() {
+double SingleXboxController::drivetrainLeftSpeed() {
     double leftY = -xboxController->GetY(frc::Joystick::JoystickHand::kLeftHand);
     if (leftY >= DRIVETRAIN_DEADZONE || leftY <= -DRIVETRAIN_DEADZONE) {
         return leftY;
@@ -34,7 +58,7 @@ double SingleXboxController::getDrivetrainLeftSpeed() {
  * 
  * @returns A double on [-1, 1] representing at what speed the right motors will drive
  */
-double SingleXboxController::getDrivetrainRightSpeed() {
+double SingleXboxController::drivetrainRightSpeed() {
     double rightY = -xboxController->GetY(frc::Joystick::JoystickHand::kRightHand);
     if (rightY >= DRIVETRAIN_DEADZONE || rightY <= DRIVETRAIN_DEADZONE) {
         return rightY;
@@ -51,7 +75,7 @@ double SingleXboxController::getDrivetrainRightSpeed() {
  * 
  * @returns True if the claw should open, false otherwise
  */
-bool SingleXboxController::getOpenClaw() {
+bool SingleXboxController::openClaw() {
     return xboxController->GetTriggerAxis(frc::Joystick::JoystickHand::kRightHand) > 0.3;
 }
 
@@ -64,21 +88,8 @@ bool SingleXboxController::getOpenClaw() {
  * 
  * @returns True if the claw should close, false otherwise
  */
-bool SingleXboxController::getCloseClaw() {
+bool SingleXboxController::closeClaw() {
     return xboxController->GetTriggerAxis(frc::Joystick::JoystickHand::kLeftHand) > 0.3;
-}
-
-/**
- * Determines whether to change to high gear based on if the
- * right bumper is pressed
- * 
- * @author Dominic Rutkowski
- * @since 2-17-2019
- * 
- * @returns True if the robot should switch to high gear, false otherwise
- */
-bool SingleXboxController::getSetHighGear() {
-    return xboxController->GetBumper(frc::Joystick::JoystickHand::kRightHand);
 }
 
 /**
@@ -90,8 +101,21 @@ bool SingleXboxController::getSetHighGear() {
  * 
  * @returns True if the robot should switch to low gear, false otherwise
  */
-bool SingleXboxController::getSetLowGear() {
+bool SingleXboxController::setLowGear() {
     return xboxController->GetBumper(frc::Joystick::JoystickHand::kLeftHand);
+}
+
+/**
+ * Determines whether to change to high gear based on if the
+ * right bumper is pressed
+ * 
+ * @author Dominic Rutkowski
+ * @since 2-17-2019
+ * 
+ * @returns True if the robot should switch to high gear, false otherwise
+ */
+bool SingleXboxController::setHighGear() {
+    return xboxController->GetBumper(frc::Joystick::JoystickHand::kRightHand);
 }
 
 /**
@@ -103,7 +127,7 @@ bool SingleXboxController::getSetLowGear() {
  * 
  * @returns True if the claw should be raised, false otherwise
  */
-bool SingleXboxController::getRaiseClaw() {
+bool SingleXboxController::raiseClaw() {
     return xboxController->GetAButton();
 }
 
@@ -116,8 +140,21 @@ bool SingleXboxController::getRaiseClaw() {
  * 
  * @returns True if the claw should be lowered, false otherwise
  */
-bool SingleXboxController::getLowerClaw() {
+bool SingleXboxController::lowerClaw() {
     return xboxController->GetBButton();
+}
+
+/**
+ * Determines not to hold the elevator at
+ * its current level
+ * 
+ * @author Dominic Rutkowski
+ * @since 3-15-2019
+ * 
+ * @returns True if the robot should hold its elevator, false otherwise
+ */
+bool SingleXboxController::holdElevator() {
+    return false;
 }
 
 /**
@@ -132,7 +169,7 @@ bool SingleXboxController::getLowerClaw() {
  * @returns A double in {-1, 0, 1} representing whether to lower the elevator (-1),
  *          leave the elevator still (0), or raise the elevator (1)
  */
-double SingleXboxController::getElevatorSpeed() {
+double SingleXboxController::elevatorSpeed() {
     if (xboxController->GetXButton()) {
         return 1;
     }
@@ -151,7 +188,7 @@ double SingleXboxController::getElevatorSpeed() {
  * 
  * @returns True if the front cargo out should run, false otherwise
  */
-bool SingleXboxController::getRunFrontOut() {
+bool SingleXboxController::ejectCargo() {
     return xboxController->GetStickButton(frc::Joystick::JoystickHand::kLeftHand);
 }
 
@@ -164,7 +201,7 @@ bool SingleXboxController::getRunFrontOut() {
  * 
  * @returns True if the cargo intake should run, false otherwise
  */
-bool SingleXboxController::getRunIntake() {
+bool SingleXboxController::runIntake() {
     return xboxController->GetStartButton();
 }
 
@@ -176,7 +213,7 @@ bool SingleXboxController::getRunIntake() {
  * 
  * @returns True if the cargo intake should run in reverse, false otherwise
  */
-bool SingleXboxController::getReverseIntake() {
+bool SingleXboxController::runIntakeReverse() {
     return false;
 }
 
@@ -188,7 +225,7 @@ bool SingleXboxController::getReverseIntake() {
  * 
  * @returns False since the single controller does not support multiple Limelight modes
  */
-bool SingleXboxController::getSetLimelightVision() {
+bool SingleXboxController::setLimelightVisionMode() {
     return false;
 }
 
@@ -200,43 +237,6 @@ bool SingleXboxController::getSetLimelightVision() {
  * 
  * @returns False since the single controller does not support multiple Limelight modes
  */
-bool SingleXboxController::getSetLimelightCamera() {
-    return false;
-}
-
-/**
- * Determines not to drive with the Limelight
- * 
- * @author Dominic Rutkowski
- * @since 2-19-2019
- * 
- * @returns True if the robot should drive with the Limelight, false otherwise
- */
-bool SingleXboxController::getDriveWithLimelight() {
-    return false;
-}
-
-/**
- * Determines whether to drive straight
- * 
- * @author Dominic Rutkowski
- * @since 2-19-2019
- * 
- * @returns True if the robot should drive straight, false otherwise
- */
-bool SingleXboxController::getDriveStraight() {
-    return xboxController->GetPOV() == 0;
-}
-
-/**
- * Determines not to hold the elevator at
- * its current level
- * 
- * @author Dominic Rutkowski
- * @since 3-15-2019
- * 
- * @returns True if the robot should hold its elevator, false otherwise
- */
-bool SingleXboxController::getHoldElevator() {
+bool SingleXboxController::setLimelightCameraMode() {
     return false;
 }

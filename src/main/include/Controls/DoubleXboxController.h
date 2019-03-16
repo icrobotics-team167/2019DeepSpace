@@ -8,28 +8,33 @@ class DoubleXboxController : public GenericController {
 private:
     frc::XboxController *xboxController1;
     frc::XboxController *xboxController2;
-    const double DRIVETRAIN_DEADZONE = 0.07;
-    const double ELEVATOR_DEADZONE = 0.3;
 public:
     DoubleXboxController();
     ~DoubleXboxController();
-    double getDrivetrainLeftSpeed() override;
-    double getDrivetrainRightSpeed() override;
-    bool getOpenClaw() override;
-    bool getCloseClaw() override;
-    bool getSetHighGear() override;
-    bool getSetLowGear() override;
-    bool getRaiseClaw() override;
-    bool getLowerClaw() override;
-    double getElevatorSpeed() override;
-    bool getRunFrontOut() override;
-    bool getRunIntake() override;
-    bool getSetLimelightVision() override;
-    bool getSetLimelightCamera() override;
-    bool getDriveWithLimelight() override;
-    bool getDriveStraight() override;
-    bool getReverseIntake() override;
-    bool getHoldElevator() override;
+
+    bool limelightDrive() override;
+    bool straightDrive() override;
+    double drivetrainLeftSpeed() override;
+    double drivetrainRightSpeed() override;
+
+    bool openClaw() override;
+    bool closeClaw() override;
+
+    bool setLowGear() override;
+    bool setHighGear() override;
+
+    bool raiseClaw() override;
+    bool lowerClaw() override;
+
+    bool holdElevator() override;
+    double elevatorSpeed() override;
+
+    bool ejectCargo() override;
+    bool runIntake() override;
+    bool runIntakeReverse() override;
+    
+    bool setLimelightVisionMode() override;
+    bool setLimelightCameraMode() override;
 };
 
 #endif
