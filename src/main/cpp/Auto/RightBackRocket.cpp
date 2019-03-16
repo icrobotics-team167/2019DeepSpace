@@ -101,12 +101,13 @@ void RightBackRocket::run() {
             if (driveBase->straightDrive(32, -1)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
+                teleop->init();
                 autoState = AutoState::done;
                 Wait(0.1);
             }
             break;
         case AutoState::done:
-            driveBase->setHighGear();
+            teleop->periodic();
             break;
     }
 }

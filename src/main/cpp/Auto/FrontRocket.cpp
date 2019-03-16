@@ -90,11 +90,13 @@ void FrontRocket::run() {
             if (driveBase->straightDrive(10, -0.6)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
+                teleop->init();
                 autoState = AutoState::done;
                 Wait(0.1);
             }
             break;
         case AutoState::done:
+            teleop->periodic();
             break;
     }
 }

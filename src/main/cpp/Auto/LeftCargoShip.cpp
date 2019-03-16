@@ -179,11 +179,13 @@ void LeftCargoShip::run() {
             if (driveBase->straightDrive(20, -1)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
+                teleop->init();
                 autoState = AutoState::done;
                 Wait(0.1);
             }
             break;
         case AutoState::done:
+            teleop->periodic();
             break;
     }
 }
