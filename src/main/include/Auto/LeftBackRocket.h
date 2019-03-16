@@ -12,7 +12,7 @@ private:
     };
     AutoState autoState;
 public:
-    LeftBackRocket(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo, GenericController* controller);
+    LeftBackRocket(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo, GenericController* controller, Teleop *teleop);
     ~LeftBackRocket();
     void run() override;
 };

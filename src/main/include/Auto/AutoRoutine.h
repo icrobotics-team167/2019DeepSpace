@@ -7,6 +7,7 @@
 #include "Subsystems/Bling.h"
 #include "Subsystems/Cargo.h"
 #include "Controls/GenericController.h"
+#include "Teleop.h"
 
 #include <frc/WPILib.h>
 
@@ -24,8 +25,9 @@ protected:
     Bling *bling;
     Cargo *cargo;
     GenericController *controller;
+    Teleop *teleop;
 public:
-    AutoRoutine(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo, GenericController *controller);
+    AutoRoutine(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *bling, Cargo *cargo, GenericController *controller, Teleop *teleop);
     virtual void run() = 0;
 };
 
