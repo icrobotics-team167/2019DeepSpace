@@ -84,12 +84,12 @@ void Robot::AutonomousPeriodic() {
 void Robot::TeleopInit() {
     driveBase->setLimelightCamera();
     driveBase->setHighGear();
-    bling->RunLeftLEDStrip(0.77); // green
-    bling->RunRightLEDStrip(0.77);
+    bling->runLeftLEDStrip(0.77); // green
+    bling->runRightLEDStrip(0.77);
     // claw->moveClawDown();
     driveBase->setHighGear();
-    bling->RunLeftLEDStrip(0.77); // green
-    bling->RunRightLEDStrip(0.77);
+    bling->runLeftLEDStrip(0.77); // green
+    bling->runRightLEDStrip(0.77);
     // Wait(0.5);
     claw->openClaw();
 }
@@ -124,12 +124,12 @@ void Robot::TeleopPeriodic() {
     // Gear shifting
     if (controller->setLowGear()) {
         driveBase->setLowGear();
-        bling->RunLeftLEDStrip(0.69); // yellow
-        bling->RunRightLEDStrip(0.69); 
+        bling->runLeftLEDStrip(0.69); // yellow
+        bling->runRightLEDStrip(0.69); 
     } else if (controller->setHighGear()) {
         driveBase->setHighGear();
-        bling->RunLeftLEDStrip(0.77); // green
-        bling->RunRightLEDStrip(0.77);
+        bling->runLeftLEDStrip(0.77); // green
+        bling->runRightLEDStrip(0.77);
     }
 
     // Claw raising and lowering
@@ -175,12 +175,12 @@ void Robot::TeleopPeriodic() {
         //bling->RunRightLEDStrip(-0.17);
     }
     else if (driveBase->getIsInHighGear()) {
-        bling->RunLeftLEDStrip(0.77); // green
-        bling->RunRightLEDStrip(0.77);
+        bling->runLeftLEDStrip(0.77); // green
+        bling->runRightLEDStrip(0.77);
     }
     else {
-        bling->RunLeftLEDStrip(0.69); // yellow
-        bling->RunRightLEDStrip(0.69);
+        bling->runLeftLEDStrip(0.69); // yellow
+        bling->runRightLEDStrip(0.69);
     }
 }
 
