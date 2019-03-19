@@ -274,7 +274,7 @@ bool DriveBase::pointTurn(double angle, double speed) {
  * 
  * @author Dominic Rutkowski
  * @author Vladimir Tivanski
- * @asince 2-15-2019
+ * @since 2-15-2019
  * 
  * @param speed The speed at which the robot will drive
  * 
@@ -320,7 +320,31 @@ bool DriveBase::driveToReflection(double speed) {
     }
 }
 
+/**
+ * This method will first align the robot within 1 degree of the center of the vision tape.
+ * Then it will use the limelight to drive the rest of the way there.
+ * 
+ * This is intended to minimalize the error when driving to a reflection
+ * 
+ * @param speed The speed at which the robot will drive at
+ * 
+ * @author Vladimir Tivanski
+ * @since 3-11-2019
+ * 
+ * @returns A bool containing whether or not the robot has successfully driven to the tape
+ */ 
 bool DriveBase::teleopDriveToReflection(double speed) {
+    double tx = getLimelightTx();
+
+    if ((tx > 1 || tx < -1) && !alignedWithTarget) {
+        return alignedWithTarget && pointTurn(-tx, 0.5);
+    } else {
+        alignedWithTarget = true;
+        return teleopLimelightDrive(speed);
+    }
+}
+
+bool DriveBase::teleopLimelightDrive(double speed) {
     setLimelightVision();
 
     double tx = getLimelightTx();
@@ -331,6 +355,7 @@ bool DriveBase::teleopDriveToReflection(double speed) {
 
     if (tv > 0) {
         if (ta >= limelightTargetArea) {
+            alignedWithTarget = false;
             return true;
         }
         double turn = tx * limelightSteerK;
@@ -353,6 +378,7 @@ bool DriveBase::teleopDriveToReflection(double speed) {
         return false;
     } else {
         drive(0, 0);
+        alignedWithTarget = false;
         return true;
     }
 }
@@ -380,7 +406,7 @@ void DriveBase::setHighGear() {
     highGearSolenoid->Set(true);
     isInHighGear = true;
 }
-\
+
 /**
  * Gets the left encoder
  * 

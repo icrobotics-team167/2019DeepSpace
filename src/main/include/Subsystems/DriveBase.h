@@ -51,6 +51,8 @@ public:
 
     bool driveToReflection(double speed);
     bool teleopDriveToReflection(double speed);
+    bool teleopLimelightDrive(double speed);
+    bool alignedWithTarget = false;
 
     const double LEFT_ENCODER_TICKS_PER_INCH = 116.711067093;
     const double RIGHT_ENCODER_TICKS_PER_INCH = 117.837349601;

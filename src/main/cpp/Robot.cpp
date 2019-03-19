@@ -77,7 +77,7 @@ void Robot::AutonomousInit() {
     // } else {
     //     autoRoutine = new NullAuto(driveBase, claw, elevator, bling, cargo, teleop);
     // }
-    autoRoutine = new RightBackRocket(driveBase, claw, elevator, bling, cargo, controller, teleop);
+    autoRoutine = new LeftCargoShip(driveBase, claw, elevator, bling, cargo, controller, teleop);
 }
 
 void Robot::AutonomousPeriodic() {
