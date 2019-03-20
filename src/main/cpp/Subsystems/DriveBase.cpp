@@ -337,7 +337,8 @@ bool DriveBase::teleopDriveToReflection(double speed) {
     double tx = getLimelightTx();
 
     if ((tx > 1 || tx < -1) && !alignedWithTarget) {
-        return alignedWithTarget && pointTurn(-tx, 0.5);
+        pointTurn(tx, .5);
+        return false;
     } else {
         alignedWithTarget = true;
         return teleopLimelightDrive(speed);

@@ -44,18 +44,19 @@ void LeftCargoShip::run() {
             Wait(0.1);
             break;
         case AutoState::driveOffHAB:
-            if (driveBase->straightDrive(24, 0.75)) {
+            if (driveBase->straightDrive(37, 0.75)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 autoState = AutoState::driveToCargoShipFront;
-                Wait(0.1);
+                Wait(1);
             }
             break;
         case AutoState::driveToCargoShipFront:
-            if (driveBase->driveToReflection(0.35)) {
+            if (driveBase->teleopDriveToReflection(0.35)) {
                 driveBase->resetEncoders();
-                driveBase->updateNavx();
                 autoState = AutoState::driveIntoCargoShipFront;
+                Wait(0.2);
+                driveBase->updateNavx();
                 Wait(0.2);
             }
             break;
@@ -105,7 +106,7 @@ void LeftCargoShip::run() {
             }
             break;
         case AutoState::driveToHumanPlayer:
-            if (driveBase->driveToReflection(0.35)) {
+            if (driveBase->teleopDriveToReflection(0.35)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 autoState = AutoState::driveIntoHumanPlayer;
@@ -159,7 +160,7 @@ void LeftCargoShip::run() {
             }
             break;
         case AutoState::driveToCargoShipSide:
-            if (driveBase->driveToReflection(0.35)) {
+            if (driveBase->teleopDriveToReflection(0.35)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 autoState = AutoState::driveIntoCargoShipSide;

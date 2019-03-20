@@ -25,8 +25,8 @@ Claw::~Claw() {
  * @since 2-9-2019
  */
 void Claw::openClaw() {
-    clawOpenSolenoid->Set(true);
-    clawClosedSolenoid->Set(false);
+    clawOpenSolenoid->Set(false);
+    clawClosedSolenoid->Set(true);
 }
 
 /**
@@ -36,8 +36,8 @@ void Claw::openClaw() {
  * @since 2-9-2019
  */
 void Claw::closeClaw() {
-    clawOpenSolenoid->Set(false);
-    clawClosedSolenoid->Set(true);
+    clawOpenSolenoid->Set(true);
+    clawClosedSolenoid->Set(false);
 }
 
 /**
