@@ -47,16 +47,25 @@ void LeftCargoShip::run() {
             if (driveBase->straightDrive(37, 0.75)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
+                driveBase->updateLimelight();
+                autoState = AutoState::driveToCargoShipFront;
+                Wait(0.5);
+            }
+            break;
+        case AutoState::alignWithCargoShip:
+            if (driveBase->pointTurn(driveBase->getLimelightTx(), 0.5)) {
+                driveBase->resetEncoders();
+                driveBase->updateNavx();
+                driveBase->updateLimelight();
                 autoState = AutoState::driveToCargoShipFront;
                 Wait(1);
             }
-            break;
         case AutoState::driveToCargoShipFront:
-            if (driveBase->teleopDriveToReflection(0.35)) {
+            if (driveBase->teleopLimelightDrive(0.2)) {
                 driveBase->resetEncoders();
-                autoState = AutoState::driveIntoCargoShipFront;
-                Wait(0.2);
                 driveBase->updateNavx();
+                driveBase->updateLimelight();
+                autoState = AutoState::driveIntoCargoShipFront;
                 Wait(0.2);
             }
             break;
@@ -88,7 +97,7 @@ void LeftCargoShip::run() {
             }
             break;
         case AutoState::driveCloserToHumanPlayer:
-            if (driveBase->straightDrive(102.5, 1)) {
+            if (driveBase->straightDrive(100, 1)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 driveBase->setLowGear();
