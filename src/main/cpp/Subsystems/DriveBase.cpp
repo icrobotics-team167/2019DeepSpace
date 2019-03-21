@@ -294,7 +294,7 @@ bool DriveBase::driveToReflection(double speed) {
             return true;
         }
         double turn = tx * limelightSteerK;
-        double drive = (limelightTargetArea - ta) * speed;
+        double drive = (limelightTargetArea - ta) * speed + 0.1;
         double leftSpeed = drive + turn;
         double rightSpeed = drive - turn;
         if (leftSpeed > limelightMaxDriveSpeed) {

@@ -7,8 +7,8 @@ class LeftCargoShip : public AutoRoutine {
 private:
     enum class AutoState {
         init, openClaw, driveOffHAB, alignWithCargoShip, driveToCargoShipFront, driveIntoCargoShipFront, score,
-        turnTowardsHumanPlayer, driveCloserToHumanPlayer, turnTowardsHumanPlayerAgain,
-        driveToHumanPlayer, driveIntoHumanPlayer, pickUpHatch, turnTowardsCargoShip,
+        turnTowardsHumanPlayer, driveCloserToHumanPlayer, turnTowardsHumanPlayerAgain, alignWithHumanPlayer,
+        driveToHumanPlayer, limelightToPlayer, alignWithHumanPlayerAgain, driveIntoHumanPlayer, pickUpHatch, turnTowardsCargoShip,
         driveCloserToCargoShip, turnTowardsCargoShipAgain, driveToCargoShipSide,
         driveIntoCargoShipSide, scoreAgain, done
     };

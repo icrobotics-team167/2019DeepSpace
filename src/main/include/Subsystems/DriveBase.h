@@ -65,8 +65,8 @@ public:
 
     void resetPID();
 
-    const double limelightSteerK = 0.1;
-    const double limelightTargetArea = 4;
+    const double limelightSteerK = 0.04;
+    const double limelightTargetArea = 3.5;
     const double limelightMaxDriveSpeed = 0.65;
     const double limelightMaxTurnSpeed = 1;
 
