@@ -96,7 +96,7 @@ void DriveBase::drive(double leftSpeed, double rightSpeed) {
  * @returns True if the drive is complete, false otherwise
  */ 
 bool DriveBase::straightDrive(double inches, double speed) {
-    //low gear fudge factor
+    // low gear fudge factor
     if (inches > 5) {
         inches -= 2.3;
     }
@@ -500,6 +500,18 @@ double DriveBase::getLimelightTv() {
 
 void DriveBase::setLimelightVision() {
     limelightVision = true;
+}
+
+void DriveBase::setLimelightLeft() {
+    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 1);
+}
+
+void DriveBase::setLimelightRight() {
+    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 2);
+}
+
+void DriveBase::setLimelightLowest() {
+    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 0);
 }
 
 void DriveBase::setLimelightCamera() {

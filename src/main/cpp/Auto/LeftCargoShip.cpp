@@ -42,24 +42,27 @@ void LeftCargoShip::run() {
             claw->openClaw();
             autoState = AutoState::driveOffHAB;
             Wait(0.1);
-            break;
-        case AutoState::driveOffHAB:
-            if (driveBase->straightDrive(95, 1)) {
+            break;                  // there is an error sometimes in which after the robot drives off of the hab platform it just stops and does not move
+                                    // we found that this error is resolved if the robot is simply pushed forward, then it will continue autonomous -- but we cannot push the robot at a competition
+        case AutoState::driveOffHAB: // possible cause of error:
+            if (driveBase->straightDrive(95, 1)) { // this might not be goinging far enough
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 driveBase->updateLimelight();
                 driveBase->setLowGear();
                 autoState = AutoState::alignWithCargoShip;
                 Wait(0.2);
-            }
+                SmartDashboard::PutBoolean("Finished Driving of Hab: ", true); // check if this case ever ends
+            }                                   
             break;
-        case AutoState::alignWithCargoShip:
-            if (driveBase->pointTurn(driveBase->getLimelightTx(), 0.05)) {
+        case AutoState::alignWithCargoShip: // possible cause of error:
+            if (driveBase->pointTurn(driveBase->getLimelightTx(), 0.05)) { // this might be too slow for a not full battery
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 driveBase->updateLimelight();
                 autoState = AutoState::driveIntoCargoShipFront;
                 Wait(0.1);
+                SmartDashboard::PutBoolean("Finished Aligning with Cargo Ship: ", true); // check if this case ever ends
             }
             break;
         // case AutoState::driveToCargoShipFront:
@@ -70,8 +73,8 @@ void LeftCargoShip::run() {
         //         Wait(0.2);
         //     }
         //     break;
-        case AutoState::driveIntoCargoShipFront:
-            if (driveBase->straightDrive(24, .55)) {
+        case AutoState::driveIntoCargoShipFront: // possible cause of error
+            if (driveBase->straightDrive(24, .55)) { // this could just not be driving but this is unlikely
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 autoState = AutoState::score;
@@ -80,7 +83,7 @@ void LeftCargoShip::run() {
             break;
         case AutoState::score:
             claw->closeClaw();
-            if (driveBase->straightDrive(6, -1)) {
+            if (driveBase->straightDrive(8, -1)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 autoState = AutoState::turnTowardsHumanPlayer;

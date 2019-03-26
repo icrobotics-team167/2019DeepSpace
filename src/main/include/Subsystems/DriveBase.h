@@ -90,6 +90,10 @@ public:
     void setLimelightVision();
     void setLimelightCamera();
 
+    void setLimelightLeft();
+    void setLimelightRight();
+    void setLimelightLowest();
+    
     bool getIsInHighGear();
 };
 
