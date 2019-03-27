@@ -269,6 +269,14 @@ bool DriveBase::pointTurn(double angle, double speed) {
     return true;
 }
 
+bool DriveBase::alignWithTarget() {
+    if (abs(getLimelightTx()) <= 0.5) {
+        pointTurn(getLimelightTx(), 0.2);
+        return false;
+    }
+    return true;
+}
+
 /**
  * Drives to the reflective tape
  * 
@@ -334,8 +342,8 @@ bool DriveBase::driveToReflection(double speed) {
  * @returns A bool containing whether or not the robot has successfully driven to the tape
  */ 
 bool DriveBase::teleopDriveToReflection(double speed) {
+    setLimelightLowest();
     double tx = getLimelightTx();
-
     if ((tx > 1 || tx < -1) && !alignedWithTarget) {
         pointTurn(tx, .5);
         return false;

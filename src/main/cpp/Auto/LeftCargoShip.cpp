@@ -56,13 +56,22 @@ void LeftCargoShip::run() {
             }                                   
             break;
         case AutoState::alignWithCargoShip: // possible cause of error:
-            if (driveBase->pointTurn(driveBase->getLimelightTx(), 0.05)) { // this might be too slow for a not full battery
+            // if (driveBase->alignWithTarget()) {
+            if (driveBase->pointTurn(driveBase->getLimelightTx(), 0.2)) { // this might be too slow for a not full battery
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 driveBase->updateLimelight();
-                autoState = AutoState::driveIntoCargoShipFront;
+                autoState = AutoState::checkIsAlignedWithCargoShipFront;
                 Wait(0.1);
                 SmartDashboard::PutBoolean("Finished Aligning with Cargo Ship: ", true); // check if this case ever ends
+            }
+            break;
+        case AutoState::checkIsAlignedWithCargoShipFront:
+            Wait(0.05);
+            if (abs(driveBase->getLimelightTx()) <= 0.6) {
+                autoState = AutoState::driveIntoCargoShipFront;
+            } else {
+                autoState = AutoState::alignWithCargoShip;
             }
             break;
         // case AutoState::driveToCargoShipFront:
@@ -119,45 +128,57 @@ void LeftCargoShip::run() {
             }
             break;
         case AutoState::alignWithHumanPlayer:
+            // if (driveBase->alignWithTarget()) {
             if (driveBase->pointTurn(driveBase->getLimelightTx(), 0.2)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 driveBase->updateLimelight();
                 driveBase->setLowGear();
-                autoState = AutoState::driveToHumanPlayer;
+                autoState = AutoState::checkIsAlignedWithHumanPlayer;
                 Wait(0.2);
+            }
+            break;
+        case AutoState::checkIsAlignedWithHumanPlayer:
+            Wait(0.05);
+            if (abs(driveBase->getLimelightTx()) <= 0.6) {
+                autoState = AutoState::driveToHumanPlayer;
+            } else {
+                autoState = AutoState::alignWithHumanPlayer;
             }
             break;
         case AutoState::driveToHumanPlayer:
-            if (driveBase->straightDrive(25, 0.5)) {
+            if (driveBase->straightDrive(55, 1)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
-                autoState = AutoState::limelightToPlayer;
-                Wait(0.2);
-            }
-            break;
-        case AutoState::limelightToPlayer:
-            if (driveBase->driveToReflection(0.2)) {
-                driveBase->resetEncoders();
-                driveBase->updateNavx();
-                autoState = AutoState::alignWithHumanPlayerAgain;
-                Wait(0.2);
-            }
-            break;
-        case AutoState::alignWithHumanPlayerAgain:
-            if (driveBase->pointTurn(driveBase->getLimelightTx(), 0.3)) {
-                driveBase->resetEncoders();
-                driveBase->updateNavx();
-                driveBase->updateLimelight();
                 driveBase->setLowGear();
                 autoState = AutoState::driveIntoHumanPlayer;
                 Wait(0.2);
             }
             break;
+        // case AutoState::limelightToPlayer:
+        //     if (driveBase->driveToReflection(0.2)) {
+        //         driveBase->resetEncoders();
+        //         driveBase->updateNavx();
+        //         autoState = AutoState::alignWithHumanPlayerAgain;
+        //         Wait(0.2);
+        //     }
+        //     break;
+        // case AutoState::alignWithHumanPlayerAgain:
+        //     if (driveBase->alignWithTarget()) {
+        //     // if (driveBase->pointTurn(driveBase->getLimelightTx(), 0.2)) {
+        //         driveBase->resetEncoders();
+        //         driveBase->updateNavx();
+        //         driveBase->updateLimelight();
+        //         driveBase->setLowGear();
+        //         autoState = AutoState::driveIntoHumanPlayer;
+        //         Wait(0.2);
+        //     }
+        //     break;
         case AutoState::driveIntoHumanPlayer:
-            if (driveBase->straightDrive(24, 0.5)) {
+            if (driveBase->straightDrive(15, 0.5)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
+                driveBase->setHighGear();
                 autoState = AutoState::pickUpHatch;
                 Wait(0.3);
             }
@@ -167,52 +188,58 @@ void LeftCargoShip::run() {
             if (driveBase->straightDrive(40, -1)) { // 140
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
-                driveBase->setLowGear();
-                autoState = AutoState::done;
+                autoState = AutoState::turnTowardsCargoShip;
                 Wait(0.1);
             }
             break;
         case AutoState::turnTowardsCargoShip:
-            if (driveBase->pointTurn(25, 0.5)) {
+            if (driveBase->pointTurn(5, 0.5)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
-                driveBase->setHighGear();
                 autoState = AutoState::driveCloserToCargoShip;
                 Wait(0.1);
             }
             break;
         case AutoState::driveCloserToCargoShip:
-            if (driveBase->straightDrive(72.5, -1)) {
+            if (driveBase->straightDrive(127, -1)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
-                driveBase->setLowGear();
                 autoState = AutoState::turnTowardsCargoShipAgain;
                 Wait(0.1);
             }
             break;
         case AutoState::turnTowardsCargoShipAgain:
-            if (driveBase->pointTurn(-120, 0.5)) {
+            if (driveBase->pointTurn(-75, 0.5)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
-                driveBase->setHighGear();
+                driveBase->setLimelightRight();
+                autoState = AutoState::alignWithCargoShipSideAgain;
+                Wait(1);
+            }
+            break;
+        case AutoState::alignWithCargoShipSideAgain:
+            if (driveBase->pointTurn(driveBase->getLimelightTx(), 0.2)) { // this might be too slow for a not full battery
+                driveBase->resetEncoders();
+                driveBase->updateNavx();
+                driveBase->updateLimelight();
                 autoState = AutoState::done;
                 Wait(0.1);
             }
             break;
-        case AutoState::driveToCargoShipSide:
-            if (driveBase->teleopDriveToReflection(0.35)) {
-                driveBase->resetEncoders();
-                driveBase->updateNavx();
-                autoState = AutoState::driveIntoCargoShipSide;
-                Wait(0.2);
-            }
-            break;
+        // case AutoState::driveToCargoShipSide:
+        //     if (driveBase->driveToReflection(0.35)) {
+        //         driveBase->resetEncoders();
+        //         driveBase->updateNavx();
+        //         autoState = AutoState::driveIntoCargoShipSide;
+        //         Wait(0.1);
+        //     }
+        //     break;
         case AutoState::driveIntoCargoShipSide:
-            if (driveBase->straightDrive(24, 0.5)) {
+            if (driveBase->straightDrive(48, 0.5)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 autoState = AutoState::scoreAgain;
-                Wait(0.6);
+                Wait(0.3);
             }
             break;
         case AutoState::scoreAgain:

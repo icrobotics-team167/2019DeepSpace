@@ -48,6 +48,7 @@ public:
     bool driveHeading(double inches, double avgSpd, double heading, double arc = 1.0);
     void teleopStraightDrive(double speed);
     bool pointTurn(double angle, double speed);
+    bool alignWithTarget();
 
     bool driveToReflection(double speed);
     bool teleopDriveToReflection(double speed);
