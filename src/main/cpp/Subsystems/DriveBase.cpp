@@ -194,8 +194,8 @@ bool DriveBase::driveHeading(double inches, double avgSpd, double targetHeading,
         leftSpeed = -1;
     }
     // target reached, reset encoders and stop motors
-    if (abs(leftEncoder->Get()) > LEFT_ENCODER_TICKS_PER_INCH * inches &&
-        abs(rightEncoder->Get()) > RIGHT_ENCODER_TICKS_PER_INCH * inches) {
+    if ((abs(leftEncoder->Get()) > LEFT_ENCODER_TICKS_PER_INCH * inches &&
+        abs(rightEncoder->Get()) > RIGHT_ENCODER_TICKS_PER_INCH * inches)) {
         straightDrivePreviousError = 0;
         straightDriveTotalError = 0;
         drive(0, 0);

@@ -12,6 +12,7 @@ Teleop::Teleop(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *blin
 void Teleop::init() {
     driveBase->setLimelightCamera();
     driveBase->setHighGear();
+    driveBase->setLimelightLowest();
     bling->runBothLEDStrips(bling->SOLID_GREEN);
 }
 
