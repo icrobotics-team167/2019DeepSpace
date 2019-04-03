@@ -9,7 +9,7 @@ private:
         init, openClaw, driveOffHAB, driveToCargoShipFront, driveIntoCargoShipFront, /*alignWithCargoShip, checkIsAlignedWithCargoShipFront, driveToCargoShipFront, driveIntoCargoShipFront, */score,
         driveByHumanPlayer, turnTowardsHumanPlayer, driveCloserToHumanPlayer, turnTowardsHumanPlayerAgain, alignWithHumanPlayer, checkIsAlignedWithHumanPlayer,
         driveToHumanPlayer, limelightToPlayer, alignWithHumanPlayerAgain, checkIsAlignedWithHumanPlayerAgain, driveIntoHumanPlayer, pickUpHatch, turnTowardsCargoShip,
-        driveCloserToCargoShip, turnTowardsCargoShipAgain, alignWithCargoShipSideAgain, checkIsAlignedWithCargoShipSide, driveToCargoShipSide,
+        driveCloserToCargoShip, driveCloserToCargoShipAgain, turnTowardsCargoShipAgain, alignWithCargoShipSideAgain, checkIsAlignedWithCargoShipSide, driveToCargoShipSide,
         driveIntoCargoShipSide, scoreAgain, done
     };
     AutoState autoState;

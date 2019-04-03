@@ -78,39 +78,20 @@ void LeftCargoShip::run() {
             if (driveBase->straightDrive(15, -1)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
+                driveBase->setHighGear();                
                 driveByHumanPlayerHeading = driveBase->getNavx()->GetAngle() - 85;
                 autoState = AutoState::driveByHumanPlayer;
                 Wait(0.1);
             }
             break;
         case AutoState::driveByHumanPlayer:
-            if (driveBase->driveHeading(67, 1, driveByHumanPlayerHeading)) {
+            if (driveBase->driveHeading(64, 1, driveByHumanPlayerHeading)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 autoState = AutoState::turnTowardsHumanPlayerAgain;
                 Wait(0.1);
             }
             break;
-        // case AutoState::turnTowardsHumanPlayer:
-        //     if (driveBase->pointTurn(-110, 0.7)) {
-        //         driveBase->resetEncoders();
-        //         driveBase->updateNavx();
-        //         driveBase->updateLimelight();
-        //         driveBase->setHighGear();
-        //         autoState = AutoState::driveCloserToHumanPlayer;
-        //         Wait(0.1);
-        //     }
-        //     break;
-        // case AutoState::driveCloserToHumanPlayer:
-        //     if (driveBase->straightDrive(96.5, 1)) {
-        //         driveBase->resetEncoders();
-        //         driveBase->updateNavx();
-        //         driveBase->setLowGear();
-        //         driveBase->setLimelightLowest();
-        //         autoState = AutoState::turnTowardsHumanPlayerAgain;
-        //         Wait(0.2);
-        //     }
-        //     break;
         case AutoState::turnTowardsHumanPlayerAgain:
             if (driveBase->pointTurn(-38, 0.85)) {
                 driveBase->resetEncoders();
@@ -129,7 +110,7 @@ void LeftCargoShip::run() {
             }
             break;
         case AutoState::driveIntoHumanPlayer:
-            if (driveBase->driveHeading(33.5, 0.5, driveBase->getNavx()->GetAngle() + driveBase->getLimelightTx())) {
+            if (driveBase->driveHeading(20.5, 0.35, driveBase->getNavx()->GetAngle() + driveBase->getLimelightTx())) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 autoState = AutoState::pickUpHatch;
@@ -138,49 +119,64 @@ void LeftCargoShip::run() {
             break;
         case AutoState::pickUpHatch:
             claw->openClaw();
-            if (driveBase->straightDrive(30, -1)) { // 140
+            if (driveBase->driveHeading(30, -1, driveBase->getNavx()->GetAngle() + driveBase->getLimelightTx())) { // 140
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
-                cargoShipSideHeading = driveBase->getNavx()->GetAngle() + 27.5;
+                cargoShipSideHeading = driveBase->getNavx()->GetAngle() + 22.5;
                 autoState = AutoState::driveCloserToCargoShip;
-                Wait(0.5);
+                Wait(0.1);
             }
             break;
         case AutoState::driveCloserToCargoShip:
-            if (driveBase->driveHeading(149, -1, cargoShipSideHeading)) {
+            if (driveBase->driveHeading(85, -1, cargoShipSideHeading)) { //149 inches
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
-                autoState = AutoState::turnTowardsCargoShipAgain;
+                cargoShipSideHeading = driveBase->getNavx()->GetAngle() - 22.5;
+                autoState = AutoState::driveCloserToCargoShipAgain;
                 Wait(0.1); 
             }
             break;
+        case AutoState::driveCloserToCargoShipAgain:
+            if (driveBase->driveHeading(75, -1, cargoShipSideHeading)) { 
+                driveBase->resetEncoders();
+                driveBase->updateNavx();
+                driveBase->drive(0,0);
+                autoState = AutoState::turnTowardsCargoShipAgain;
+                Wait(0.2); 
+            }
+            break;
         case AutoState::turnTowardsCargoShipAgain:
-            if (driveBase->pointTurn(-56, 0.5)) {
+            if (driveBase->pointTurn(-68, 0.4)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 driveBase->setLimelightRight();
+                driveBase->drive(0,0);
                 autoState = AutoState::driveIntoCargoShipSide;
                 Wait(0.2);
             }
             break;
         case AutoState::driveIntoCargoShipSide:
-            driveBase->driveHeading(10000000, 0.35, driveBase->getNavx()->GetAngle() + driveBase->getLimelightTx());
+            driveBase->driveHeading(25, 0.5, driveBase->getNavx()->GetAngle() + driveBase->getLimelightTx());
             if (driveBase->getLimelightTa() >= 17.2) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
+                driveBase->drive(0,0);
                 autoState = AutoState::scoreAgain;
                 Wait(0.3);
             }
             break;
         case AutoState::scoreAgain:
             claw->closeClaw();
-            if (driveBase->straightDrive(20, -1)) {
-                driveBase->resetEncoders();
-                driveBase->updateNavx();
-                teleop->init();
-                autoState = AutoState::done;
-                Wait(0.1);
-            }
+            autoState = AutoState::done; //comment these 2 lines out if you uncomment
+            Wait(0.1);                   //below IF statement
+            
+            // if (driveBase->straightDrive(20, -1)) {
+            //     driveBase->resetEncoders();
+            //     driveBase->updateNavx();
+            //     teleop->init();
+            //     autoState = AutoState::done;
+            //     Wait(0.1);
+            // }
             break;
         case AutoState::done:
             teleop->periodic();
