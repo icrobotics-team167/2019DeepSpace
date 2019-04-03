@@ -8,7 +8,7 @@
 // Left motor controllers
 #define LEFT_TALON_1 3 
 #define LEFT_TALON_2 4
-#define LEFT_TALON_3 5
+#define LEFT_TALON_3 9
 
 // Right motor controllers
 #define RIGHT_TALON_1 6
