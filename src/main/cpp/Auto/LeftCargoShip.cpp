@@ -41,7 +41,7 @@ void LeftCargoShip::run() {
             claw->moveClawDown();
             autoState = AutoState::openClaw;
             driveBase->setLimelightLeft();
-            Wait(0.36);
+            Wait(0.17);
             break;
         case AutoState::openClaw:
             claw->openClaw();
@@ -50,7 +50,7 @@ void LeftCargoShip::run() {
             Wait(0.4);
             break;
         case AutoState::driveOffHAB: 
-            if (driveBase->driveHeading(53, 1, cargoShipFrontHeading)) {
+            if (driveBase->driveHeading(56, 1, cargoShipFrontHeading)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 driveBase->updateLimelight();
