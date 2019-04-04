@@ -29,6 +29,7 @@ AutoRoutine(driveBase, claw, elevator, bling, cargo, controller, teleop)
  */ 
 void LeftBackRocket::run() {
     if (controller->sandstormAutoOverride()) {
+        teleop->init();
         autoState = AutoState::done;
     }
     switch (autoState) {
