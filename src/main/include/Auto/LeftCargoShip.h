@@ -13,6 +13,7 @@ private:
         driveIntoCargoShipSide, scoreAgain, done
     };
     AutoState autoState;
+    double cargoShipFrontHeading;
     double cargoShipSideHeading;
     double driveIntoCargoShipFrontInitialHeading;
     double driveToCargoShipFrontInitialHeading;

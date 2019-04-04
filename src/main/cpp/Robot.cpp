@@ -71,7 +71,7 @@ void Robot::AutonomousInit() {
     // } else if (selectedAuto == rightBackRocket) {
     //     autoRoutine = new RightBackRocket(driveBase, claw, elevator, bling, cargo, teleop);
     // } else if (selectedAuto == leftCargoShip) {
-    //     autoRoutine = new LeftCargoShip(driveBase, claw, elevator, bling, cargo, teleop);
+    //     ..autoRoutine = new LeftCargoShip(driveBase, claw, elevator, bling, cargo, teleop);
     // } else if (selectedAuto == rightCargoShip) {
     //     autoRoutine = new RightCargoShip(driveBase, claw, elevator, bling, cargo, teleop);
     // } else {

@@ -22,7 +22,7 @@ void Teleop::periodic() {
     double rightY = controller->drivetrainRightSpeed();
     
     if (controller->limelightDrive()) {
-        driveBase->teleopDriveToReflection(0.2);
+        driveBase->teleopDriveToReflection(0.45);
     } else if (controller->straightDrive()) {
         driveBase->teleopStraightDrive(leftY);
         driveBase->resetEncoders();

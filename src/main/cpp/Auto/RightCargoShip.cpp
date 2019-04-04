@@ -45,11 +45,12 @@ void RightCargoShip::run() {
             break;
         case AutoState::openClaw:
             claw->openClaw();
+            cargoShipFrontHeading = driveBase->getNavx()->GetAngle();
             autoState = AutoState::driveOffHAB;
-            Wait(0.1);
+            Wait(0.4);
             break;
         case AutoState::driveOffHAB: 
-            if (driveBase->straightDrive(75, 1)) {
+            if (driveBase->driveHeading(53, 1, cargoShipFrontHeading)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 driveBase->updateLimelight();
@@ -60,7 +61,7 @@ void RightCargoShip::run() {
             }                                   
             break;
         case AutoState::driveToCargoShipFront:
-            if (driveBase->driveHeading(35.5, 0.75, driveBase->getNavx()->GetAngle() + driveBase->getLimelightTx())) {
+            if (driveBase->driveHeading(55, 0.75, driveBase->getNavx()->GetAngle() + driveBase->getLimelightTx())) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 driveIntoCargoShipFrontInitialHeading = driveBase->getNavx()->GetAngle();
@@ -68,7 +69,7 @@ void RightCargoShip::run() {
             }
             break;
         case AutoState::driveIntoCargoShipFront:           
-            if (driveBase->driveHeading(20, 0.5, driveBase->getNavx()->GetAngle() + driveBase->getLimelightTx())) {
+            if (driveBase->driveHeading(20, 0.36, driveBase->getNavx()->GetAngle() + driveBase->getLimelightTx())) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 autoState = AutoState::score;
@@ -89,7 +90,7 @@ void RightCargoShip::run() {
             }
             break;
         case AutoState::driveByHumanPlayer:
-            if (driveBase->driveHeading(64, 1, driveByHumanPlayerHeading)) {
+            if (driveBase->driveHeading(38, 1, driveByHumanPlayerHeading)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 autoState = AutoState::turnTowardsHumanPlayerAgain;
@@ -111,7 +112,7 @@ void RightCargoShip::run() {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
                 driveBase->setLimelightLowestHatchPickup();
-                autoState = AutoState::driveIntoHumanPlayer;
+                autoState = AutoState::done;
                 Wait(0.2);
             }
             break;
