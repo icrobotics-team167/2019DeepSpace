@@ -29,6 +29,8 @@ public:
 
     virtual bool setLimelightVisionMode() = 0;
     virtual bool setLimelightCameraMode() = 0;
+
+    virtual bool sandstormAutoOverride() = 0;
 };
 
 #endif

@@ -28,6 +28,9 @@ AutoRoutine(driveBase, claw, elevator, bling, cargo, controller, teleop)
  * @since 2-10-2019
  */ 
 void RightCargoShip::run() {
+    if (controller->sandstormAutoOverride()) {
+        autoState = AutoState::done;
+    }
     switch (autoState) {
         case AutoState::init:
             driveBase->resetEncoders();

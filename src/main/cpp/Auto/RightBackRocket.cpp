@@ -28,6 +28,9 @@ AutoRoutine(driveBase, claw, elevator, bling, cargo, controller, teleop)
  * @since 2-17-2019
  */ 
 void RightBackRocket::run() {
+    if (controller->sandstormAutoOverride()) {
+        autoState = AutoState::done;
+    }
     switch (autoState) {
         case AutoState::init:
             driveBase->resetEncoders();

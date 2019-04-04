@@ -35,6 +35,8 @@ public:
     
     bool setLimelightVisionMode() override;
     bool setLimelightCameraMode() override;
+
+    bool sandstormAutoOverride() override;
 };
 
 #endif

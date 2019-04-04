@@ -240,3 +240,8 @@ bool DoubleXboxController::setLimelightVisionMode() {
 bool DoubleXboxController::setLimelightCameraMode() {
     return xboxController1->GetBackButton();
 }
+
+bool DoubleXboxController::sandstormAutoOverride() {
+    return xboxController1->GetStickButton(frc::Joystick::JoystickHand::kLeftHand)
+        && xboxController1->GetStickButton(frc::Joystick::JoystickHand::kRightHand);
+}
