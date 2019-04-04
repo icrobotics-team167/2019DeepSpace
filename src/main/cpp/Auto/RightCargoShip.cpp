@@ -36,7 +36,7 @@ void RightCargoShip::run() {
             driveBase->setLimelightVision();
             claw->moveClawDown();
             autoState = AutoState::openClaw;
-            driveBase->setLimelightLeft();
+            driveBase->setLimelightRight();
             Wait(0.36);
             break;
         case AutoState::openClaw:
@@ -106,7 +106,9 @@ void RightCargoShip::run() {
             if (driveBase->driveHeading(27.5, 0.75, driveBase->getNavx()->GetAngle() + driveBase->getLimelightTx())) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
+                driveBase->setLimelightLowestHatchPickup();
                 autoState = AutoState::driveIntoHumanPlayer;
+                Wait(0.2);
             }
             break;
         case AutoState::driveIntoHumanPlayer:
@@ -149,7 +151,7 @@ void RightCargoShip::run() {
             if (driveBase->pointTurn(68, 0.4)) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
-                driveBase->setLimelightRight();
+                driveBase->setLimelightLeft();
                 driveBase->drive(0,0);
                 autoState = AutoState::driveIntoCargoShipSide;
                 Wait(0.2);

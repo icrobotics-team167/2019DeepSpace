@@ -93,6 +93,7 @@ public:
     void setLimelightLeft();
     void setLimelightRight();
     void setLimelightLowest();
+    void setLimelightLowestHatchPickup();
     
     bool getIsInHighGear();
 };

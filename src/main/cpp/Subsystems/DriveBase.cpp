@@ -518,6 +518,10 @@ void DriveBase::setLimelightLowest() {
     nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 0);
 }
 
+void DriveBase::setLimelightLowestHatchPickup() {
+    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 3);
+}
+
 void DriveBase::setLimelightCamera() {
     limelightVision = false;
 }

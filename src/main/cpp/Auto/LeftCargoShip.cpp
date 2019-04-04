@@ -106,7 +106,9 @@ void LeftCargoShip::run() {
             if (driveBase->driveHeading(27.5, 0.75, driveBase->getNavx()->GetAngle() + driveBase->getLimelightTx())) {
                 driveBase->resetEncoders();
                 driveBase->updateNavx();
+                driveBase->setLimelightLowestHatchPickup();
                 autoState = AutoState::driveIntoHumanPlayer;
+                Wait(0.2);
             }
             break;
         case AutoState::driveIntoHumanPlayer:
