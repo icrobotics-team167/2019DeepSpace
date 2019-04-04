@@ -94,7 +94,7 @@ void DriveBase::drive(double leftSpeed, double rightSpeed) {
  * @returns True if the drive is complete, false otherwise
  */ 
 bool DriveBase::straightDrive(double inches, double speed) {
-    //low gear fudge factor
+    // low gear fudge factor
     if (inches > 5) {
         inches -= 2.3;
     }
@@ -192,8 +192,8 @@ bool DriveBase::driveHeading(double inches, double avgSpd, double targetHeading,
         leftSpeed = -1;
     }
     // target reached, reset encoders and stop motors
-    if (abs(leftEncoder->Get()) > LEFT_ENCODER_TICKS_PER_INCH * inches &&
-        abs(rightEncoder->Get()) > RIGHT_ENCODER_TICKS_PER_INCH * inches) {
+    if ((abs(leftEncoder->Get()) > LEFT_ENCODER_TICKS_PER_INCH * inches &&
+        abs(rightEncoder->Get()) > RIGHT_ENCODER_TICKS_PER_INCH * inches)) {
         straightDrivePreviousError = 0;
         straightDriveTotalError = 0;
         drive(0, 0);
@@ -267,12 +267,20 @@ bool DriveBase::pointTurn(double angle, double speed) {
     return true;
 }
 
+bool DriveBase::alignWithTarget() {
+    if (abs(getLimelightTx()) <= 0.5) {
+        pointTurn(getLimelightTx(), 0.2);
+        return false;
+    }
+    return true;
+}
+
 /**
  * Drives to the reflective tape
  * 
  * @author Dominic Rutkowski
  * @author Vladimir Tivanski
- * @asince 2-15-2019
+ * @since 2-15-2019
  * 
  * @param speed The speed at which the robot will drive
  * 
@@ -292,7 +300,7 @@ bool DriveBase::driveToReflection(double speed) {
             return true;
         }
         double turn = tx * limelightSteerK;
-        double drive = (limelightTargetArea - ta) * speed;
+        double drive = (limelightTargetArea - ta) * speed + 0.1;
         double leftSpeed = drive + turn;
         double rightSpeed = drive - turn;
         if (leftSpeed > limelightMaxDriveSpeed) {
@@ -318,7 +326,32 @@ bool DriveBase::driveToReflection(double speed) {
     }
 }
 
+/**
+ * This method will first align the robot within 1 degree of the center of the vision tape.
+ * Then it will use the limelight to drive the rest of the way there.
+ * 
+ * This is intended to minimalize the error when driving to a reflection
+ * 
+ * @param speed The speed at which the robot will drive at
+ * 
+ * @author Vladimir Tivanski
+ * @since 3-11-2019
+ * 
+ * @returns A bool containing whether or not the robot has successfully driven to the tape
+ */ 
 bool DriveBase::teleopDriveToReflection(double speed) {
+    setLimelightLowest();
+    double tx = getLimelightTx();
+    if ((tx > 1 || tx < -1) && !alignedWithTarget) {
+        pointTurn(tx, .5);
+        return false;
+    } else {
+        alignedWithTarget = true;
+        return teleopLimelightDrive(speed);
+    }
+}
+
+bool DriveBase::teleopLimelightDrive(double speed) {
     setLimelightVision();
 
     double tx = getLimelightTx();
@@ -329,6 +362,7 @@ bool DriveBase::teleopDriveToReflection(double speed) {
 
     if (tv > 0) {
         if (ta >= limelightTargetArea) {
+            alignedWithTarget = false;
             return true;
         }
         double turn = tx * limelightSteerK;
@@ -351,6 +385,7 @@ bool DriveBase::teleopDriveToReflection(double speed) {
         return false;
     } else {
         drive(0, 0);
+        alignedWithTarget = false;
         return true;
     }
 }
@@ -469,6 +504,18 @@ double DriveBase::getLimelightTv() {
 
 void DriveBase::setLimelightVision() {
     limelightVision = true;
+}
+
+void DriveBase::setLimelightLeft() {
+    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 1);
+}
+
+void DriveBase::setLimelightRight() {
+    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 2);
+}
+
+void DriveBase::setLimelightLowest() {
+    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 0);
 }
 
 void DriveBase::setLimelightCamera() {

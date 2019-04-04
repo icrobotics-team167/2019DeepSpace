@@ -47,9 +47,12 @@ public:
     bool driveHeading(double inches, double avgSpd, double heading, double arc = 1.0);
     void teleopStraightDrive(double speed);
     bool pointTurn(double angle, double speed);
+    bool alignWithTarget();
 
     bool driveToReflection(double speed);
     bool teleopDriveToReflection(double speed);
+    bool teleopLimelightDrive(double speed);
+    bool alignedWithTarget = false;
 
     const double LEFT_ENCODER_TICKS_PER_INCH = 116.619420989;
     const double RIGHT_ENCODER_TICKS_PER_INCH = 116.193064549;
@@ -62,8 +65,8 @@ public:
 
     void resetPID();
 
-    const double limelightSteerK = 0.1;
-    const double limelightTargetArea = 4;
+    const double limelightSteerK = 0.04;
+    const double limelightTargetArea = 3.5;
     const double limelightMaxDriveSpeed = 0.65;
     const double limelightMaxTurnSpeed = 1;
 
@@ -87,6 +90,10 @@ public:
     void setLimelightVision();
     void setLimelightCamera();
 
+    void setLimelightLeft();
+    void setLimelightRight();
+    void setLimelightLowest();
+    
     bool getIsInHighGear();
 };
 
