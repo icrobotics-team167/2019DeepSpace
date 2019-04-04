@@ -21,8 +21,8 @@ AutoRoutine(driveBase, claw, elevator, bling, cargo, controller, teleop)
 }
 
 /**
- * Scores on the front left cargo ship and almost scores
- * on the side left cargo ship
+ * Scores on the front left cargo ship, picks up a hatch from the left
+ * human player station, and scores on the side left cargo ship
  * 
  * @author Dominic Rutkowski
  * @since 2-10-2019
