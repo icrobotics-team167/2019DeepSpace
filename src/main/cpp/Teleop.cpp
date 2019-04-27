@@ -34,11 +34,11 @@ void Teleop::periodic() {
     driveBase->drive(0.5 * leftY, 0.5 * rightY);
     
     // Open and close claw
-    if (controller->closeClaw()) {
-        claw->closeClaw();
-    } else if (controller->openClaw()) {
-        claw->openClaw();
-    }
+    // if (controller->closeClaw()) {
+    //     claw->closeClaw();
+    // } else if (controller->openClaw()) {
+    //     claw->openClaw();
+    // }
 
     // Gear shifting
     // if (controller->setLowGear()) {
@@ -55,11 +55,11 @@ void Teleop::periodic() {
     }
 
     // Elevator
-    if (controller->holdElevator()) {
-        elevator->raiseElevator(-0.3);
-    } else {
-        elevator->raiseElevator(controller->elevatorSpeed());
-    }
+    // if (controller->holdElevator()) {
+    //     elevator->raiseElevator(-0.3);
+    // } else {
+    //     elevator->raiseElevator(controller->elevatorSpeed());
+    // }
 
     // Cargo intake and ejection
     if (controller->ejectCargo()) {

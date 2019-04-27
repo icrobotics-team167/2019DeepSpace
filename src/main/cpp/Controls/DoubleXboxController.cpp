@@ -186,7 +186,7 @@ double DoubleXboxController::elevatorSpeed() {
  * @returns True if the front cargo out should run, false otherwise
  */
 bool DoubleXboxController::ejectCargo() {
-    return xboxController2->GetTriggerAxis(frc::Joystick::JoystickHand::kRightHand) > 0.3;;
+    return xboxController1->GetTriggerAxis(frc::Joystick::JoystickHand::kRightHand) > 0.3;;
 }
 
 /**
@@ -199,7 +199,7 @@ bool DoubleXboxController::ejectCargo() {
  * @returns True if the cargo intake should run, false otherwise
  */
 bool DoubleXboxController::runIntake() {
-    return xboxController2->GetTriggerAxis(frc::Joystick::JoystickHand::kLeftHand) > 0.3;
+    return xboxController1->GetTriggerAxis(frc::Joystick::JoystickHand::kLeftHand) > 0.3;
 }
 
 /**
@@ -212,7 +212,7 @@ bool DoubleXboxController::runIntake() {
  * @returns True if the cargo intake should run in reverse, false otherwise
  */
 bool DoubleXboxController::runIntakeReverse() {
-    return xboxController2->GetBumper(frc::Joystick::JoystickHand::kLeftHand);
+    return xboxController1->GetBumper(frc::Joystick::JoystickHand::kLeftHand);
 }
 
 /**
