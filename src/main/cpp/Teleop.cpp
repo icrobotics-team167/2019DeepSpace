@@ -11,7 +11,7 @@ Teleop::Teleop(DriveBase *driveBase, Claw *claw, Elevator *elevator, Bling *blin
 
 void Teleop::init() {
     driveBase->setLimelightCamera();
-    driveBase->setHighGear();
+    driveBase->setLowGear();
     driveBase->setLimelightLowest();
     bling->runBothLEDStrips(bling->SOLID_GREEN);
 }
@@ -21,16 +21,17 @@ void Teleop::periodic() {
     double leftY = controller->drivetrainLeftSpeed();
     double rightY = controller->drivetrainRightSpeed();
     
-    if (controller->limelightDrive()) {
-        driveBase->teleopDriveToReflection(0.45);
-    } else if (controller->straightDrive()) {
-        driveBase->teleopStraightDrive(leftY);
-        driveBase->resetEncoders();
-    } else {
-        driveBase->resetPID();
-        driveBase->updateNavx();
-        driveBase->drive(leftY, rightY);
-    }
+    // if (controller->limelightDrive()) {
+    //     driveBase->teleopDriveToReflection(0.45);
+    // } else if (controller->straightDrive()) {
+    //     driveBase->teleopStraightDrive(leftY);
+    //     driveBase->resetEncoders();
+    // } else {
+    //     driveBase->resetPID();
+    //     driveBase->updateNavx();
+    //     driveBase->drive(leftY, rightY);
+    // }
+    driveBase->drive(0.5 * leftY, 0.5 * rightY);
     
     // Open and close claw
     if (controller->closeClaw()) {
@@ -40,11 +41,11 @@ void Teleop::periodic() {
     }
 
     // Gear shifting
-    if (controller->setLowGear()) {
-        driveBase->setLowGear();
-    } else if (controller->setHighGear()) {
-        driveBase->setHighGear();
-    }
+    // if (controller->setLowGear()) {
+    //     driveBase->setLowGear();
+    // } else if (controller->setHighGear()) {
+    //     driveBase->setHighGear();
+    // }
 
     // Claw raising and lowering
     if (controller->raiseClaw()) {
